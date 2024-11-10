@@ -1,5 +1,6 @@
 using Xunit;
 using System;
+using BYTProject.Models;
 
 namespace BYTProject.UnitTesting
 {
@@ -9,14 +10,14 @@ namespace BYTProject.UnitTesting
         public void LikeID_ShouldThrowException_WhenValueIsNonPositive()
         {
             var like = new Like(1, DateTime.Now);
-            Assert.Throws<ArgumentException>(() => like.LikeID = 0);
+            Assert.Throws<ArgumentException>(() => like.LikeId = 0);
         }
 
         [Fact]
         public void LikeID_ShouldReturnCorrectValue()
         {
             var like = new Like(1, DateTime.Now);
-            Assert.Equal(1, like.LikeID);
+            Assert.Equal(1, like.LikeId);
         }
 
         [Fact]
@@ -67,8 +68,8 @@ namespace BYTProject.UnitTesting
 
             var likes = Like.GetLikes();
             Assert.Equal(2, likes.Count);
-            Assert.Equal(1, likes[0].LikeID);
-            Assert.Equal(2, likes[1].LikeID);
+            Assert.Equal(1, likes[0].LikeId);
+            Assert.Equal(2, likes[1].LikeId);
         }
     }
 }

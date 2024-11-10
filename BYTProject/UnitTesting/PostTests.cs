@@ -9,14 +9,14 @@ namespace BYTProject.UnitTesting
         public void PostID_ShouldThrowException_WhenValueIsNonPositive()
         {
             var post = new Post(1, "Caption 1", DateTime.Now);
-            Assert.Throws<ArgumentException>(() => post.PostID = 0);
+            Assert.Throws<ArgumentException>(() => post.PostId = 0);
         }
 
         [Fact]
         public void PostID_ShouldReturnCorrectValue()
         {
             var post = new Post(1, "Caption 1", DateTime.Now);
-            Assert.Equal(1, post.PostID);
+            Assert.Equal(1, post.PostId);
         }
 
         [Fact]
@@ -81,9 +81,9 @@ namespace BYTProject.UnitTesting
 
             var posts = Post.GetPosts();
             Assert.Equal(2, posts.Count);
-            Assert.Equal(1, posts[0].PostID);
+            Assert.Equal(1, posts[0].PostId);
             Assert.Equal("Caption 1", posts[0].Caption);
-            Assert.Equal(2, posts[1].PostID);
+            Assert.Equal(2, posts[1].PostId);
             Assert.Equal("Caption 2", posts[1].Caption);
         }
     }

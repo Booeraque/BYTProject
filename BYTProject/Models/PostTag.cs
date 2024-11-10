@@ -19,7 +19,7 @@ public class PostTag
     private static List<PostTag> _postTagsExtent = new List<PostTag>();
 
     // Private static method to add a PostTag to the extent, with validation
-    private static void AddTag(PostTag postTag)
+    public static void AddTag(PostTag postTag)
     {
         if (postTag == null)
         {

@@ -1,6 +1,7 @@
 using Xunit;
 using System;
 using System.IO;
+using BYTProject.Models;
 
 namespace BYTProject.UnitTesting
 {
@@ -16,7 +17,7 @@ namespace BYTProject.UnitTesting
         public void AccountID_ShouldReturnCorrectValue()
         {
             var account = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
-            Assert.Equal(1, account.AccountID);
+            Assert.Equal(1, account.AccountId);
         }
 
         [Fact]
@@ -132,9 +133,9 @@ namespace BYTProject.UnitTesting
 
             var accounts = Account.GetAccounts();
             Assert.Equal(2, accounts.Count);
-            Assert.Equal(1, accounts[0].AccountID);
+            Assert.Equal(1, accounts[0].AccountId);
             Assert.Equal("User1", accounts[0].Username);
-            Assert.Equal(2, accounts[1].AccountID);
+            Assert.Equal(2, accounts[1].AccountId);
             Assert.Equal("User2", accounts[1].Username);
 
             File.Delete("TestAccounts.xml");

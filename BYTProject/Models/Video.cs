@@ -61,6 +61,8 @@ public class Video
     public Video(int videoId, string description, VideoEditor videoEditor)
     {
         VideoId = videoId;
+        _description = description;
+        _videoEditor = videoEditor;
         Description = description;
         VideoEditor = videoEditor;
 

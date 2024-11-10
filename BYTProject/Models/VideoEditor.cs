@@ -61,6 +61,7 @@ public class VideoEditor
     public VideoEditor(int videoEdId, string videoEdBio, int accountId)
     {
         VideoEdId = videoEdId;
+        _videoEdBio = videoEdBio;
         VideoEdBio = videoEdBio;
         AccountId = accountId;
 

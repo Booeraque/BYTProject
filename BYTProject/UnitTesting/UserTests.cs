@@ -16,7 +16,7 @@ public class UserTests
     public void AccountID_ShouldReturnCorrectValue()
     {
         var user = new User(1, true);
-        Assert.Equal(1, user.AccountID);
+        Assert.Equal(1, user.AccountId);
     }
 
     [Fact]

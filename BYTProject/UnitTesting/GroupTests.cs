@@ -1,5 +1,6 @@
 using Xunit;
 using System;
+using BYTProject.Models;
 
 namespace BYTProject.UnitTesting
 {
@@ -9,14 +10,14 @@ namespace BYTProject.UnitTesting
         public void GroupID_ShouldThrowException_WhenValueIsNonPositive()
         {
             var group = new Group(1, "Group 1", "Sample Description");
-            Assert.Throws<ArgumentException>(() => group.GroupID = 0);
+            Assert.Throws<ArgumentException>(() => group.GroupId = 0);
         }
 
         [Fact]
         public void GroupID_ShouldReturnCorrectValue()
         {
             var group = new Group(1, "Group 1", "Sample Description");
-            Assert.Equal(1, group.GroupID);
+            Assert.Equal(1, group.GroupId);
         }
 
         [Fact]
@@ -84,10 +85,10 @@ namespace BYTProject.UnitTesting
 
             var groups = Group.GetGroups();
             Assert.Equal(2, groups.Count);
-            Assert.Equal(1, groups[0].GroupID);
+            Assert.Equal(1, groups[0].GroupId);
             Assert.Equal("Group 1", groups[0].GroupName);
             Assert.Equal("Description 1", groups[0].Description);
-            Assert.Equal(2, groups[1].GroupID);
+            Assert.Equal(2, groups[1].GroupId);
             Assert.Equal("Group 2", groups[1].GroupName);
             Assert.Equal("Description 2", groups[1].Description);
         }

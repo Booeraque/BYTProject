@@ -16,7 +16,7 @@ public class TagTests
     public void TagID_ShouldReturnCorrectValue()
     {
         var tag = new Tag(1, new List<string> { "Category 1" });
-        Assert.Equal(1, tag.TagID);
+        Assert.Equal(1, tag.TagId);
     }
 
     [Fact]

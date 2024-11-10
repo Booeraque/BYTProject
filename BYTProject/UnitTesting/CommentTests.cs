@@ -1,5 +1,6 @@
 using Xunit;
 using System;
+using BYTProject.Models;
 
 namespace BYTProject.UnitTesting
 {
@@ -9,14 +10,14 @@ namespace BYTProject.UnitTesting
         public void CommentID_ShouldThrowException_WhenValueIsNonPositive()
         {
             var comment = new Comment(1, "Content 1", DateTime.Now);
-            Assert.Throws<ArgumentException>(() => comment.CommentID = 0);
+            Assert.Throws<ArgumentException>(() => comment.CommentId = 0);
         }
 
         [Fact]
         public void CommentID_ShouldReturnCorrectValue()
         {
             var comment = new Comment(1, "Content 1", DateTime.Now);
-            Assert.Equal(1, comment.CommentID);
+            Assert.Equal(1, comment.CommentId);
         }
 
         [Fact]
@@ -88,9 +89,9 @@ namespace BYTProject.UnitTesting
 
             var comments = Comment.GetComments();
             Assert.Equal(2, comments.Count);
-            Assert.Equal(1, comments[0].CommentID);
+            Assert.Equal(1, comments[0].CommentId);
             Assert.Equal("Content 1", comments[0].Content);
-            Assert.Equal(2, comments[1].CommentID);
+            Assert.Equal(2, comments[1].CommentId);
             Assert.Equal("Content 2", comments[1].Content);
         }
     }

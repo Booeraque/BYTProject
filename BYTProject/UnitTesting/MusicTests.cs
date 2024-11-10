@@ -1,75 +1,113 @@
-using System;
-using System.Collections.Generic;
+using BYTProject.Models;
 using Xunit;
 
-public class MusicTests
+namespace BYTProject.UnitTesting
 {
-    [Fact]
-    public void MusicID_ShouldThrowException_WhenValueIsNonPositive()
+    public class MusicTests
     {
-        var music = new Music { MusicID = 1, Description = "Description 1" };
-        Assert.Throws<ArgumentException>(() => music.MusicID = 0);
-    }
+        private Musician CreateMockMusician()
+        {
+            return new Musician(1, "John Doe Bio", 100); // Mock data for testing
+        }
 
-    [Fact]
-    public void MusicID_ShouldReturnCorrectValue()
-    {
-        var music = new Music { MusicID = 1, Description = "Description 1" };
-        Assert.Equal(1, music.MusicID);
-    }
+        private MusicAlbum CreateMockMusicAlbum()
+        {
+            return new MusicAlbum(1, "Single", "Mock Album Description");
+        }
 
-    [Fact]
-    public void Description_ShouldThrowException_WhenValueIsEmpty()
-    {
-        var music = new Music { MusicID = 1, Description = "Description 1" };
-        Assert.Throws<ArgumentException>(() => music.Description = "");
-    }
+        [Fact]
+        public void MusicId_ShouldThrowException_WhenValueIsNonPositive()
+        {
+            var musician = CreateMockMusician();
+            var musicAlbum = CreateMockMusicAlbum();
+            var music = new Music(1, "Description 1", musician, musicAlbum);
+            Assert.Throws<ArgumentException>(() => music.MusicId = 0);
+        }
 
-    [Fact]
-    public void Description_ShouldReturnCorrectValue()
-    {
-        var music = new Music { MusicID = 1, Description = "Description 1" };
-        Assert.Equal("Description 1", music.Description);
-    }
+        [Fact]
+        public void MusicId_ShouldReturnCorrectValue()
+        {
+            var musician = CreateMockMusician();
+            var musicAlbum = CreateMockMusicAlbum();
+            var music = new Music(1, "Description 1", musician, musicAlbum);
+            Assert.Equal(1, music.MusicId);
+        }
 
-    [Fact]
-    public void AddMusic_ShouldThrowException_WhenMusicIsNull()
-    {
-        Assert.Throws<ArgumentException>(() => Music.AddMusic(null));
-    }
+        [Fact]
+        public void Description_ShouldThrowException_WhenValueIsEmpty()
+        {
+            var musician = CreateMockMusician();
+            var musicAlbum = CreateMockMusicAlbum();
+            var music = new Music(1, "Description 1", musician, musicAlbum);
+            Assert.Throws<ArgumentException>(() => music.Description = "");
+        }
 
-    [Fact]
-    public void AddMusic_ShouldAddMusicCorrectly()
-    {
-        var music = new Music { MusicID = 1, Description = "Description 1" };
-        Music.AddMusic(music);
-        Assert.Contains(music, Music.MusicList);
-    }
+        [Fact]
+        public void Description_ShouldReturnCorrectValue()
+        {
+            var musician = CreateMockMusician();
+            var musicAlbum = CreateMockMusicAlbum();
+            var music = new Music(1, "Description 1", musician, musicAlbum);
+            Assert.Equal("Description 1", music.Description);
+        }
 
-    [Fact]
-    public void GetMusicList_ShouldReturnCorrectList()
-    {
-        var music = new Music { MusicID = 1, Description = "Description 1" };
-        Music.AddMusic(music);
-        Assert.Contains(music, Music.MusicList);
-    }
+        [Fact]
+        public void Musician_ShouldThrowException_WhenValueIsNull()
+        {
+            var musicAlbum = CreateMockMusicAlbum();
+            Assert.Throws<ArgumentException>(() => new Music(1, "Description", null, musicAlbum));
+        }
 
-    [Fact]
-    public void SaveAndLoadMusic_ShouldPersistDataCorrectly()
-    {
-        var music1 = new Music { MusicID = 1, Description = "Description 1" };
-        var music2 = new Music { MusicID = 2, Description = "Description 2" };
-        Music.MusicList.Add(music1);
-        Music.MusicList.Add(music2);
+        [Fact]
+        public void MusicAlbum_ShouldThrowException_WhenValueIsNull()
+        {
+            var musician = CreateMockMusician();
+            Assert.Throws<ArgumentException>(() => new Music(1, "Description", musician, null));
+        }
 
-        Music.SaveMusic();
-        Music.MusicList.Clear();
-        Music.LoadMusic();
+        [Fact]
+        public void AddMusic_ShouldThrowException_WhenMusicIsNull()
+        {
+            Assert.Throws<ArgumentException>(() => Music.AddMusic(null));
+        }
 
-        Assert.Equal(2, Music.MusicList.Count);
-        Assert.Equal(1, Music.MusicList[0].MusicID);
-        Assert.Equal("Description 1", Music.MusicList[0].Description);
-        Assert.Equal(2, Music.MusicList[1].MusicID);
-        Assert.Equal("Description 2", Music.MusicList[1].Description);
+        [Fact]
+        public void AddMusic_ShouldAddMusicCorrectly()
+        {
+            var musician = CreateMockMusician();
+            var musicAlbum = CreateMockMusicAlbum();
+            var music = new Music(1, "Description 1", musician, musicAlbum);
+            Music.AddMusic(music);
+            Assert.Contains(music, Music.GetMusicList());
+        }
+
+        [Fact]
+        public void GetMusicList_ShouldReturnCorrectList()
+        {
+            var musician = CreateMockMusician();
+            var musicAlbum = CreateMockMusicAlbum();
+            var music = new Music(1, "Description 1", musician, musicAlbum);
+            Music.AddMusic(music);
+            Assert.Contains(music, Music.GetMusicList());
+        }
+
+        [Fact]
+        public void SaveAndLoadMusic_ShouldPersistDataCorrectly()
+        {
+            var musician = CreateMockMusician();
+            var musicAlbum = CreateMockMusicAlbum();
+            var music1 = new Music(1, "Description 1", musician, musicAlbum);
+            var music2 = new Music(2, "Description 2", musician, musicAlbum);
+
+            Music.SaveMusic();
+            Music.LoadMusic();
+
+            var musicList = Music.GetMusicList();
+            Assert.Equal(2, musicList.Count);
+            Assert.Equal(1, musicList[0].MusicId);
+            Assert.Equal("Description 1", musicList[0].Description);
+            Assert.Equal(2, musicList[1].MusicId);
+            Assert.Equal("Description 2", musicList[1].Description);
+        }
     }
 }
