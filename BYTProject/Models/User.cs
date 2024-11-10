@@ -30,7 +30,7 @@ public class User
     private static List<User> usersExtent = new List<User>();
 
     // Private static method to add a User to the extent, with validation
-    private static void AddUser(User user)
+    internal static void AddUser(User user)
     {
         if (user == null)
         {

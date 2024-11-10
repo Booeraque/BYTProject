@@ -31,7 +31,7 @@ public class Like
     private static List<Like> likesExtent = new List<Like>();
 
     // Private static method to add a Like to the extent
-    private static void AddLike(Like like)
+    internal static void AddLike(Like like)
     {
         if (like == null)
         {

@@ -51,7 +51,7 @@ public class Comment
     private static List<Comment> commentsExtent = new List<Comment>();
 
     // Private static method to add a Comment to the extent, with validation
-    private static void AddComment(Comment comment)
+    internal static void AddComment(Comment comment)
     {
         if (comment == null)
         {

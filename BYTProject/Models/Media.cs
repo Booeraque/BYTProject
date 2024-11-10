@@ -31,7 +31,7 @@ public class Media
     private static List<Media> mediaExtent = new List<Media>();
 
     // Private static method to add a Media object to the extent, with validation
-    private static void AddMedia(Media media)
+    internal static void AddMedia(Media media)
     {
         if (media == null)
         {

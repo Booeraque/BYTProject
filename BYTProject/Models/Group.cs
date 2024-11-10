@@ -43,7 +43,7 @@ public class Group
     private static List<Group> groupsExtent = new List<Group>();
 
     // Private static method to add a Group to the extent, with validation
-    public static void AddGroup(Group group)
+    internal static void AddGroup(Group group)
     {
         if (group == null)
         {

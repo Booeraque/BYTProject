@@ -1,20 +1,20 @@
-using System;
-using System.Collections.Generic;
 using Xunit;
+
+namespace BYTProject.UnitTesting;
 
 public class PostTests
 {
     [Fact]
     public void PostID_ShouldThrowException_WhenValueIsNonPositive()
     {
-        var post = new Post(1, "Caption 1");
+        var post = new Post(1, "Caption 1", DateTime.Now);
         Assert.Throws<ArgumentException>(() => post.PostID = 0);
     }
 
     [Fact]
     public void Caption_ShouldThrowException_WhenValueIsEmpty()
     {
-        var post = new Post(1, "Caption 1");
+        var post = new Post(1, "Caption 1", DateTime.Now);
         Assert.Throws<ArgumentException>(() => post.Caption = "");
     }
     
@@ -27,15 +27,15 @@ public class PostTests
     [Fact]
     public void PostConstructor_ShouldThrowException_WhenCaptionIsNotProvided()
     {
-        Assert.Throws<ArgumentException>(() => new Post(1, null));
+        Assert.Throws<ArgumentException>(() => new Post(1, null, DateTime.Now));
     }
 
     [Fact]
     public void SaveAndLoadPosts_ShouldPersistDataCorrectly()
     {
         // Arrange
-        var post1 = new Post(1, "Caption 1");
-        var post2 = new Post(2, "Caption 2");
+        var post1 = new Post(1, "Caption 1", DateTime.Now);
+        var post2 = new Post(2, "Caption 2", DateTime.Now);
 
         // Act
         Post.SavePosts();

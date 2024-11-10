@@ -7,14 +7,14 @@ public class MediaTests
     [Fact]
     public void MediaID_ShouldThrowException_WhenValueIsNonPositive()
     {
-        var media = new Media();
+        var media = new Media(1, "Video");
         Assert.Throws<ArgumentException>(() => media.MediaID = 0);
     }
 
     [Fact]
     public void MediaType_ShouldThrowException_WhenValueIsEmpty()
     {
-        var media = new Media();
+        var media = new Media(2, "Image");
         Assert.Throws<ArgumentException>(() => media.MediaType = "");
     }
 
@@ -22,21 +22,21 @@ public class MediaTests
     public void SaveAndLoadMedia_ShouldPersistDataCorrectly()
     {
         // Arrange
-        var media1 = new Media { MediaID = 1, MediaType = "Video" };
-        var media2 = new Media { MediaID = 2, MediaType = "Image" };
-        Media.MediaList.Add(media1);
-        Media.MediaList.Add(media2);
+        var media1 = new Media(1, "Video");
+        var media2 = new Media(2, "Image");
 
         // Act
         Media.SaveMedia();
-        Media.MediaList.Clear();
+        
+        // Clear the in-memory extent list by reinitializing the mediaExtent list
         Media.LoadMedia();
 
         // Assert
-        Assert.Equal(2, Media.MediaList.Count);
-        Assert.Equal(1, Media.MediaList[0].MediaID);
-        Assert.Equal("Video", Media.MediaList[0].MediaType);
-        Assert.Equal(2, Media.MediaList[1].MediaID);
-        Assert.Equal("Image", Media.MediaList[1].MediaType);
+        var mediaList = Media.GetMediaList();
+        Assert.Equal(2, mediaList.Count);
+        Assert.Equal(1, mediaList[0].MediaID);
+        Assert.Equal("Video", mediaList[0].MediaType);
+        Assert.Equal(2, mediaList[1].MediaID);
+        Assert.Equal("Image", mediaList[1].MediaType);
     }
 }

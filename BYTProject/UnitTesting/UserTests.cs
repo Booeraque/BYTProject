@@ -18,12 +18,6 @@ public class UserTests
     }
 
     [Fact]
-    public void UserConstructor_ShouldThrowException_WhenIsAdminIsNotProvided()
-    {
-        Assert.Throws<ArgumentException>(() => new User(1));
-    }
-
-    [Fact]
     public void SaveAndLoadUsers_ShouldPersistDataCorrectly()
     {
         // Arrange

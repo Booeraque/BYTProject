@@ -41,7 +41,7 @@ public class Tag
     private static List<Tag> tagsExtent = new List<Tag>();
 
     // Static method to add a Tag to the extent, with validation
-    private static void AddTag(Tag tag)
+    internal static void AddTag(Tag tag)
     {
         if (tag == null)
         {

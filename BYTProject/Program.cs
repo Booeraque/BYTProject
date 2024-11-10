@@ -1,30 +1,41 @@
-class Program
+namespace BYTProject
 {
-	static void Main(string[] args)
-	{
-		// Load all accounts from XML
-		Account.LoadAccounts();
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Load all accounts from XML
+            Account.LoadAccounts();
 
-		// Example: Add a new account to the list
-		Account account = new Account
-		{
-			AccountID = 1,
-			Username = "nova",
-			Email = "nova@example.com",
-			BirthDate = new DateTime(1995, 1, 1),
-			Phone = "123-456-7890",
-			Address = "123 Main St",
-			Password = "password123"
-		};
-		Account.Accounts.Add(account);
+            // Example: Add a new account to the list
+            int newAccountId = 10;
+            if (!Account.GetAccounts().Any(acc => acc.AccountID == newAccountId))
+            {
+                Account account = new Account(
+                    newAccountId, // AccountID
+                    "nova", // Username
+                    "nova@example.com", // Email
+                    new DateTime(1995, 1, 1), // BirthDate
+                    "123 Main St", // Address
+                    "password123" // Password
+                );
 
-		// Save the accounts back to XML
-		Account.SaveAccounts();
+                // Add the account to the extent collection using AddAccount
+                Account.AddAccount(account);
+            }
+            else
+            {
+                Console.WriteLine($"An account with AccountID {newAccountId} already exists.");
+            }
 
-		// Output all accounts to the console
-		foreach (var acc in Account.Accounts)
-		{
-			Console.WriteLine($"Account ID: {acc.AccountID}, Username: {acc.Username}");
-		}
-	}
+            // Save the accounts back to XML
+            Account.SaveAccounts();
+
+            // Output all accounts to the console
+            foreach (var acc in Account.GetAccounts())
+            {
+                Console.WriteLine($"Account ID: {acc.AccountID}, Username: {acc.Username}");
+            }
+        }
+    }
 }

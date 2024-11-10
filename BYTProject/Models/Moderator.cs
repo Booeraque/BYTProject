@@ -46,7 +46,7 @@ public class Moderator
     private static List<Moderator> moderatorsExtent = new List<Moderator>();
 
     // Private static method to add a Moderator to the extent, with validation
-    private static void AddModerator(Moderator moderator)
+    internal static void AddModerator(Moderator moderator)
     {
         if (moderator == null)
         {

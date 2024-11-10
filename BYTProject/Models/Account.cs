@@ -92,14 +92,19 @@ public class Account
     private static List<Account> accountsExtent = new List<Account>();
 
     // Private static method to add an Account to the extent, with validation
-    public static void AddAccount(Account account)
+    internal static void AddAccount(Account account)
     {
         if (account == null)
         {
             throw new ArgumentException("Account cannot be null.");
         }
+        if (accountsExtent.Exists(a => a.AccountID == account.AccountID))
+        {
+            throw new ArgumentException("An account with the same AccountID already exists.");
+        }
         accountsExtent.Add(account);
     }
+
 
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<Account> GetAccounts()
@@ -111,19 +116,16 @@ public class Account
     public Account(int accountID, string username, string email, DateTime birthDate, string address, string password)
     {
         AccountID = accountID;
-        _username = username;
-        _email = email;
         Username = username;
         Email = email;
         BirthDate = birthDate;
-        _address = address;
-        _password = password;
         Address = address;
         Password = password;
 
         // Automatically add to extent
         AddAccount(this);
     }
+
 
 
     // Method to save all accounts to XML (for persistence)

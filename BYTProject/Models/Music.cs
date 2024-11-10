@@ -26,7 +26,7 @@ public class Music
     public static List<Music> MusicList = new List<Music>();
 
     // Private static method to add a Music object to the extent, with validation
-    private static void AddMusic(Music music)
+    internal static void AddMusic(Music music)
     {
         if (music == null)
         {

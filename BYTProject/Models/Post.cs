@@ -43,7 +43,7 @@ public class Post
     private static List<Post> postsExtent = new List<Post>();
 
     // Static method to add a Post to the extent, with validation
-    private static void AddPost(Post post)
+    internal static void AddPost(Post post)
     {
         if (post == null)
         {
