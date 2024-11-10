@@ -11,7 +11,24 @@ public class UserTests
         var user = new User(1, true);
         Assert.Throws<ArgumentException>(() => user.AccountId = 0);
     }
-    
+
+    [Fact]
+    public void AccountID_ShouldReturnCorrectValue()
+    {
+        var user = new User(1, true);
+        Assert.Equal(1, user.AccountID);
+    }
+
+    [Fact]
+    public void IsAdmin_ShouldReturnCorrectValue()
+    {
+        var user = new User(1, true);
+        Assert.True(user.IsAdmin);
+
+        var user2 = new User(2, false);
+        Assert.False(user2.IsAdmin);
+    }
+
     [Fact]
     public void AddUser_ShouldThrowException_WhenUserIsNull()
     {
@@ -19,17 +36,30 @@ public class UserTests
     }
 
     [Fact]
+    public void AddUser_ShouldAddUserCorrectly()
+    {
+        var user = new User(1, true);
+        User.AddUser(user);
+        Assert.Contains(user, User.GetUsers());
+    }
+
+    [Fact]
+    public void GetUsers_ShouldReturnCorrectList()
+    {
+        var user = new User(1, true);
+        var users = User.GetUsers();
+        Assert.Contains(user, users);
+    }
+
+    [Fact]
     public void SaveAndLoadUsers_ShouldPersistDataCorrectly()
     {
-        // Arrange
         var user1 = new User(1, true);
         var user2 = new User(2, false);
 
-        // Act
         User.SaveUsers();
         User.LoadUsers();
 
-        // Assert
         var users = User.GetUsers();
         Assert.Equal(2, users.Count);
         Assert.Equal(1, users[0].AccountId);
