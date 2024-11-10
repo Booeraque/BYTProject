@@ -12,10 +12,38 @@ public class TagTests
     }
 
     [Fact]
+    public void TagID_ShouldReturnCorrectValue()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        Assert.Equal(1, tag.TagID);
+    }
+
+    [Fact]
     public void Categories_ShouldThrowException_WhenValueIsEmpty()
     {
         var tag = new Tag(1, new List<string> { "Category 1" });
         Assert.Throws<ArgumentException>(() => tag.Categories = new List<string> { "" });
+    }
+
+    [Fact]
+    public void Categories_ShouldThrowException_WhenValueIsNull()
+    {
+        Assert.Throws<ArgumentException>(() => new Tag(1, null));
+    }
+
+    [Fact]
+    public void Categories_ShouldThrowException_WhenMoreThan10Items()
+    {
+        var longCategoryList = new List<string> { "Cat1", "Cat2", "Cat3", "Cat4", "Cat5", "Cat6", "Cat7", "Cat8", "Cat9", "Cat10", "Cat11" };
+        Assert.Throws<ArgumentException>(() => new Tag(1, longCategoryList));
+    }
+
+    [Fact]
+    public void Categories_ShouldReturnCorrectValues()
+    {
+        var categories = new List<string> { "Category 1", "Category 2" };
+        var tag = new Tag(1, categories);
+        Assert.Equal(categories, tag.Categories);
     }
 
     [Fact]
@@ -25,24 +53,30 @@ public class TagTests
     }
 
     [Fact]
-    public void TagConstructor_ShouldThrowException_WhenCategoriesContainMoreThan10Items()
+    public void AddTag_ShouldAddTagCorrectly()
     {
-        var longCategoryList = new List<string> { "Cat1", "Cat2", "Cat3", "Cat4", "Cat5", "Cat6", "Cat7", "Cat8", "Cat9", "Cat10", "Cat11" };
-        Assert.Throws<ArgumentException>(() => new Tag(1, longCategoryList));
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        Tag.AddTag(tag);
+        Assert.Contains(tag, Tag.GetTags());
+    }
+
+    [Fact]
+    public void GetTags_ShouldReturnCorrectList()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        var tags = Tag.GetTags();
+        Assert.Contains(tag, tags);
     }
 
     [Fact]
     public void SaveAndLoadTags_ShouldPersistDataCorrectly()
     {
-        // Arrange
         var tag1 = new Tag(1, new List<string> { "Category 1" });
         var tag2 = new Tag(2, new List<string> { "Category 2" });
 
-        // Act
         Tag.SaveTags();
         Tag.LoadTags();
 
-        // Assert
         var tags = Tag.GetTags();
         Assert.Equal(2, tags.Count);
         Assert.Equal(1, tags[0].TagID);
