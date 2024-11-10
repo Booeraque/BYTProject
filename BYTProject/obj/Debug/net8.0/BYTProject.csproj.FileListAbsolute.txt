@@ -1,0 +1,5 @@
+C:\Studies\RiderProjects\BYT\BYTProject\BYTProject\obj\Debug\net8.0\BYTProject.csproj.AssemblyReference.cache
+C:\Studies\RiderProjects\BYT\BYTProject\BYTProject\obj\Debug\net8.0\BYTProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Studies\RiderProjects\BYT\BYTProject\BYTProject\obj\Debug\net8.0\BYTProject.AssemblyInfoInputs.cache
+C:\Studies\RiderProjects\BYT\BYTProject\BYTProject\obj\Debug\net8.0\BYTProject.AssemblyInfo.cs
+C:\Studies\RiderProjects\BYT\BYTProject\BYTProject\obj\Debug\net8.0\BYTProject.csproj.CoreCompileInputs.cache
