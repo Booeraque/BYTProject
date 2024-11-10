@@ -57,6 +57,12 @@ public class Group
     {
         return groupsExtent.AsReadOnly();
     }
+    
+    public static void ClearGroups()
+    {
+        groupsExtent.Clear();
+    }
+
 
     // Constructor to initialize Group with mandatory attributes and automatically add to extent
     public Group(int groupID, string groupName, string description)

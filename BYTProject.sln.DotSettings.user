@@ -1,41 +1,5 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=090fbb6d_002D48b7_002D43ef_002Db813_002D76c94a89e547/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddTag_ShouldThrowException_WhenTagIsNull" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::TagTests.AddTag_ShouldThrowException_WhenTagIsNull&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1146a2c0_002De90c_002D4b64_002Db1c4_002Ddc9ef6a1e73b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SaveAndLoadMedia_ShouldPersistDataCorrectly #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::MediaTests.SaveAndLoadMedia_ShouldPersistDataCorrectly&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=176c93ac_002D71df_002D439a_002D9442_002D912d4ddb3230/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddGroup_ShouldThrowException_WhenGroupIsNull" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::BYTProject.UnitTesting.GroupTests.AddGroup_ShouldThrowException_WhenGroupIsNull&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1857d70f_002D7640_002D46bf_002D8ab9_002Df01b691b69a0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from CommentTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;ProjectFile&gt;F2E89249-6C37-44EA-A132-F89C1CB833F3/d:UnitTesting/f:CommentTests.cs&lt;/ProjectFile&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=78805b3a_002D4141_002D42b5_002D82cf_002D772ac18cd3d0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SaveAndLoadMedia_ShouldPersistDataCorrectly" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::MediaTests.SaveAndLoadMedia_ShouldPersistDataCorrectly&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c938432d_002De021_002D4bf4_002D9e4d_002D68e85e4c4142/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from AccountTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;ProjectFile&gt;F2E89249-6C37-44EA-A132-F89C1CB833F3/d:UnitTesting/f:AccountTests.cs&lt;/ProjectFile&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d674dad6_002D1fe4_002D4fc4_002D893a_002D0f8fb5ee7eca/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddUser_ShouldThrowException_WhenUserIsNull" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::UserTests.AddUser_ShouldThrowException_WhenUserIsNull&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d9d88cc4_002Debe1_002D4038_002Dbf37_002D8848b094ee12/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="PostTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::BYTProject.UnitTesting.PostTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ffae468c_002D51ad_002D44b1_002Db3a4_002Db7ef83b31d99/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AccountTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2f585f4b_002Da3f0_002D4d32_002Db00e_002D597ba014a8c0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AccountTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::BYTProject.UnitTesting.AccountTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;

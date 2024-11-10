@@ -33,6 +33,9 @@ public class GroupTests
     [Fact]
     public void SaveAndLoadGroups_ShouldPersistDataCorrectly()
     {
+        // Clear existing groups to ensure a fresh test environment
+        Group.ClearGroups();
+    
         // Arrange
         var group1 = new Group(1, "Group 1", "Description 1");
         var group2 = new Group(2, "Group 2", "Description 2");
@@ -51,4 +54,5 @@ public class GroupTests
         Assert.Equal("Group 2", groups[1].GroupName);
         Assert.Equal("Description 2", groups[1].Description);
     }
+
 }

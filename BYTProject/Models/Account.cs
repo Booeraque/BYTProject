@@ -105,7 +105,6 @@ public class Account
         accountsExtent.Add(account);
     }
 
-
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<Account> GetAccounts()
     {
@@ -126,17 +125,23 @@ public class Account
         AddAccount(this);
     }
 
-
+    // Parameterless constructor needed for XML serialization
+    public Account() { }
 
     // Method to save all accounts to XML (for persistence)
-    public static void SaveAccounts()
+    public static void SaveAccounts(string filename = "XML Files/Accounts.xml")
     {
-        PersistenceManager.SaveExtent(accountsExtent, "Accounts.xml");
+        PersistenceManager.SaveExtent(accountsExtent, filename);
+    }
+    // Method to load all accounts from XML (for persistence)
+    public static void LoadAccounts(string filename = "XML Files/Accounts.xml")
+    {
+        accountsExtent = PersistenceManager.LoadExtent<Account>(filename);
+    }
+    
+    public static void ClearAccounts()
+    {
+        accountsExtent.Clear();
     }
 
-    // Method to load all accounts from XML (for persistence)
-    public static void LoadAccounts()
-    {
-        accountsExtent = PersistenceManager.LoadExtent<Account>("Accounts.xml");
-    }
 }

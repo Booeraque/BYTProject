@@ -8,20 +8,19 @@ namespace BYTProject
             Account.LoadAccounts();
 
             // Example: Add a new account to the list
-            int newAccountId = 10;
+            int newAccountId = 15;
             if (!Account.GetAccounts().Any(acc => acc.AccountID == newAccountId))
             {
                 Account account = new Account(
                     newAccountId, // AccountID
-                    "nova", // Username
-                    "nova@example.com", // Email
+                    "jacob", // Username
+                    "jacob@example.com", // Email
                     new DateTime(1995, 1, 1), // BirthDate
                     "123 Main St", // Address
                     "password123" // Password
                 );
 
-                // Add the account to the extent collection using AddAccount
-                Account.AddAccount(account);
+                // No need to call Account.AddAccount(account); here, as it's already added in the constructor.
             }
             else
             {

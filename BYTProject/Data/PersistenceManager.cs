@@ -11,6 +11,13 @@ public static class PersistenceManager
     {
         try
         {
+            // Ensure the directory exists
+            string directory = Path.GetDirectoryName(filename);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
             // Create a StreamWriter for the given path
             using (StreamWriter file = File.CreateText(filename))
             {
