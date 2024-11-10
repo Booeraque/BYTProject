@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
+namespace BYTProject.Models;
 
 public class Media
 {
     // Mandatory attribute: MediaID
-    private int _mediaID;
+    private int _mediaId;
     public int MediaID
     {
-        get => _mediaID;
+        get => _mediaId;
         set
         {
             if (value <= 0) throw new ArgumentException("MediaID must be positive.");
-            _mediaID = value;
+            _mediaId = value;
         }
     }
 
@@ -28,7 +27,7 @@ public class Media
     }
 
     // Private static extent collection to store all Media objects
-    private static List<Media> mediaExtent = new List<Media>();
+    private static List<Media> _mediaExtent = new List<Media>();
 
     // Private static method to add a Media object to the extent, with validation
     internal static void AddMedia(Media media)
@@ -37,19 +36,20 @@ public class Media
         {
             throw new ArgumentException("Media cannot be null.");
         }
-        mediaExtent.Add(media);
+        _mediaExtent.Add(media);
     }
 
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<Media> GetMediaList()
     {
-        return mediaExtent.AsReadOnly();
+        return _mediaExtent.AsReadOnly();
     }
 
     // Constructor to initialize Media object with mandatory attributes and automatically add to extent
     public Media(int mediaID, string mediaType)
     {
         MediaID = mediaID;
+        _mediaType = mediaType;
         MediaType = mediaType;
 
         // Automatically add to extent
@@ -59,12 +59,12 @@ public class Media
     // Method to save all media to XML (for persistence)
     public static void SaveMedia()
     {
-        PersistenceManager.SaveExtent(mediaExtent, "Media.xml");
+        PersistenceManager.SaveExtent(_mediaExtent, "Media.xml");
     }
 
     // Method to load all media from XML (for persistence)
     public static void LoadMedia()
     {
-        mediaExtent = PersistenceManager.LoadExtent<Media>("Media.xml");
+        _mediaExtent = PersistenceManager.LoadExtent<Media>("Media.xml");
     }
 }

@@ -1,3 +1,4 @@
+using BYTProject.Models;
 using Xunit;
 
 namespace BYTProject.UnitTesting;
@@ -8,7 +9,7 @@ public class LikeTests
     public void LikeID_ShouldThrowException_WhenValueIsNonPositive()
     {
         var like = new Like(1, DateTime.Now);
-        Assert.Throws<ArgumentException>(() => like.LikeID = 0);
+        Assert.Throws<ArgumentException>(() => like.LikeId = 0);
     }
 
     [Fact]
@@ -38,8 +39,8 @@ public class LikeTests
         // Assert
         var likes = Like.GetLikes();
         Assert.Equal(2, likes.Count);
-        Assert.Equal(1, likes[0].LikeID);
-        Assert.Equal(2, likes[1].LikeID);
+        Assert.Equal(1, likes[0].LikeId);
+        Assert.Equal(2, likes[1].LikeId);
     }
     
 }

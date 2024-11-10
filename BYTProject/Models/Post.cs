@@ -4,14 +4,14 @@ using System.Collections.Generic;
 public class Post
 {
     // Mandatory attribute: PostID
-    private int _postID;
-    public int PostID
+    private int _postId;
+    public int PostId
     {
-        get => _postID;
+        get => _postId;
         set
         {
             if (value <= 0) throw new ArgumentException("PostID must be positive.");
-            _postID = value;
+            _postId = value;
         }
     }
 
@@ -40,7 +40,7 @@ public class Post
     }
 
     // Static extent collection to store all Post objects
-    private static List<Post> postsExtent = new List<Post>();
+    private static List<Post> _postsExtent = new List<Post>();
 
     // Static method to add a Post to the extent, with validation
     internal static void AddPost(Post post)
@@ -49,19 +49,20 @@ public class Post
         {
             throw new ArgumentException("Post cannot be null.");
         }
-        postsExtent.Add(post);
+        _postsExtent.Add(post);
     }
 
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<Post> GetPosts()
     {
-        return postsExtent.AsReadOnly();
+        return _postsExtent.AsReadOnly();
     }
 
     // Constructor to initialize Post with mandatory attributes and automatically add to extent
     public Post(int postID, string caption, DateTime createdAt)
     {
-        PostID = postID;
+        PostId = postID;
+        _caption = caption;
         Caption = caption;
         CreatedAt = createdAt;
 
@@ -72,12 +73,12 @@ public class Post
     // Method to save all posts to XML (for persistence)
     public static void SavePosts()
     {
-        PersistenceManager.SaveExtent(postsExtent, "Posts.xml");
+        PersistenceManager.SaveExtent(_postsExtent, "Posts.xml");
     }
 
     // Method to load all posts from XML (for persistence)
     public static void LoadPosts()
     {
-        postsExtent = PersistenceManager.LoadExtent<Post>("Posts.xml");
+        _postsExtent = PersistenceManager.LoadExtent<Post>("Posts.xml");
     }
 }

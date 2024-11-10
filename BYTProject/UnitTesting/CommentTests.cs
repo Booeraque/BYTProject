@@ -1,3 +1,4 @@
+using BYTProject.Models;
 using Xunit;
 
 namespace BYTProject.UnitTesting;
@@ -8,7 +9,7 @@ public class CommentTests
     public void CommentID_ShouldThrowException_WhenValueIsNonPositive()
     {
         var comment = new Comment(1, "Content 1", DateTime.Now);
-        Assert.Throws<ArgumentException>(() => comment.CommentID = 0);
+        Assert.Throws<ArgumentException>(() => comment.CommentId = 0);
     }
 
     [Fact]
@@ -51,9 +52,9 @@ public class CommentTests
         // Assert
         var comments = Comment.GetComments();
         Assert.Equal(2, comments.Count);
-        Assert.Equal(1, comments[0].CommentID);
+        Assert.Equal(1, comments[0].CommentId);
         Assert.Equal("Content 1", comments[0].Content);
-        Assert.Equal(2, comments[1].CommentID);
+        Assert.Equal(2, comments[1].CommentId);
         Assert.Equal("Content 2", comments[1].Content);
     }
         

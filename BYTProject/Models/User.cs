@@ -1,20 +1,19 @@
-using System;
-using System.Collections.Generic;
+namespace BYTProject.Models;
 
 public class User
 {
     // Mandatory attribute: AccountID
-    private int _accountID;
-    public int AccountID
+    private int _accountId;
+    public int AccountId
     {
-        get => _accountID;
+        get => _accountId;
         set
         {
             if (value <= 0)
             {
                 throw new ArgumentException("AccountID must be positive.");
             }
-            _accountID = value;
+            _accountId = value;
         }
     }
 
@@ -27,7 +26,7 @@ public class User
     }
 
     // Private static extent collection to store all User objects
-    private static List<User> usersExtent = new List<User>();
+    private static List<User> _usersExtent = new List<User>();
 
     // Private static method to add a User to the extent, with validation
     internal static void AddUser(User user)
@@ -36,19 +35,19 @@ public class User
         {
             throw new ArgumentException("User cannot be null.");
         }
-        usersExtent.Add(user);
+        _usersExtent.Add(user);
     }
 
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<User> GetUsers()
     {
-        return usersExtent.AsReadOnly();
+        return _usersExtent.AsReadOnly();
     }
 
     // Constructor to initialize User with mandatory attributes and automatically add to extent
-    public User(int accountID, bool isAdmin)
+    public User(int accountId, bool isAdmin)
     {
-        AccountID = accountID;
+        AccountId = accountId;
         IsAdmin = isAdmin;
 
         // Automatically add to extent
@@ -58,12 +57,12 @@ public class User
     // Method to save all users to XML (for persistence)
     public static void SaveUsers()
     {
-        PersistenceManager.SaveExtent(usersExtent, "Users.xml");
+        PersistenceManager.SaveExtent(_usersExtent, "Users.xml");
     }
 
     // Method to load all users from XML (for persistence)
     public static void LoadUsers()
     {
-        usersExtent = PersistenceManager.LoadExtent<User>("Users.xml");
+        _usersExtent = PersistenceManager.LoadExtent<User>("Users.xml");
     }
 }

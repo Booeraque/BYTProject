@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BYTProject.Models;
 using Xunit;
 
 public class UserTests
@@ -8,7 +9,7 @@ public class UserTests
     public void AccountID_ShouldThrowException_WhenValueIsNonPositive()
     {
         var user = new User(1, true);
-        Assert.Throws<ArgumentException>(() => user.AccountID = 0);
+        Assert.Throws<ArgumentException>(() => user.AccountId = 0);
     }
     
     [Fact]
@@ -31,9 +32,9 @@ public class UserTests
         // Assert
         var users = User.GetUsers();
         Assert.Equal(2, users.Count);
-        Assert.Equal(1, users[0].AccountID);
+        Assert.Equal(1, users[0].AccountId);
         Assert.True(users[0].IsAdmin);
-        Assert.Equal(2, users[1].AccountID);
+        Assert.Equal(2, users[1].AccountId);
         Assert.False(users[1].IsAdmin);
     }
 }

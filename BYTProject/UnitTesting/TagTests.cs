@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BYTProject.Models;
 using Xunit;
 
 public class TagTests
@@ -8,7 +9,7 @@ public class TagTests
     public void TagID_ShouldThrowException_WhenValueIsNonPositive()
     {
         var tag = new Tag(1, new List<string> { "Category 1" });
-        Assert.Throws<ArgumentException>(() => tag.TagID = 0);
+        Assert.Throws<ArgumentException>(() => tag.TagId = 0);
     }
 
     [Fact]
@@ -45,9 +46,9 @@ public class TagTests
         // Assert
         var tags = Tag.GetTags();
         Assert.Equal(2, tags.Count);
-        Assert.Equal(1, tags[0].TagID);
+        Assert.Equal(1, tags[0].TagId);
         Assert.Equal(new List<string> { "Category 1" }, tags[0].Categories);
-        Assert.Equal(2, tags[1].TagID);
+        Assert.Equal(2, tags[1].TagId);
         Assert.Equal(new List<string> { "Category 2" }, tags[1].Categories);
     }
 }

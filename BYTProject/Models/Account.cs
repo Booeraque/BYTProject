@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
+namespace BYTProject.Models;
 
 public class Account
 {
     // Mandatory attribute: AccountID
-    private int _accountID;
-    public int AccountID
+    private int _accountId;
+    public int AccountId
     {
-        get => _accountID;
-        set
+        get => _accountId;
+        private init
         {
             if (value <= 0) throw new ArgumentException("AccountID must be positive.");
-            _accountID = value;
+            _accountId = value;
         }
     }
 
@@ -89,7 +88,7 @@ public class Account
     }
 
     // Private static extent collection to store all Account objects
-    private static List<Account> accountsExtent = new List<Account>();
+    private static List<Account> _accountsExtent = new List<Account>();
 
     // Private static method to add an Account to the extent, with validation
     internal static void AddAccount(Account account)
@@ -98,26 +97,30 @@ public class Account
         {
             throw new ArgumentException("Account cannot be null.");
         }
-        if (accountsExtent.Exists(a => a.AccountID == account.AccountID))
+        if (_accountsExtent.Exists(a => a.AccountId == account.AccountId))
         {
             throw new ArgumentException("An account with the same AccountID already exists.");
         }
-        accountsExtent.Add(account);
+        _accountsExtent.Add(account);
     }
 
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<Account> GetAccounts()
     {
-        return accountsExtent.AsReadOnly();
+        return _accountsExtent.AsReadOnly();
     }
 
     // Constructor to initialize Account object with mandatory attributes and automatically add to extent
     public Account(int accountID, string username, string email, DateTime birthDate, string address, string password)
     {
-        AccountID = accountID;
+        AccountId = accountID;
+        _username = username;
+        _email = email;
         Username = username;
         Email = email;
         BirthDate = birthDate;
+        _address = address;
+        _password = password;
         Address = address;
         Password = password;
 
@@ -126,22 +129,28 @@ public class Account
     }
 
     // Parameterless constructor needed for XML serialization
-    public Account() { }
+    public Account(string username, string email, string address, string password)
+    {
+        _username = username;
+        _email = email;
+        _address = address;
+        _password = password;
+    }
 
     // Method to save all accounts to XML (for persistence)
     public static void SaveAccounts(string filename = "XML Files/Accounts.xml")
     {
-        PersistenceManager.SaveExtent(accountsExtent, filename);
+        PersistenceManager.SaveExtent(_accountsExtent, filename);
     }
     // Method to load all accounts from XML (for persistence)
     public static void LoadAccounts(string filename = "XML Files/Accounts.xml")
     {
-        accountsExtent = PersistenceManager.LoadExtent<Account>(filename);
+        _accountsExtent = PersistenceManager.LoadExtent<Account>(filename);
     }
     
     public static void ClearAccounts()
     {
-        accountsExtent.Clear();
+        _accountsExtent.Clear();
     }
 
 }

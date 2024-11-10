@@ -1,3 +1,5 @@
+using BYTProject.Models;
+
 namespace BYTProject
 {
     class Program
@@ -9,7 +11,7 @@ namespace BYTProject
 
             // Example: Add a new account to the list
             int newAccountId = 15;
-            if (!Account.GetAccounts().Any(acc => acc.AccountID == newAccountId))
+            if (!Account.GetAccounts().Any(acc => acc.AccountId == newAccountId))
             {
                 Account account = new Account(
                     newAccountId, // AccountID
@@ -33,7 +35,7 @@ namespace BYTProject
             // Output all accounts to the console
             foreach (var acc in Account.GetAccounts())
             {
-                Console.WriteLine($"Account ID: {acc.AccountID}, Username: {acc.Username}");
+                Console.WriteLine($"Account ID: {acc.AccountId}, Username: {acc.Username}");
             }
         }
     }

@@ -1,3 +1,4 @@
+using BYTProject.Models;
 using Xunit;
 
 namespace BYTProject.UnitTesting;
@@ -72,9 +73,9 @@ public class AccountTests
         // Assert
         var accounts = Account.GetAccounts();
         Assert.Equal(2, accounts.Count);
-        Assert.Equal(1, accounts[0].AccountID);
+        Assert.Equal(1, accounts[0].AccountId);
         Assert.Equal("User1", accounts[0].Username);
-        Assert.Equal(2, accounts[1].AccountID);
+        Assert.Equal(2, accounts[1].AccountId);
         Assert.Equal("User2", accounts[1].Username);
 
         // Clean up

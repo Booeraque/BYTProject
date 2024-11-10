@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
+namespace BYTProject.Models;
 
 public class Group
 {
     // Mandatory attribute: GroupID
-    private int _groupID;
-    public int GroupID
+    private int _groupId;
+    public int GroupId
     {
-        get => _groupID;
+        get => _groupId;
         set
         {
             if (value <= 0) throw new ArgumentException("GroupID must be positive.");
-            _groupID = value;
+            _groupId = value;
         }
     }
 
@@ -40,7 +39,7 @@ public class Group
     }
 
     // Private static extent collection to store all Group objects
-    private static List<Group> groupsExtent = new List<Group>();
+    private static List<Group> _groupsExtent = new List<Group>();
 
     // Private static method to add a Group to the extent, with validation
     internal static void AddGroup(Group group)
@@ -49,25 +48,27 @@ public class Group
         {
             throw new ArgumentException("Group cannot be null.");
         }
-        groupsExtent.Add(group);
+        _groupsExtent.Add(group);
     }
 
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<Group> GetGroups()
     {
-        return groupsExtent.AsReadOnly();
+        return _groupsExtent.AsReadOnly();
     }
     
     public static void ClearGroups()
     {
-        groupsExtent.Clear();
+        _groupsExtent.Clear();
     }
 
 
     // Constructor to initialize Group with mandatory attributes and automatically add to extent
     public Group(int groupID, string groupName, string description)
     {
-        GroupID = groupID;
+        GroupId = groupID;
+        _groupName = groupName;
+        _description = description;
         GroupName = groupName;
         Description = description;
 
@@ -78,12 +79,12 @@ public class Group
     // Method to save all groups to XML (for persistence)
     public static void SaveGroups()
     {
-        PersistenceManager.SaveExtent(groupsExtent, "Groups.xml");
+        PersistenceManager.SaveExtent(_groupsExtent, "Groups.xml");
     }
 
     // Method to load all groups from XML (for persistence)
     public static void LoadGroups()
     {
-        groupsExtent = PersistenceManager.LoadExtent<Group>("Groups.xml");
+        _groupsExtent = PersistenceManager.LoadExtent<Group>("Groups.xml");
     }
 }

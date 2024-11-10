@@ -8,7 +8,7 @@ public class PostTests
     public void PostID_ShouldThrowException_WhenValueIsNonPositive()
     {
         var post = new Post(1, "Caption 1", DateTime.Now);
-        Assert.Throws<ArgumentException>(() => post.PostID = 0);
+        Assert.Throws<ArgumentException>(() => post.PostId = 0);
     }
 
     [Fact]
@@ -44,9 +44,9 @@ public class PostTests
         // Assert
         var posts = Post.GetPosts();
         Assert.Equal(2, posts.Count);
-        Assert.Equal(1, posts[0].PostID);
+        Assert.Equal(1, posts[0].PostId);
         Assert.Equal("Caption 1", posts[0].Caption);
-        Assert.Equal(2, posts[1].PostID);
+        Assert.Equal(2, posts[1].PostId);
         Assert.Equal("Caption 2", posts[1].Caption);
     }
 }
