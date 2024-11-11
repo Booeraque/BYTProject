@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using BYTProject.Models;
 using Xunit;
+
+namespace BYTProject.UnitTesting;
 
 public class UserTests
 {
