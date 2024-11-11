@@ -1,4 +1,6 @@
-namespace BYTProject.Models;
+using System;
+using System.Collections.Generic;
+using BYTProject.Models;
 
 public class Account
 {
@@ -7,12 +9,13 @@ public class Account
     public int AccountId
     {
         get => _accountId;
-        private init
+        set  // Changed to public set for XML deserialization
         {
             if (value <= 0) throw new ArgumentException("AccountID must be positive.");
             _accountId = value;
         }
     }
+
 
     // Mandatory attribute: Username
     private string _username;
@@ -114,13 +117,9 @@ public class Account
     public Account(int accountID, string username, string email, DateTime birthDate, string address, string password)
     {
         AccountId = accountID;
-        _username = username;
-        _email = email;
         Username = username;
         Email = email;
         BirthDate = birthDate;
-        _address = address;
-        _password = password;
         Address = address;
         Password = password;
 
@@ -131,21 +130,51 @@ public class Account
     // Parameterless constructor needed for XML serialization
     public Account() { }
 
-
     // Method to save all accounts to XML (for persistence)
     public static void SaveAccounts(string filename = "Accounts.xml")
     {
+        if (string.IsNullOrEmpty(filename))
+        {
+            Console.WriteLine("Error: Filename for saving accounts is empty.");
+            return;
+        }
+
+        Console.WriteLine($"Saving accounts to {filename}...");
         PersistenceManager.SaveExtent(_accountsExtent, filename);
     }
+
     // Method to load all accounts from XML (for persistence)
     public static void LoadAccounts(string filename = "Accounts.xml")
     {
-        _accountsExtent = PersistenceManager.LoadExtent<Account>(filename);
-    }
-    
-    public static void ClearAccounts()
-    {
-        _accountsExtent.Clear();
+        if (string.IsNullOrEmpty(filename))
+        {
+            Console.WriteLine("Error: Filename for loading accounts is empty.");
+            return;
+        }
+
+        Console.WriteLine($"Attempting to load accounts from {filename}...");
+
+        try
+        {
+            _accountsExtent = PersistenceManager.LoadExtent<Account>(filename);
+            Console.WriteLine($"Loaded {_accountsExtent.Count} accounts from {filename}.");
+
+            // Output loaded accounts to confirm
+            foreach (var account in _accountsExtent)
+            {
+                Console.WriteLine($"Loaded Account ID: {account.AccountId}, Username: {account.Username}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading Account data from {filename}: {ex.Message}");
+        }
     }
 
+    // Method to clear all accounts from the list
+    public static void ClearAccounts()
+    {
+        Console.WriteLine("Clearing all accounts from extent...");
+        _accountsExtent.Clear();
+    }
 }
