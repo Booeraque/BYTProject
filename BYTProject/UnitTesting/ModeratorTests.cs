@@ -70,24 +70,24 @@ namespace BYTProject.UnitTesting
             var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
             Assert.Contains(moderator, Moderator.GetModerators());
         }
-
+        
         [Fact]
         public void SaveAndLoadModerators_ShouldPersistDataCorrectly()
         {
-            Moderator.ClearModerators();
-            var moderator1 = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
-            var moderator2 = new Moderator(2, DateTime.Now, new List<string> { "Right2" });
+            var date1 = DateTime.Now.AddDays(-10);
+            var date2 = DateTime.Now.AddDays(-5);
+            var moderator1 = new Moderator(1, date1, new List<string> { "Right1", "Right2" });
+            var moderator2 = new Moderator(2, date2, new List<string> { "Right3", "Right4" });
 
+            // Act
             Moderator.SaveModerators();
-            Moderator.ClearModerators();
             Moderator.LoadModerators();
 
+            // Assert
             var moderators = Moderator.GetModerators();
             Assert.Equal(2, moderators.Count);
-            Assert.Equal(1, moderators[0].AccountId);
-            Assert.Equal("Right1", moderators[0].Rights[0]);
-            Assert.Equal(2, moderators[1].AccountId);
-            Assert.Equal("Right2", moderators[1].Rights[0]);
+            Assert.Contains(moderators, m => m.AccountId == 1 && m.DateOfAssignment == date1 && m.Rights.SequenceEqual(new List<string> { "Right1", "Right2" }));
+            Assert.Contains(moderators, m => m.AccountId == 2 && m.DateOfAssignment == date2 && m.Rights.SequenceEqual(new List<string> { "Right3", "Right4" }));
         }
     }
 }
