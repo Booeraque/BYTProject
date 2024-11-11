@@ -80,16 +80,19 @@ namespace BYTProject.UnitTesting
         public void SaveAndLoadMusicians_ShouldPersistExtentCorrectly()
         {
             Musician.ClearMusicians();
-            var musician1 = new Musician(1, "Bio1", 100);
-            var musician2 = new Musician(2, "Bio2", 101);
+            var musician1 = new Musician(1, "Bio11", 100);
+            var musician2 = new Musician(2, "Bio21", 101);
 
             Musician.SaveMusicians();
             Musician.LoadMusicians();
 
             var musicians = Musician.GetMusicians();
             Assert.Equal(2, musicians.Count);
-            Assert.Contains(musicians, m => m.MusicianId == 1 && m.MusicianBio == "Bio1" && m.AccountId == 100);
-            Assert.Contains(musicians, m => m.MusicianId == 2 && m.MusicianBio == "Bio2" && m.AccountId == 101);
+    
+            // Updated expected values to match the actual data
+            Assert.Contains(musicians, m => m.MusicianId == 1 && m.MusicianBio == "Bio11" && m.AccountId == 100);
+            Assert.Contains(musicians, m => m.MusicianId == 2 && m.MusicianBio == "Bio21" && m.AccountId == 101);
         }
+
     }
 }

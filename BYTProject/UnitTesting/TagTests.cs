@@ -80,8 +80,8 @@ public class TagTests
     public void SaveAndLoadTags_ShouldPersistDataCorrectly()
     {
         Tag.ClearTags();
-        var tag1 = new Tag(1, new List<string> { "Category 11" });
-        var tag2 = new Tag(2, new List<string> { "Category 22" });
+        var tag1 = new Tag(1, new List<string> { "Category 10" });
+        var tag2 = new Tag(2, new List<string> { "Category 20" });
 
         Tag.SaveTags();
         Tag.LoadTags();
@@ -89,8 +89,8 @@ public class TagTests
         var tags = Tag.GetTags();
         Assert.Equal(2, tags.Count);
         Assert.Equal(1, tags[0].TagId);
-        Assert.Equal(new List<string> { "Category 1" }, tags[0].Categories);
+        Assert.Equal(new List<string> { "Category 10" }, tags[0].Categories);
         Assert.Equal(2, tags[1].TagId);
-        Assert.Equal(new List<string> { "Category 2" }, tags[1].Categories);
+        Assert.Equal(new List<string> { "Category 20" }, tags[1].Categories);
     }
 }
