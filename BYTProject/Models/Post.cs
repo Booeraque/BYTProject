@@ -70,6 +70,11 @@ public class Post
         AddPost(this);
     }
 
+    public Post()
+    {
+        
+    }
+
     // Method to save all posts to XML (for persistence)
     public static void SavePosts()
     {
@@ -80,5 +85,9 @@ public class Post
     public static void LoadPosts()
     {
         _postsExtent = PersistenceManager.LoadExtent<Post>("Posts.xml");
+    }
+    public static void ClearPosts()
+    {
+        _postsExtent.Clear();
     }
 }

@@ -54,4 +54,8 @@ public class PostTag
     {
         _postTagsExtent = PersistenceManager.LoadExtent<PostTag>("PostTags.xml");
     }
+    public static void ClearPostTags()
+    {
+        _postTagsExtent.Clear();
+    }
 }

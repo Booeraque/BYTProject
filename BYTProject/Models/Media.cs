@@ -67,4 +67,9 @@ public class Media
     {
         _mediaExtent = PersistenceManager.LoadExtent<Media>("Media.xml");
     }
+    
+    public static void ClearMedia()
+    {
+        _mediaExtent.Clear();
+    }
 }

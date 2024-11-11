@@ -78,6 +78,11 @@ public class Comment
         AddComment(this);
     }
 
+    public Comment()
+    {
+        
+    }
+
     // Method to save all comments to XML
     public static void SaveComments()
     {

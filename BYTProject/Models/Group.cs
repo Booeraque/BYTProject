@@ -87,4 +87,6 @@ public class Group
     {
         _groupsExtent = PersistenceManager.LoadExtent<Group>("Groups.xml");
     }
+    
+    
 }

@@ -69,6 +69,11 @@ public class VideoEditor
         AddVideoEditor(this);
     }
 
+    public VideoEditor()
+    {
+        
+    }
+
     // Method to save all video editors to XML (for persistence)
     public static void SaveVideoEditors()
     {
@@ -79,5 +84,10 @@ public class VideoEditor
     public static void LoadVideoEditors()
     {
         _videoEditorsExtent = PersistenceManager.LoadExtent<VideoEditor>("VideoEditors.xml");
+    }
+    
+    public static void ClearVideoEditors()
+    {
+        _videoEditorsExtent.Clear();
     }
 }

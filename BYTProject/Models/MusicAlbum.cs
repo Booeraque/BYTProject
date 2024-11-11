@@ -90,4 +90,8 @@ public class MusicAlbum
     {
         _musicAlbumsExtent = PersistenceManager.LoadExtent<MusicAlbum>("MusicAlbums.xml");
     }
+    public static void ClearMusicAlbums()
+    {
+        _musicAlbumsExtent.Clear();
+    }
 }

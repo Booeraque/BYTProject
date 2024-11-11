@@ -79,4 +79,9 @@ public class Musician
     {
         _musiciansExtent = PersistenceManager.LoadExtent<Musician>("Musicians.xml");
     }
+    
+    public static void ClearMusicians()
+    {
+        _musiciansExtent.Clear();
+    }
 }

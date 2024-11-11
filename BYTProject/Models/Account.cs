@@ -174,7 +174,6 @@ public class Account
     // Method to clear all accounts from the list
     public static void ClearAccounts()
     {
-        Console.WriteLine("Clearing all accounts from extent...");
         _accountsExtent.Clear();
     }
 }

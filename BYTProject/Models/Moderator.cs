@@ -82,4 +82,9 @@ public class Moderator
     {
         _moderatorsExtent = PersistenceManager.LoadExtent<Moderator>("Moderators.xml");
     }
+    
+    public static void ClearModerators()
+    {
+        _moderatorsExtent.Clear();
+    }
 }

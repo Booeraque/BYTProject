@@ -27,6 +27,7 @@ public class User
 
     // Private static extent collection to store all User objects
     private static List<User> _usersExtent = new List<User>();
+    
 
     // Private static method to add a User to the extent, with validation
     internal static void AddUser(User user)
@@ -52,6 +53,11 @@ public class User
 
         // Automatically add to extent
         AddUser(this);
+    }
+
+    public User()
+    {
+        
     }
 
     // Method to save all users to XML (for persistence)

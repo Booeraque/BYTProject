@@ -66,4 +66,9 @@ public class Like
     {
         _likesExtent = PersistenceManager.LoadExtent<Like>("Likes.xml");
     }
+    
+    public static void ClearLikes()
+    {
+        _likesExtent.Clear();
+    }
 }

@@ -68,4 +68,5 @@ public class Tag
     {
         _tagsExtent = PersistenceManager.LoadExtent<Tag>("Tags.xml");
     }
+    
 }
