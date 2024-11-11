@@ -7,6 +7,12 @@ namespace BYTProject.UnitTesting
 {
     public class AccountTests
     {
+        public AccountTests()
+        {
+            // Clear accounts before each test
+            Account.ClearAccounts();
+        }
+        
         [Fact]
         public void AccountID_ShouldThrowException_WhenValueIsNonPositive()
         {

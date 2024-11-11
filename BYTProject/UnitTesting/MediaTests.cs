@@ -9,14 +9,14 @@ public class MediaTests
     public void MediaID_ShouldThrowException_WhenValueIsNonPositive()
     {
         var media = new Media(1, "Video");
-        Assert.Throws<ArgumentException>(() => media.MediaID = 0);
+        Assert.Throws<ArgumentException>(() => media.MediaId = 0);
     }
 
     [Fact]
     public void MediaID_ShouldReturnCorrectValue()
     {
         var media = new Media(1, "Video");
-        Assert.Equal(1, media.MediaID);
+        Assert.Equal(1, media.MediaId);
     }
 
     [Fact]
@@ -66,9 +66,9 @@ public class MediaTests
 
         var mediaList = Media.GetMediaList();
         Assert.Equal(2, mediaList.Count);
-        Assert.Equal(1, mediaList[0].MediaID);
+        Assert.Equal(1, mediaList[0].MediaId);
         Assert.Equal("Video", mediaList[0].MediaType);
-        Assert.Equal(2, mediaList[1].MediaID);
+        Assert.Equal(2, mediaList[1].MediaId);
         Assert.Equal("Image", mediaList[1].MediaType);
     }
 }
