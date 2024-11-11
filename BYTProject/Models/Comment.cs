@@ -89,4 +89,9 @@ public class Comment
     {
         _commentsExtent = PersistenceManager.LoadExtent<Comment>("Comments.xml");
     }
+    
+    public static void ClearComments()
+    {
+        _commentsExtent.Clear();
+    }
 }

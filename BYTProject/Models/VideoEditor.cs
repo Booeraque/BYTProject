@@ -68,8 +68,6 @@ public class VideoEditor
         // Automatically add to extent
         AddVideoEditor(this);
     }
-    public VideoEditor(){}
-
     public VideoEditor()
     {
         

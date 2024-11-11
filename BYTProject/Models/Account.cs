@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using BYTProject.Models;
+namespace BYTProject.Models;
 
 public class Account
 {

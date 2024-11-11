@@ -10,10 +10,10 @@ namespace BYTProject
             Account.LoadAccounts();
 
             // Example: Add a new account to the list
-            int newAccountId = 13;
-            if (!Account.GetAccounts().Any(acc => acc.AccountId == newAccountId))
+            const int newAccountId = 13;
+            if (Account.GetAccounts().All(acc => acc.AccountId != newAccountId))
             {
-                Account account = new Account(
+                var account = new Account(
                     newAccountId, // AccountID
                     "jacob", // Username
                     "jacob@example.com", // Email
