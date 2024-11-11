@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
+namespace BYTProject.Models;
 
 public class Moderator
 {
     // Mandatory attribute: AccountID
-    private int _accountID;
-    public int AccountID
+    private int _accountId;
+    public int AccountId
     {
-        get => _accountID;
+        get => _accountId;
         set
         {
             if (value <= 0) throw new ArgumentException("AccountID must be positive.");
-            _accountID = value;
+            _accountId = value;
         }
     }
 
@@ -43,7 +42,7 @@ public class Moderator
     }
 
     // Private static extent collection to store all Moderator objects
-    private static List<Moderator> moderatorsExtent = new List<Moderator>();
+    private static List<Moderator> _moderatorsExtent = new List<Moderator>();
 
     // Private static method to add a Moderator to the extent, with validation
     internal static void AddModerator(Moderator moderator)
@@ -52,19 +51,19 @@ public class Moderator
         {
             throw new ArgumentException("Moderator cannot be null.");
         }
-        moderatorsExtent.Add(moderator);
+        _moderatorsExtent.Add(moderator);
     }
 
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<Moderator> GetModerators()
     {
-        return moderatorsExtent.AsReadOnly();
+        return _moderatorsExtent.AsReadOnly();
     }
 
     // Constructor to initialize Moderator with mandatory attributes and automatically add to extent
     public Moderator(int accountID, DateTime dateOfAssignment, List<string> rights)
     {
-        AccountID = accountID;
+        AccountId = accountID;
         DateOfAssignment = dateOfAssignment;
         Rights = rights;
 
@@ -75,12 +74,12 @@ public class Moderator
     // Method to save all moderators to XML (for persistence)
     public static void SaveModerators()
     {
-        PersistenceManager.SaveExtent(moderatorsExtent, "Moderators.xml");
+        PersistenceManager.SaveExtent(_moderatorsExtent, "Moderators.xml");
     }
 
     // Method to load all moderators from XML (for persistence)
     public static void LoadModerators()
     {
-        moderatorsExtent = PersistenceManager.LoadExtent<Moderator>("Moderators.xml");
+        _moderatorsExtent = PersistenceManager.LoadExtent<Moderator>("Moderators.xml");
     }
 }

@@ -1,16 +1,20 @@
+namespace BYTProject.Models;
+
 public class Music
 {
-    private int _musicID;
-    public int MusicID
+    // Mandatory attribute: MusicID
+    private int _musicId;
+    public int MusicId
     {
-        get => _musicID;
+        get => _musicId;
         set
         {
             if (value <= 0) throw new ArgumentException("MusicID must be positive.");
-            _musicID = value;
+            _musicId = value;
         }
     }
 
+    // Mandatory attribute: Description
     private string _description;
     public string Description
     {
@@ -22,8 +26,32 @@ public class Music
         }
     }
 
-    // Static extent collection to store all Music objects
-    public static List<Music> MusicList = new List<Music>();
+    // Mandatory attribute: Musician
+    private Musician _musician;
+    public Musician Musician
+    {
+        get => _musician;
+        set
+        {
+            if (value == null) throw new ArgumentException("Musician cannot be null.");
+            _musician = value;
+        }
+    }
+
+    // Mandatory attribute: MusicAlbum
+    private MusicAlbum _musicAlbum;
+    public MusicAlbum MusicAlbum
+    {
+        get => _musicAlbum;
+        set
+        {
+            if (value == null) throw new ArgumentException("MusicAlbum cannot be null.");
+            _musicAlbum = value;
+        }
+    }
+
+    // Private static extent collection to store all Music objects
+    private static List<Music> _musicExtent = new List<Music>();
 
     // Private static method to add a Music object to the extent, with validation
     internal static void AddMusic(Music music)
@@ -32,18 +60,36 @@ public class Music
         {
             throw new ArgumentException("Music cannot be null.");
         }
-        MusicList.Add(music);
+        _musicExtent.Add(music);
     }
 
-    // Save all music using PersistenceManager
+    // Public static method to get a read-only copy of the extent
+    public static IReadOnlyList<Music> GetMusicList()
+    {
+        return _musicExtent.AsReadOnly();
+    }
+
+    // Constructor to initialize Music object with mandatory attributes and automatically add to extent
+    public Music(int musicId, string description, Musician musician, MusicAlbum musicAlbum)
+    {
+        MusicId = musicId;
+        Description = description;
+        Musician = musician;
+        MusicAlbum = musicAlbum;
+
+        // Automatically add to extent
+        AddMusic(this);
+    }
+
+    // Method to save all music to XML (for persistence)
     public static void SaveMusic()
     {
-        PersistenceManager.SaveExtent(MusicList, "Music.xml");
+        PersistenceManager.SaveExtent(_musicExtent, "Music.xml");
     }
 
-    // Load all music using PersistenceManager
+    // Method to load all music from XML (for persistence)
     public static void LoadMusic()
     {
-        MusicList = PersistenceManager.LoadExtent<Music>("Music.xml");
+        _musicExtent = PersistenceManager.LoadExtent<Music>("Music.xml");
     }
 }

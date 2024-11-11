@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BYTProject.Models;
 using Xunit;
 
 public class MediaTests
@@ -12,6 +13,13 @@ public class MediaTests
     }
 
     [Fact]
+    public void MediaID_ShouldReturnCorrectValue()
+    {
+        var media = new Media(1, "Video");
+        Assert.Equal(1, media.MediaID);
+    }
+
+    [Fact]
     public void MediaType_ShouldThrowException_WhenValueIsEmpty()
     {
         var media = new Media(2, "Image");
@@ -19,19 +27,43 @@ public class MediaTests
     }
 
     [Fact]
+    public void MediaType_ShouldReturnCorrectValue()
+    {
+        var media = new Media(2, "Image");
+        Assert.Equal("Image", media.MediaType);
+    }
+
+    [Fact]
+    public void AddMedia_ShouldThrowException_WhenMediaIsNull()
+    {
+        Assert.Throws<ArgumentException>(() => Media.AddMedia(null));
+    }
+
+    [Fact]
+    public void AddMedia_ShouldAddMediaCorrectly()
+    {
+        var media = new Media(1, "Video");
+        Media.AddMedia(media);
+        Assert.Contains(media, Media.GetMediaList());
+    }
+
+    [Fact]
+    public void GetMediaList_ShouldReturnCorrectList()
+    {
+        var media = new Media(1, "Video");
+        var mediaList = Media.GetMediaList();
+        Assert.Contains(media, mediaList);
+    }
+
+    [Fact]
     public void SaveAndLoadMedia_ShouldPersistDataCorrectly()
     {
-        // Arrange
         var media1 = new Media(1, "Video");
         var media2 = new Media(2, "Image");
 
-        // Act
         Media.SaveMedia();
-        
-        // Clear the in-memory extent list by reinitializing the mediaExtent list
         Media.LoadMedia();
 
-        // Assert
         var mediaList = Media.GetMediaList();
         Assert.Equal(2, mediaList.Count);
         Assert.Equal(1, mediaList[0].MediaID);

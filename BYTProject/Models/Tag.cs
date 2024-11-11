@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
+namespace BYTProject.Models;
 
 public class Tag
 {
     // Mandatory attribute: TagID
-    private int _tagID;
-    public int TagID
+    private int _tagId;
+    public int TagId
     {
-        get => _tagID;
+        get => _tagId;
         set
         {
             if (value <= 0) throw new ArgumentException("TagID must be positive.");
-            _tagID = value;
+            _tagId = value;
         }
     }
 
@@ -38,7 +37,7 @@ public class Tag
     }
 
     // Private static extent collection to store all Tag objects
-    private static List<Tag> tagsExtent = new List<Tag>();
+    private static List<Tag> _tagsExtent = new List<Tag>();
 
     // Static method to add a Tag to the extent, with validation
     internal static void AddTag(Tag tag)
@@ -47,19 +46,19 @@ public class Tag
         {
             throw new ArgumentException("Tag cannot be null.");
         }
-        tagsExtent.Add(tag);
+        _tagsExtent.Add(tag);
     }
 
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<Tag> GetTags()
     {
-        return tagsExtent.AsReadOnly();
+        return _tagsExtent.AsReadOnly();
     }
 
     // Constructor to initialize Tag object with mandatory attributes and automatically add to extent
-    public Tag(int tagID, List<string> categories = null)
+    public Tag(int tagId, List<string> categories = null)
     {
-        TagID = tagID;
+        TagId = tagId;
         Categories = categories ?? new List<string>(); // Allow empty list as it's optional
 
         // Automatically add to extent
@@ -69,12 +68,12 @@ public class Tag
     // Method to save all tags to XML (for persistence)
     public static void SaveTags()
     {
-        PersistenceManager.SaveExtent(tagsExtent, "Tags.xml");
+        PersistenceManager.SaveExtent(_tagsExtent, "Tags.xml");
     }
 
     // Method to load all tags from XML (for persistence)
     public static void LoadTags()
     {
-        tagsExtent = PersistenceManager.LoadExtent<Tag>("Tags.xml");
+        _tagsExtent = PersistenceManager.LoadExtent<Tag>("Tags.xml");
     }
 }

@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
+namespace BYTProject.Models;
 
 public class Comment
 {
     // Mandatory attribute: CommentID
-    private int _commentID;
-    public int CommentID
+    private int _commentId;
+    public int CommentId
     {
-        get => _commentID;
+        get => _commentId;
         set
         {
             if (value <= 0) throw new ArgumentException("CommentID must be positive.");
-            _commentID = value;
+            _commentId = value;
         }
     }
 
@@ -48,7 +47,7 @@ public class Comment
     }
 
     // Private static extent collection to store all Comment objects
-    private static List<Comment> commentsExtent = new List<Comment>();
+    private static List<Comment> _commentsExtent = new List<Comment>();
 
     // Private static method to add a Comment to the extent, with validation
     internal static void AddComment(Comment comment)
@@ -57,19 +56,20 @@ public class Comment
         {
             throw new ArgumentException("Comment cannot be null.");
         }
-        commentsExtent.Add(comment);
+        _commentsExtent.Add(comment);
     }
 
     // Public static method to get a read-only copy of the extent
     public static IReadOnlyList<Comment> GetComments()
     {
-        return commentsExtent.AsReadOnly();
+        return _commentsExtent.AsReadOnly();
     }
 
     // Constructor to initialize Comment object and automatically add to extent
     public Comment(int commentID, string content, DateTime createdAt, bool edited = false)
     {
-        CommentID = commentID;
+        CommentId = commentID;
+        _content = content;
         Content = content;
         CreatedAt = createdAt;
         Edited = edited;
@@ -81,12 +81,12 @@ public class Comment
     // Method to save all comments to XML
     public static void SaveComments()
     {
-        PersistenceManager.SaveExtent(commentsExtent, "Comments.xml");
+        PersistenceManager.SaveExtent(_commentsExtent, "Comments.xml");
     }
 
     // Method to load all comments from XML
     public static void LoadComments()
     {
-        commentsExtent = PersistenceManager.LoadExtent<Comment>("Comments.xml");
+        _commentsExtent = PersistenceManager.LoadExtent<Comment>("Comments.xml");
     }
 }
