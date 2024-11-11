@@ -54,6 +54,7 @@ public class User
         // Automatically add to extent
         AddUser(this);
     }
+    public User(){}
 
     public User()
     {

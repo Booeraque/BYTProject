@@ -128,7 +128,7 @@ public class Account
     }
 
     // Parameterless constructor needed for XML serialization
-    public Account() { }
+    public Account() {}
 
     // Method to save all accounts to XML (for persistence)
     public static void SaveAccounts(string filename = "Accounts.xml")

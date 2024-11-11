@@ -34,6 +34,7 @@ public class Tag
         TagId = tagId;
         Categories = categories;
     }
+    public Tag(){}
 
     // Static extent collection to store all Tag objects
     private static List<Tag> _tagsExtent = new List<Tag>();

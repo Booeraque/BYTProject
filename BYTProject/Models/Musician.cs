@@ -67,6 +67,7 @@ public class Musician
         // Automatically add to extent
         AddMusician(this);
     }
+    public Musician(){}
 
     // Method to save all musicians to XML (for persistence)
     public static void SaveMusicians()

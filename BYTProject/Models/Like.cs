@@ -54,6 +54,7 @@ public class Like
         // Automatically add to extent
         AddLike(this);
     }
+    public Like(){}
 
     // Method to save all likes to XML (for persistence)
     public static void SaveLikes()

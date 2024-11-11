@@ -42,6 +42,7 @@ public class PostTag
         // Automatically add to extent
         AddTag(this);
     }
+    public PostTag(){}
 
     // Method to save all post tags to XML (for persistence)
     public static void SavePostTags()

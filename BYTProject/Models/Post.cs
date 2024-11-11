@@ -69,6 +69,7 @@ public class Post
         // Automatically add to extent
         AddPost(this);
     }
+    public Post(){}
 
     public Post()
     {
