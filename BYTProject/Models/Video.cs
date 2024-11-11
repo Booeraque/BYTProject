@@ -1,4 +1,6 @@
-﻿namespace BYTProject.Models;
+﻿using BYTProject.Data;
+
+namespace BYTProject.Models;
 
 public class Video
 {
@@ -86,5 +88,9 @@ public class Video
         _videoExtent = PersistenceManager.LoadExtent<Video>("Videos.xml");
         Console.WriteLine($"Load complete. Loaded {_videoExtent.Count} videos.");
     }
-
+    
+    public static void ClearVideos()
+    {
+        _videoExtent.Clear();
+    }
 }

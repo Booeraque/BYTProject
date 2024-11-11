@@ -6,6 +6,12 @@ namespace BYTProject.UnitTesting
 {
     public class MusicianTests
     {
+        public MusicianTests()
+        {
+            // Clear musicians before each test
+            Musician.ClearMusicians();
+        }
+        
         [Fact]
         public void MusicianId_ShouldThrowException_WhenValueIsNonPositive()
         {

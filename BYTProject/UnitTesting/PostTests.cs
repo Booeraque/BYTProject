@@ -5,6 +5,11 @@ namespace BYTProject.UnitTesting
 {
     public class PostTests
     {
+        public PostTests()
+        {
+            // Clear posts before each test
+            Post.ClearPosts();
+        }
         [Fact]
         public void PostID_ShouldThrowException_WhenValueIsNonPositive()
         {

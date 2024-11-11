@@ -1,4 +1,6 @@
-﻿namespace BYTProject.Models;
+﻿using BYTProject.Data;
+
+namespace BYTProject.Models;
 
 public class MusicAlbum
 {

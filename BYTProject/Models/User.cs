@@ -1,3 +1,5 @@
+using BYTProject.Data;
+
 namespace BYTProject.Models;
 
 public class User
@@ -69,5 +71,10 @@ public class User
     public static void LoadUsers()
     {
         _usersExtent = PersistenceManager.LoadExtent<User>("Users.xml");
+    }
+    
+    public static void ClearUsers()
+    {
+        _usersExtent.Clear();
     }
 }

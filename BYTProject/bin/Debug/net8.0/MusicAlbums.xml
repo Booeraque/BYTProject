@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMusicAlbum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>Album 1</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>2</AlbumId>
+    <Type>Mix</Type>
+    <Description>Album 2</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>Mock Album Description</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>Mock Album Description</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>Mock Album Description</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>Mock Album Description</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>Mock Album Description</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>Mock Album Description</Description>
+  </MusicAlbum>
+</ArrayOfMusicAlbum>

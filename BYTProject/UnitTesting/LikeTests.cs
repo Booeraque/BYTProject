@@ -6,6 +6,12 @@ namespace BYTProject.UnitTesting
 {
     public class LikeTests
     {
+        public LikeTests()
+        {
+            // Clear likes before each test
+            Like.ClearLikes();
+        }
+        
         [Fact]
         public void LikeID_ShouldThrowException_WhenValueIsNonPositive()
         {

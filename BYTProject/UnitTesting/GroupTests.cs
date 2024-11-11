@@ -6,6 +6,12 @@ namespace BYTProject.UnitTesting
 {
     public class GroupTests
     {
+        public GroupTests()
+        {
+            // Clear groups before each test
+            Group.ClearGroups();
+        }
+        
         [Fact]
         public void GroupID_ShouldThrowException_WhenValueIsNonPositive()
         {

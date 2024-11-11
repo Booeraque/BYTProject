@@ -5,6 +5,11 @@ namespace BYTProject.UnitTesting
 {
     public class MusicTests
     {
+        public MusicTests()
+        {
+            // Clear music before each test
+            Music.ClearMusic();
+        }
         private Musician CreateMockMusician()
         {
             return new Musician(1, "John Doe Bio", 100); // Mock data for testing

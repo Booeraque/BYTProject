@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMedia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Media>
+    <MediaId>1</MediaId>
+    <MediaType>Video</MediaType>
+  </Media>
+  <Media>
+    <MediaId>2</MediaId>
+    <MediaType>Image</MediaType>
+  </Media>
+</ArrayOfMedia>

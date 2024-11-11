@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMusic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Music>
+    <MusicId>1</MusicId>
+    <Description>Description 1</Description>
+    <Musician>
+      <MusicianId>1</MusicianId>
+      <MusicianBio>John Doe Bio</MusicianBio>
+      <AccountId>100</AccountId>
+    </Musician>
+    <MusicAlbum>
+      <AlbumId>1</AlbumId>
+      <Type>Single</Type>
+      <Description>Mock Album Description</Description>
+    </MusicAlbum>
+  </Music>
+  <Music>
+    <MusicId>2</MusicId>
+    <Description>Description 2</Description>
+    <Musician>
+      <MusicianId>1</MusicianId>
+      <MusicianBio>John Doe Bio</MusicianBio>
+      <AccountId>100</AccountId>
+    </Musician>
+    <MusicAlbum>
+      <AlbumId>1</AlbumId>
+      <Type>Single</Type>
+      <Description>Mock Album Description</Description>
+    </MusicAlbum>
+  </Music>
+</ArrayOfMusic>

@@ -6,6 +6,11 @@ namespace BYTProject.UnitTesting
 {
     public class VideoEditorTests
     {
+        public VideoEditorTests()
+        {
+            // Clear video editors before each test
+            VideoEditor.ClearVideoEditors();
+        }
         [Fact]
         public void VideoEdId_ShouldThrowException_WhenValueIsNonPositive()
         {

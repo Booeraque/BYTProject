@@ -7,6 +7,11 @@ namespace BYTProject.UnitTesting
 {
     public class PostTagTests
     {
+        public PostTagTests()
+        {
+            // Clear post tags before each test
+            PostTag.ClearPostTags();
+        }
         [Fact]
         public void AddedAt_ShouldThrowException_WhenValueIsInFuture()
         {

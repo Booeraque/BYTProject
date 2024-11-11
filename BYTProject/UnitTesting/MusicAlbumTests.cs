@@ -7,6 +7,11 @@ namespace BYTProject.UnitTesting
 {
     public class MusicAlbumTests
     {
+        public MusicAlbumTests()
+        {
+            // Clear albums before each test
+            MusicAlbum.ClearMusicAlbums();
+        }
         [Fact]
         public void AlbumId_ShouldThrowException_WhenValueIsNonPositive()
         {

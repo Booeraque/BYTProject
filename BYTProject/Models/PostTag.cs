@@ -1,4 +1,6 @@
 ﻿
+using BYTProject.Data;
+
 namespace BYTProject.Models;
 
 public class PostTag

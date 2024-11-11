@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Group>
+    <GroupId>1</GroupId>
+    <GroupName>Group 1</GroupName>
+    <Description>Description 1</Description>
+  </Group>
+  <Group>
+    <GroupId>2</GroupId>
+    <GroupName>Group 2</GroupName>
+    <Description>Description 2</Description>
+  </Group>
+</ArrayOfGroup>

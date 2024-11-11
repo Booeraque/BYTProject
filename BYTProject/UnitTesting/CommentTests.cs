@@ -6,6 +6,12 @@ namespace BYTProject.UnitTesting
 {
     public class CommentTests
     {
+        public CommentTests()
+        {
+            // Clear comments before each test
+            Comment.ClearComments();
+        }
+        
         [Fact]
         public void CommentID_ShouldThrowException_WhenValueIsNonPositive()
         {

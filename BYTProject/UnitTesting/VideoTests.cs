@@ -6,6 +6,12 @@ namespace BYTProject.UnitTesting
 {
     public class VideoTests
     {
+        public VideoTests()
+        {
+            // Clear videos before each test
+            Video.ClearVideos();
+        }
+        
         private VideoEditor CreateMockVideoEditor()
         {
             return new VideoEditor(1, "Editor Bio", 1);

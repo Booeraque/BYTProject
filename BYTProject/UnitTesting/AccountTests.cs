@@ -121,7 +121,6 @@ namespace BYTProject.UnitTesting
         [Fact]
         public void AddAccount_ShouldAddAccountCorrectly()
         {
-            Account.ClearAccounts();
             var account = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
             Assert.Contains(account, Account.GetAccounts());
         }
@@ -129,12 +128,10 @@ namespace BYTProject.UnitTesting
         [Fact]
         public void SaveAndLoadAccounts_ShouldPersistDataCorrectly()
         {
-            Account.ClearAccounts();
             var account1 = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
             var account2 = new Account(2, "User2", "user2@example.com", DateTime.Now.AddYears(-25), "Address 2", "Password2");
 
             Account.SaveAccounts("Accounts.xml");
-            Account.ClearAccounts();
             Account.LoadAccounts("Accounts.xml");
 
             var accounts = Account.GetAccounts();

@@ -4,7 +4,13 @@ using Xunit;
 namespace BYTProject.UnitTesting;
 
 public class MediaTests
-{
+{        
+    // Clear media before each test
+    public MediaTests()
+    {
+        Media.ClearMedia();
+    }
+    
     [Fact]
     public void MediaID_ShouldThrowException_WhenValueIsNonPositive()
     {
