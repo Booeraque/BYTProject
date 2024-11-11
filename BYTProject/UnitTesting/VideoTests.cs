@@ -91,7 +91,7 @@ namespace BYTProject.UnitTesting
         [Fact]
         public void SaveAndLoadVideos_ShouldPersistExtentCorrectly()
         {
-            Video.ClearVideo();
+            Video.ClearVideos();
             var editor = CreateMockVideoEditor();
             var video1 = new Video(1, "Description 1", editor);
             var video2 = new Video(2, "Description 2", editor);

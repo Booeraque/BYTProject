@@ -1,5 +1,4 @@
 ﻿using BYTProject.Data;
-
 namespace BYTProject.Models;
 
 public class VideoEditor
@@ -70,6 +69,8 @@ public class VideoEditor
         // Automatically add to extent
         AddVideoEditor(this);
     }
+
+
     public VideoEditor()
     {
         
