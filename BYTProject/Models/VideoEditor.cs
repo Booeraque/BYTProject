@@ -68,6 +68,7 @@ public class VideoEditor
         // Automatically add to extent
         AddVideoEditor(this);
     }
+    public VideoEditor(){}
 
     // Method to save all video editors to XML (for persistence)
     public static void SaveVideoEditors()

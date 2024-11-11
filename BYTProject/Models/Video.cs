@@ -54,6 +54,7 @@ public class Video
         // Automatically add to extent
         AddVideo(this);
     }
+    
 
     // Private static method to add a Video object to the extent, with validation
     internal static void AddVideo(Video video)

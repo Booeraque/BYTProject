@@ -69,6 +69,7 @@ public class Post
         // Automatically add to extent
         AddPost(this);
     }
+    public Post(){}
 
     // Method to save all posts to XML (for persistence)
     public static void SavePosts()

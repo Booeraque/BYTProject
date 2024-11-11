@@ -70,6 +70,7 @@ public class Moderator
         // Automatically add to extent
         AddModerator(this);
     }
+    public Moderator(){}
 
     // Method to save all moderators to XML (for persistence)
     public static void SaveModerators()

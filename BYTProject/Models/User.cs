@@ -53,6 +53,7 @@ public class User
         // Automatically add to extent
         AddUser(this);
     }
+    public User(){}
 
     // Method to save all users to XML (for persistence)
     public static void SaveUsers()

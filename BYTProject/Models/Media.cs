@@ -55,6 +55,7 @@ public class Media
         // Automatically add to extent
         AddMedia(this);
     }
+    public Media(){}
 
     // Method to save all media to XML (for persistence)
     public static void SaveMedia()

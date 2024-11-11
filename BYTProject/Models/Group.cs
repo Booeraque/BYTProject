@@ -75,6 +75,7 @@ public class Group
         // Automatically add to extent
         AddGroup(this);
     }
+    public Group(){}
 
     // Method to save all groups to XML (for persistence)
     public static void SaveGroups()

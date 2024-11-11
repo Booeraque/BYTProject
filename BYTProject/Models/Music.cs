@@ -80,6 +80,7 @@ public class Music
         // Automatically add to extent
         AddMusic(this);
     }
+    public Music(){}
 
     // Method to save all music to XML (for persistence)
     public static void SaveMusic()
