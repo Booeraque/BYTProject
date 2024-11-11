@@ -5,30 +5,6 @@
     <IsAdmin>true</IsAdmin>
   </User>
   <User>
-    <AccountId>1</AccountId>
-    <IsAdmin>true</IsAdmin>
-  </User>
-  <User>
-    <AccountId>1</AccountId>
-    <IsAdmin>true</IsAdmin>
-  </User>
-  <User>
-    <AccountId>2</AccountId>
-    <IsAdmin>false</IsAdmin>
-  </User>
-  <User>
-    <AccountId>1</AccountId>
-    <IsAdmin>true</IsAdmin>
-  </User>
-  <User>
-    <AccountId>1</AccountId>
-    <IsAdmin>true</IsAdmin>
-  </User>
-  <User>
-    <AccountId>1</AccountId>
-    <IsAdmin>true</IsAdmin>
-  </User>
-  <User>
     <AccountId>2</AccountId>
     <IsAdmin>false</IsAdmin>
   </User>

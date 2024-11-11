@@ -78,6 +78,7 @@ namespace BYTProject.UnitTesting
         [Fact]
         public void SaveAndLoadVideoEditors_ShouldPersistExtentCorrectly()
         {
+            VideoEditor.ClearVideoEditors();
             var editor1 = new VideoEditor(1, "Bio1", 100);
             var editor2 = new VideoEditor(2, "Bio2", 101);
 

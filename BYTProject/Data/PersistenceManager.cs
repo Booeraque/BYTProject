@@ -5,59 +5,64 @@ namespace BYTProject.Data;
 
 public static class PersistenceManager
 {
+    // Generic method to save extents (lists of objects) to XML using XmlTextWriter
     public static void SaveExtent<T>(List<T> extent, string filename)
     {
         try
         {
+            // Ensure the directory exists
             string directory = Path.GetDirectoryName(filename);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
-                Console.WriteLine($"Created directory: {directory}");
             }
 
+            // Create a StreamWriter for the given path
             using (StreamWriter file = File.CreateText(filename))
             {
+                // Create an XmlSerializer instance to serialize List<T>
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
+
+                // Use XmlTextWriter for writing the XML content
                 using (XmlTextWriter writer = new XmlTextWriter(file))
                 {
-                    writer.Formatting = Formatting.Indented;
-                    xmlSerializer.Serialize(writer, extent);
+                    writer.Formatting = Formatting.Indented; // Optional: Makes the XML more readable
+                    xmlSerializer.Serialize(writer, extent);  // Serialize the list to the XML file
                 }
             }
-            Console.WriteLine($"{typeof(T).Name} data saved successfully to {filename}.");
+            Console.WriteLine($"{typeof(T).Name} data saved successfully.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error saving {typeof(T).Name} data to {filename}: {ex.Message}");
+            Console.WriteLine($"Error saving {typeof(T).Name} data: {ex.Message}");
         }
     }
 
+    // Generic method to load extents (lists of objects) from XML using XmlTextReader
     public static List<T> LoadExtent<T>(string filename)
     {
-        Console.WriteLine($"Attempting to load {typeof(T).Name} data from {filename}...");
-
         try
         {
             if (File.Exists(filename))
             {
+                // Create an XmlSerializer instance to deserialize List<T>
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
+
+                // Use XmlTextReader for reading the XML content
                 using (XmlTextReader reader = new XmlTextReader(filename))
                 {
-                    var extent = (List<T>)xmlSerializer.Deserialize(reader);
-                    Console.WriteLine($"Successfully loaded {extent.Count} items of {typeof(T).Name} data.");
-                    return extent;
+                    return (List<T>)xmlSerializer.Deserialize(reader);  // Deserialize the XML file into the list
                 }
             }
             else
             {
-                Console.WriteLine($"{typeof(T).Name} file not found at {filename}. Returning empty list.");
+                Console.WriteLine($"No {typeof(T).Name} file found. Starting fresh.");
                 return new List<T>();
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error loading {typeof(T).Name} data from {filename}: {ex.Message}");
+            Console.WriteLine($"Error loading {typeof(T).Name} data: {ex.Message}");
             return new List<T>();
         }
     }

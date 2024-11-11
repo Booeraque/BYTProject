@@ -79,8 +79,9 @@ public class TagTests
     [Fact]
     public void SaveAndLoadTags_ShouldPersistDataCorrectly()
     {
-        var tag1 = new Tag(1, new List<string> { "Category 1" });
-        var tag2 = new Tag(2, new List<string> { "Category 2" });
+        Tag.ClearTags();
+        var tag1 = new Tag(1, new List<string> { "Category 11" });
+        var tag2 = new Tag(2, new List<string> { "Category 22" });
 
         Tag.SaveTags();
         Tag.LoadTags();

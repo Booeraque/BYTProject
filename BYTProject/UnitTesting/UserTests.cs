@@ -60,6 +60,7 @@ public class UserTests
     [Fact]
     public void SaveAndLoadUsers_ShouldPersistDataCorrectly()
     {
+        User.ClearUser();
         var user1 = new User(1, true);
         var user2 = new User(2, false);
 

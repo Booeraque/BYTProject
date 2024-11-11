@@ -1,4 +1,7 @@
 using BYTProject.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BYTProject
 {
@@ -36,6 +39,46 @@ namespace BYTProject
             foreach (var acc in Account.GetAccounts())
             {
                 Console.WriteLine($"Account ID: {acc.AccountId}, Username: {acc.Username}");
+            }
+
+            // Test for Tag functionality
+            Console.WriteLine("\n--- Testing Tag Saving and Loading ---");
+            
+            // Clear existing tags, if any
+            Tag.ClearTags();
+
+            // Create some example tags
+            var tag1 = new Tag(1, new List<string> { "Category 111" });
+            var tag2 = new Tag(2, new List<string> { "Category 222" });
+
+
+            // Save tags to XML
+            Tag.SaveTags();
+            Console.WriteLine("Tags saved to Tags.xml.");
+
+            // Clear tags from memory to simulate loading
+            Tag.ClearTags();
+
+            // Load tags from XML
+            Tag.LoadTags();
+            Console.WriteLine("Tags loaded from Tags.xml.");
+
+            // Output loaded tags to confirm
+            var tags = Tag.GetTags();
+            Console.WriteLine($"Loaded {tags.Count} tags:");
+            foreach (var tag in tags)
+            {
+                Console.WriteLine($"Tag ID: {tag.TagId}, Categories: {string.Join(", ", tag.Categories)}");
+            }
+
+            // Check if the correct number of tags were loaded
+            if (tags.Count == 2)
+            {
+                Console.WriteLine("Tag loading successful. Test passed.");
+            }
+            else
+            {
+                Console.WriteLine("Tag loading failed. Test did not pass.");
             }
         }
     }
