@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfComment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Comment>
+    <CommentId>1</CommentId>
+    <Content>Content 1</Content>
+    <CreatedAt>2024-11-11T14:37:51.3459564+01:00</CreatedAt>
+    <Edited>false</Edited>
+  </Comment>
+  <Comment>
+    <CommentId>2</CommentId>
+    <Content>Content 2</Content>
+    <CreatedAt>2024-11-11T14:37:51.3464155+01:00</CreatedAt>
+    <Edited>false</Edited>
+  </Comment>
+</ArrayOfComment>

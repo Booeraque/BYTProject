@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfVideo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Video>
+    <VideoId>1</VideoId>
+    <Description>Test Description</Description>
+    <VideoEditor>
+      <VideoEdId>1</VideoEdId>
+      <VideoEdBio>Editor Bio</VideoEdBio>
+      <AccountId>1</AccountId>
+    </VideoEditor>
+  </Video>
+  <Video>
+    <VideoId>1</VideoId>
+    <Description>Description 1</Description>
+    <VideoEditor>
+      <VideoEdId>1</VideoEdId>
+      <VideoEdBio>Editor Bio</VideoEdBio>
+      <AccountId>1</AccountId>
+    </VideoEditor>
+  </Video>
+  <Video>
+    <VideoId>2</VideoId>
+    <Description>Description 2</Description>
+    <VideoEditor>
+      <VideoEdId>1</VideoEdId>
+      <VideoEdBio>Editor Bio</VideoEdBio>
+      <AccountId>1</AccountId>
+    </VideoEditor>
+  </Video>
+</ArrayOfVideo>

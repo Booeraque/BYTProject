@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPost xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Post>
+    <PostId>1</PostId>
+    <Caption>Caption 1</Caption>
+    <CreatedAt>2024-11-11T14:40:31.4471826+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>1</PostId>
+    <Caption>Caption 1</Caption>
+    <CreatedAt>2024-11-11T14:40:31.4528614+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>1</PostId>
+    <Caption>Caption 1</Caption>
+    <CreatedAt>2024-11-11T14:40:31.4532128+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>1</PostId>
+    <Caption>Caption 1</Caption>
+    <CreatedAt>2024-11-11T14:40:31.4536698+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>1</PostId>
+    <Caption>Caption 1</Caption>
+    <CreatedAt>2024-11-11T14:40:31.457856+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>1</PostId>
+    <Caption>Caption 1</Caption>
+    <CreatedAt>2024-11-11T14:40:31.4589143+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>2</PostId>
+    <Caption>Caption 2</Caption>
+    <CreatedAt>2024-11-11T14:40:31.4589171+01:00</CreatedAt>
+  </Post>
+</ArrayOfPost>
