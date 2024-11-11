@@ -129,21 +129,16 @@ public class Account
     }
 
     // Parameterless constructor needed for XML serialization
-    public Account(string username, string email, string address, string password)
-    {
-        _username = username;
-        _email = email;
-        _address = address;
-        _password = password;
-    }
+    public Account() { }
+
 
     // Method to save all accounts to XML (for persistence)
-    public static void SaveAccounts(string filename = "XML Files/Accounts.xml")
+    public static void SaveAccounts(string filename = "Accounts.xml")
     {
         PersistenceManager.SaveExtent(_accountsExtent, filename);
     }
     // Method to load all accounts from XML (for persistence)
-    public static void LoadAccounts(string filename = "XML Files/Accounts.xml")
+    public static void LoadAccounts(string filename = "Accounts.xml")
     {
         _accountsExtent = PersistenceManager.LoadExtent<Account>(filename);
     }

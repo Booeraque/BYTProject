@@ -133,9 +133,9 @@ namespace BYTProject.UnitTesting
             var account1 = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
             var account2 = new Account(2, "User2", "user2@example.com", DateTime.Now.AddYears(-25), "Address 2", "Password2");
 
-            Account.SaveAccounts("TestAccounts.xml");
+            Account.SaveAccounts("XML Files/Accounts.xml");
             Account.ClearAccounts();
-            Account.LoadAccounts("TestAccounts.xml");
+            Account.LoadAccounts("XML Files/Accounts.xml");
 
             var accounts = Account.GetAccounts();
             Assert.Equal(2, accounts.Count);
@@ -144,7 +144,7 @@ namespace BYTProject.UnitTesting
             Assert.Equal(2, accounts[1].AccountId);
             Assert.Equal("User2", accounts[1].Username);
 
-            File.Delete("TestAccounts.xml");
+            File.Delete("XML Files/Accounts.xml");
         }
     }
 }

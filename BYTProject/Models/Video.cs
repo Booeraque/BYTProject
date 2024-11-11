@@ -41,6 +41,20 @@ public class Video
     // Private static extent collection to store all Video objects
     private static List<Video> _videoExtent = new List<Video>();
 
+    // Parameterless constructor for XML serialization
+    public Video() { }
+
+    // Constructor to initialize Video object with mandatory attributes and automatically add to extent
+    public Video(int videoId, string description, VideoEditor videoEditor)
+    {
+        VideoId = videoId;
+        Description = description;
+        VideoEditor = videoEditor;
+
+        // Automatically add to extent
+        AddVideo(this);
+    }
+
     // Private static method to add a Video object to the extent, with validation
     internal static void AddVideo(Video video)
     {
@@ -57,28 +71,19 @@ public class Video
         return _videoExtent.AsReadOnly();
     }
 
-    // Constructor to initialize Video object with mandatory attributes and automatically add to extent
-    public Video(int videoId, string description, VideoEditor videoEditor)
-    {
-        VideoId = videoId;
-        _description = description;
-        _videoEditor = videoEditor;
-        Description = description;
-        VideoEditor = videoEditor;
-
-        // Automatically add to extent
-        AddVideo(this);
-    }
-
     // Method to save all videos to XML (for persistence)
     public static void SaveVideos()
     {
+        Console.WriteLine("Saving videos to XML...");
         PersistenceManager.SaveExtent(_videoExtent, "Videos.xml");
+        Console.WriteLine("Save complete.");
     }
 
-    // Method to load all videos from XML (for persistence)
     public static void LoadVideos()
     {
+        Console.WriteLine("Loading videos from XML...");
         _videoExtent = PersistenceManager.LoadExtent<Video>("Videos.xml");
+        Console.WriteLine($"Load complete. Loaded {_videoExtent.Count} videos.");
     }
+
 }
