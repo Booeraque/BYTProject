@@ -2,14 +2,14 @@
 <ArrayOfModerator xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Moderator>
     <AccountId>1</AccountId>
-    <DateOfAssignment>2024-11-11T15:17:25.7712009+01:00</DateOfAssignment>
+    <DateOfAssignment>2024-11-11T15:30:20.3371151+01:00</DateOfAssignment>
     <Rights>
       <string>Right1</string>
     </Rights>
   </Moderator>
   <Moderator>
     <AccountId>2</AccountId>
-    <DateOfAssignment>2024-11-11T15:17:25.7712032+01:00</DateOfAssignment>
+    <DateOfAssignment>2024-11-11T15:30:20.3371193+01:00</DateOfAssignment>
     <Rights>
       <string>Right2</string>
     </Rights>

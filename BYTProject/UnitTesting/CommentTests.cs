@@ -87,7 +87,7 @@ namespace BYTProject.UnitTesting
         [Fact]
         public void SaveAndLoadComments_ShouldPersistDataCorrectly()
         {
-            
+            Comment.ClearComments();
             var comment1 = new Comment(1, "Content 1", DateTime.Now);
             var comment2 = new Comment(2, "Content 2", DateTime.Now);
 

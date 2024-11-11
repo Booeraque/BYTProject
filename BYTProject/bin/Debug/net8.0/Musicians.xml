@@ -2,11 +2,6 @@
 <ArrayOfMusician xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Musician>
     <MusicianId>1</MusicianId>
-    <MusicianBio>John Doe Bio</MusicianBio>
-    <AccountId>100</AccountId>
-  </Musician>
-  <Musician>
-    <MusicianId>1</MusicianId>
     <MusicianBio>Bio1</MusicianBio>
     <AccountId>100</AccountId>
   </Musician>
@@ -14,10 +9,5 @@
     <MusicianId>2</MusicianId>
     <MusicianBio>Bio2</MusicianBio>
     <AccountId>101</AccountId>
-  </Musician>
-  <Musician>
-    <MusicianId>1</MusicianId>
-    <MusicianBio>John Doe Bio</MusicianBio>
-    <AccountId>100</AccountId>
   </Musician>
 </ArrayOfMusician>

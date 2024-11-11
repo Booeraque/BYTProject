@@ -79,6 +79,7 @@ namespace BYTProject.UnitTesting
         [Fact]
         public void SaveAndLoadMusicians_ShouldPersistExtentCorrectly()
         {
+            Musician.ClearMusicians();
             var musician1 = new Musician(1, "Bio1", 100);
             var musician2 = new Musician(2, "Bio2", 101);
 

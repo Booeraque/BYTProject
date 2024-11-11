@@ -74,6 +74,7 @@ namespace BYTProject.UnitTesting
         [Fact]
         public void SaveAndLoadModerators_ShouldPersistDataCorrectly()
         {
+            Moderator.ClearModerators();
             var moderator1 = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
             var moderator2 = new Moderator(2, DateTime.Now, new List<string> { "Right2" });
 
