@@ -4,7 +4,7 @@ public class Media
 {
     // Mandatory attribute: MediaID
     private int _mediaId;
-    public int MediaID
+    public int MediaId
     {
         get => _mediaId;
         set
@@ -48,7 +48,7 @@ public class Media
     // Constructor to initialize Media object with mandatory attributes and automatically add to extent
     public Media(int mediaID, string mediaType)
     {
-        MediaID = mediaID;
+        MediaId = mediaID;
         _mediaType = mediaType;
         MediaType = mediaType;
 
