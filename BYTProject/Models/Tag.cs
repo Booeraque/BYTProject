@@ -38,6 +38,12 @@ public class Tag
     // Static extent collection to store all Tag objects
     private static List<Tag> _tagsExtent = new List<Tag>();
 
+    // Method to clear all tags (for testing purposes)
+    public static void ClearTags()
+    {
+        _tagsExtent.Clear();
+    }
+
     // Method to add a Tag to the extent, with validation
     public static void AddTag(Tag tag)
     {

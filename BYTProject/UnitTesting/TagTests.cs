@@ -5,6 +5,12 @@ using Xunit;
 
 public class TagTests
 {
+    public TagTests()
+    {
+        // Clear tags before each test
+        Tag.ClearTags();
+    }
+    
     [Fact]
     public void TagID_ShouldThrowException_WhenValueIsNonPositive()
     {
@@ -65,6 +71,7 @@ public class TagTests
     public void GetTags_ShouldReturnCorrectList()
     {
         var tag = new Tag(1, new List<string> { "Category 1" });
+        Tag.AddTag(tag);
         var tags = Tag.GetTags();
         Assert.Contains(tag, tags);
     }
