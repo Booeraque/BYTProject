@@ -1,11 +1,4 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2f585f4b_002Da3f0_002D4d32_002Db00e_002D597ba014a8c0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AccountTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::BYTProject.UnitTesting.AccountTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::BYTProject.UnitTesting.MusicTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::BYTProject.UnitTesting.MusicAlbumTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::BYTProject.UnitTesting.VideoTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::BYTProject.UnitTesting.VideoEditorTests.AddVideoEditor_ShouldThrowException_WhenVideoEditorIsNull&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F2E89249-6C37-44EA-A132-F89C1CB833F3::net8.0::BYTProject.UnitTesting.VideoEditorTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;ProjectFolder&gt;F2E89249-6C37-44EA-A132-F89C1CB833F3/d:UnitTesting&lt;/ProjectFolder&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
