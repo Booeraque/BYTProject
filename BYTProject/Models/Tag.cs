@@ -31,7 +31,7 @@ namespace BYTProject.Models
             {
                 if (value == null) throw new ArgumentException("Categories cannot be null.");
                 if (value.Count > 10) throw new ArgumentException("Categories cannot contain more than 10 items.");
-                if(value.Any(c => string.ISNullOrWhiteSpace(c))) throw new ArgumentException("Category cannot contain emppty or whitespace string.");
+                if(value.Any(c => string.IsNullOrWhiteSpace(c))) throw new ArgumentException("Category cannot contain emppty or whitespace string.");
                 _categories = value;
             }
         }
