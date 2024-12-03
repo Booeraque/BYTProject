@@ -25,4 +25,19 @@
     <Caption>A quick thought.</Caption>
     <CreatedAt>2024-12-03T20:47:39.9554023+01:00</CreatedAt>
   </Post>
+  <Post>
+    <PostId>101</PostId>
+    <Caption>My first post!</Caption>
+    <CreatedAt>2024-12-03T21:14:34.1307087+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>102</PostId>
+    <Caption>Another update.</Caption>
+    <CreatedAt>2024-12-03T21:14:34.1309141+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>103</PostId>
+    <Caption>A quick thought.</Caption>
+    <CreatedAt>2024-12-03T21:14:34.1309232+01:00</CreatedAt>
+  </Post>
 </ArrayOfPost>

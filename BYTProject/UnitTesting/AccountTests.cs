@@ -124,6 +124,66 @@ namespace BYTProject.UnitTesting
             var account = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
             Assert.Contains(account, Account.GetAccounts());
         }
+        
+        [Fact]
+        public void AddPost_ShouldAssociatePostWithAccount()
+        {
+            var account = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
+            var post = new Post(1, "Caption 1", DateTime.Now);
+
+            account.AddPost(post);
+
+            Assert.Contains(post, account.Posts);
+            Assert.Equal(account, post.Account);
+        }
+
+        [Fact]
+        public void RemovePost_ShouldDisassociatePostFromAccount()
+        {
+            var account = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
+            var post = new Post(1, "Caption 1", DateTime.Now);
+
+            account.AddPost(post);
+            account.RemovePost(post);
+
+            Assert.DoesNotContain(post, account.Posts);
+            Assert.Null(post.Account);
+        }
+
+        [Fact]
+        public void UpdatePost_ShouldReplaceOldPostWithNewPost()
+        {
+            var account = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
+            var oldPost = new Post(1, "Caption 1", DateTime.Now);
+            var newPost = new Post(2, "Caption 2", DateTime.Now);
+
+            account.AddPost(oldPost);
+            account.UpdatePost(oldPost, newPost);
+
+            Assert.DoesNotContain(oldPost, account.Posts);
+            Assert.Contains(newPost, account.Posts);
+            Assert.Equal(account, newPost.Account);
+            Assert.Null(oldPost.Account);
+        }
+
+        [Fact]
+        public void AddPost_ShouldThrowException_WhenPostIsNull()
+        {
+            var account = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
+
+            Assert.Throws<ArgumentNullException>(() => account.AddPost(null));
+        }
+
+        [Fact]
+        public void AddPost_ShouldThrowException_WhenPostAlreadyAssociated()
+        {
+            var account = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
+            var post = new Post(1, "Caption 1", DateTime.Now);
+
+            account.AddPost(post);
+
+            Assert.Throws<InvalidOperationException>(() => account.AddPost(post));
+        }
 
         [Fact]
         public void SaveAndLoadAccounts_ShouldPersistDataCorrectly()

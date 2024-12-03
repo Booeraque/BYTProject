@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\BYTProject.csproj": {}
+    "C:\\Users\\user\\BYTProject\\BYTProject\\BYTProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\BYTProject.csproj": {
+    "C:\\Users\\user\\BYTProject\\BYTProject\\BYTProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\BYTProject.csproj",
+        "projectUniqueName": "C:\\Users\\user\\BYTProject\\BYTProject\\BYTProject.csproj",
         "projectName": "BYTProject",
-        "projectPath": "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\BYTProject.csproj",
-        "packagesPath": "C:\\Users\\prana\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\obj\\",
+        "projectPath": "C:\\Users\\user\\BYTProject\\BYTProject\\BYTProject.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\BYTProject\\BYTProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\prana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,11 +35,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
