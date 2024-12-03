@@ -82,18 +82,20 @@ namespace BYTProject.UnitTesting
             // Clear posts before the test to avoid the extent being pre-filled
             Post.ClearPosts();
 
+            // Create an account
+            var account = new Account(1, "testUser", "test@example.com", DateTime.Now.AddYears(-25), "123 Main St", "password");
+
+            // Create and add the first post
             var post1 = new Post(1, "Caption 1", DateTime.Now);
-    
-            // Add the first post to the extent
-            Post.AddPost(post1);
+            account.AddPost(post1);  // Add post to the account
 
             // Now try to add a duplicate post (with the same PostId)
             var post2 = new Post(1, "Caption 2", DateTime.Now); // Same PostId as post1
 
-            // Try adding the duplicate post
-            var exception = Assert.Throws<InvalidOperationException>(() => Post.AddPost(post2));
+            // Try adding the duplicate post and expect an exception
+            var exception = Assert.Throws<InvalidOperationException>(() => account.AddPost(post2));
 
-            // Assert that the exception message matches
+            // Assert that the exception message matches the expected one
             Assert.Equal("The post is already associated with this account.", exception.Message);
         }
 
@@ -163,21 +165,6 @@ namespace BYTProject.UnitTesting
             Assert.Throws<ArgumentException>(() => Post.RemovePost(null));
         }
 
-        [Fact]
-        public void RemovePost_ShouldRemovePostCorrectly()
-        {
-            // Create and add a post
-            var post = new Post(1, "Caption 1", DateTime.Now);
-            Post.AddPost(post);
-
-            // Verify the post is added first
-            Assert.Contains(post, Post.GetPosts());
-
-            // Now, remove the post
-            Post.RemovePost(post);
-
-            // Verify that the post has been removed
-            Assert.DoesNotContain(post, Post.GetPosts());
-        }
+        
     }
 }

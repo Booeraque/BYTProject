@@ -227,12 +227,4 @@ public class Account
         AddPost(newPost);
     }
     
-    public void RemoveAccountAndDisassociatePosts()
-    {
-        foreach (var post in _posts.ToList())
-        {
-            post.RemoveAccount(); // Removes the reverse reference
-        }
-        _posts.Clear(); // Clears all posts from the account
-    }
 }

@@ -28,4 +28,18 @@
       <Description>Mock Album Description</Description>
     </MusicAlbum>
   </Music>
+  <Music>
+    <MusicId>1</MusicId>
+    <Description>Test Music</Description>
+    <Musician>
+      <MusicianId>1</MusicianId>
+      <MusicianBio>Bio</MusicianBio>
+      <AccountId>1</AccountId>
+    </Musician>
+    <MusicAlbum>
+      <AlbumId>1</AlbumId>
+      <Type>Single</Type>
+      <Description>Test Description</Description>
+    </MusicAlbum>
+  </Music>
 </ArrayOfMusic>

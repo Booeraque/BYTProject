@@ -147,6 +147,7 @@ public class Post
     {
         _account = null;
     }
+    
 
     // Public method: Update the post's attributes
     public void UpdatePost(string newCaption, DateTime newCreatedAt)
