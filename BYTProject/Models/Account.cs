@@ -176,4 +176,45 @@ public class Account
     {
         _accountsExtent.Clear();
     }
+    
+    // Association: One Account -> Many Posts
+    private readonly List<Post> _posts = new List<Post>();
+
+    // Getter: Return a copy of the posts
+    public IReadOnlyList<Post> Posts => _posts.AsReadOnly();
+
+    // Method: Add a Post to the Account
+    public void AddPost(Post post)
+    {
+        if (post == null)
+            throw new ArgumentNullException(nameof(post), "Post cannot be null.");
+
+        if (_posts.Contains(post))
+            throw new InvalidOperationException("The post is already associated with this account.");
+
+        _posts.Add(post);
+        post.SetAccount(this); // Set the reverse connection
+    }
+
+    // Method: Remove a Post from the Account
+    public void RemovePost(Post post)
+    {
+        if (post == null)
+            throw new ArgumentNullException(nameof(post), "Post cannot be null.");
+
+        if (_posts.Remove(post))
+        {
+            post.RemoveAccount(); // Remove the reverse connection
+        }
+    }
+
+    // Method: Update an existing Post
+    public void UpdatePost(Post oldPost, Post newPost)
+    {
+        if (oldPost == null || newPost == null)
+            throw new ArgumentNullException("Posts cannot be null.");
+
+        RemovePost(oldPost);
+        AddPost(newPost);
+    }
 }

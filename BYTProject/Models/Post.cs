@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BYTProject.Data;
+using BYTProject.Models;
 
 public class Post
 {
@@ -90,4 +91,26 @@ public class Post
     {
         _postsExtent.Clear();
     }
+    private Account _account;
+
+    // Getter: Get the associated Account
+    public Account Account => _account; 
+
+    // Internal method: Set the Account for this Post
+    internal void SetAccount(Account account)
+    {
+        if (_account != null && _account != account)
+        {
+            _account.RemovePost(this); // Remove from the old account
+        }
+
+        _account = account;
+    }
+
+    // Internal method: Remove the Account reference
+    internal void RemoveAccount()
+    {
+        _account = null;
+    }
 }
+

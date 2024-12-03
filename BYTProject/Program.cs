@@ -10,13 +10,20 @@ namespace BYTProject
         static void Main(string[] args)
         {
             // Load all accounts from XML
+            Console.WriteLine("Loading accounts from XML...");
             Account.LoadAccounts();
 
-            // Example: Add a new account to the list
+            // Load all posts from XML
+            Console.WriteLine("Loading posts from XML...");
+            Post.LoadPosts();
+
+            // Example: Add a new account if not already existing
             const int newAccountId = 13;
-            if (Account.GetAccounts().All(acc => acc.AccountId != newAccountId))
+            var account = Account.GetAccounts().FirstOrDefault(acc => acc.AccountId == newAccountId);
+
+            if (account == null)
             {
-                var account = new Account(
+                account = new Account(
                     newAccountId, // AccountID
                     "jacob", // Username
                     "jacob@example.com", // Email
@@ -25,60 +32,61 @@ namespace BYTProject
                     "password123" // Password
                 );
 
-                // No need to call Account.AddAccount(account); here, as it's already added in the constructor.
+                Console.WriteLine($"Created new account: {account.Username} (ID: {account.AccountId})");
             }
             else
             {
-                Console.WriteLine($"An account with AccountID {newAccountId} already exists.");
+                Console.WriteLine($"Account with ID {newAccountId} already exists.");
             }
 
-            // Save the accounts back to XML
-            Account.SaveAccounts();
+            // Add posts to the account
+            var post1 = new Post(101, "My first post!", DateTime.Now);
+            var post2 = new Post(102, "Another update.", DateTime.Now);
+            var post3 = new Post(103, "A quick thought.", DateTime.Now);
 
-            // Output all accounts to the console
+            Console.WriteLine("\n--- Adding Posts to Account ---");
+            account.AddPost(post1);
+            account.AddPost(post2);
+
+            Console.WriteLine($"Added {account.Posts.Count} posts to account {account.Username}.");
+
+            // Display the reverse connection
+            Console.WriteLine($"Post 101 is associated with account: {post1.Account?.Username}");
+            Console.WriteLine($"Post 102 is associated with account: {post2.Account?.Username}");
+
+            // Remove a post and check reverse connection
+            Console.WriteLine("\n--- Removing a Post from Account ---");
+            account.RemovePost(post1);
+            Console.WriteLine($"Removed post 101. Is post still associated? {post1.Account != null}");
+
+            // Edit a post connection
+            Console.WriteLine("\n--- Editing a Post Association ---");
+            account.UpdatePost(post2, post3);
+            Console.WriteLine($"Post 102 reassigned to Post 103. Account Posts Count: {account.Posts.Count}");
+            Console.WriteLine($"Post 102 is associated with account: {post2.Account?.Username}");
+            Console.WriteLine($"Post 103 is associated with account: {post3.Account?.Username}");
+
+            // Save accounts and posts back to XML
+            Console.WriteLine("\nSaving accounts and posts to XML...");
+            Account.SaveAccounts();
+            Post.SavePosts();
+
+            // Output all accounts and their posts
+            Console.WriteLine("\n--- All Accounts and Their Posts ---");
             foreach (var acc in Account.GetAccounts())
             {
-                Console.WriteLine($"Account ID: {acc.AccountId}, Username: {acc.Username}");
+                Console.WriteLine($"Account ID: {acc.AccountId}, Username: {acc.Username}, Posts: {acc.Posts.Count}");
+                foreach (var post in acc.Posts)
+                {
+                    Console.WriteLine($"  Post ID: {post.PostId}, Caption: {post.Caption}");
+                }
             }
 
-            // Test for Tag functionality
-            Console.WriteLine("\n--- Testing Tag Saving and Loading ---");
-            
-            // Clear existing tags, if any
-            Tag.ClearTags();
-
-            // Create some example tags
-            var tag1 = new Tag(1, new List<string> { "Category 111" });
-            var tag2 = new Tag(2, new List<string> { "Category 222" });
-
-
-            // Save tags to XML
-            Tag.SaveTags();
-            Console.WriteLine("Tags saved to Tags.xml.");
-
-            // Clear tags from memory to simulate loading
-            Tag.ClearTags();
-
-            // Load tags from XML
-            Tag.LoadTags();
-            Console.WriteLine("Tags loaded from Tags.xml.");
-
-            // Output loaded tags to confirm
-            var tags = Tag.GetTags();
-            Console.WriteLine($"Loaded {tags.Count} tags:");
-            foreach (var tag in tags)
+            // Verify reverse connections are maintained
+            Console.WriteLine("\n--- Verifying Reverse Connections ---");
+            foreach (var post in Post.GetPosts())
             {
-                Console.WriteLine($"Tag ID: {tag.TagId}, Categories: {string.Join(", ", tag.Categories)}");
-            }
-
-            // Check if the correct number of tags were loaded
-            if (tags.Count == 2)
-            {
-                Console.WriteLine("Tag loading successful. Test passed.");
-            }
-            else
-            {
-                Console.WriteLine("Tag loading failed. Test did not pass.");
+                Console.WriteLine($"Post ID: {post.PostId}, Caption: {post.Caption}, Associated Account: {post.Account?.Username ?? "None"}");
             }
         }
     }
