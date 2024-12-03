@@ -24,7 +24,8 @@ public class Post
         get => _caption;
         set
         {
-            if (string.IsNullOrEmpty(value)) throw new ArgumentException("Caption can't be empty.");
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Caption cannot be empty or whitespace.");
             _caption = value;
         }
     }
@@ -36,22 +37,31 @@ public class Post
         get => _createdAt;
         set
         {
-            if (value > DateTime.Now) throw new ArgumentException("Creation date cannot be in the future.");
+            if (value > DateTime.Now)
+                throw new ArgumentException("Creation date cannot be in the future.");
             _createdAt = value;
         }
     }
 
     // Static extent collection to store all Post objects
-    private static List<Post> _postsExtent = new List<Post>();
+    private static readonly List<Post> _postsExtent = new List<Post>();
 
     // Static method to add a Post to the extent, with validation
-    internal static void AddPost(Post post)
+    public static void AddPost(Post post)
     {
         if (post == null)
-        {
             throw new ArgumentException("Post cannot be null.");
-        }
+        
         _postsExtent.Add(post);
+    }
+
+    // Static method to remove a Post from the extent
+    public static void RemovePost(Post post)
+    {
+        if (post == null)
+            throw new ArgumentException("Post cannot be null.");
+
+        _postsExtent.Remove(post);
     }
 
     // Public static method to get a read-only copy of the extent
@@ -64,47 +74,72 @@ public class Post
     public Post(int postID, string caption, DateTime createdAt)
     {
         PostId = postID;
-        _caption = caption;
         Caption = caption;
         CreatedAt = createdAt;
 
         // Automatically add to extent
         AddPost(this);
     }
+
     public Post()
     {
-        
+        // Default constructor for persistence use
     }
 
     // Method to save all posts to XML (for persistence)
     public static void SavePosts()
     {
-        PersistenceManager.SaveExtent(_postsExtent, "Posts.xml");
+        try
+        {
+            PersistenceManager.SaveExtent(_postsExtent, "Posts.xml");
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to save posts.", ex);
+        }
     }
 
     // Method to load all posts from XML (for persistence)
     public static void LoadPosts()
     {
-        _postsExtent = PersistenceManager.LoadExtent<Post>("Posts.xml");
+        try
+        {
+            _postsExtent.Clear();
+            _postsExtent.AddRange(PersistenceManager.LoadExtent<Post>("Posts.xml"));
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to load posts.", ex);
+        }
     }
+
     public static void ClearPosts()
     {
         _postsExtent.Clear();
     }
+
     private Account _account;
 
     // Getter: Get the associated Account
-    public Account Account => _account; 
+    public Account Account => _account;
 
     // Internal method: Set the Account for this Post
     internal void SetAccount(Account account)
     {
-        if (_account != null && _account != account)
-        {
-            _account.RemovePost(this); // Remove from the old account
-        }
+        if (_account == account)
+            return;
 
+        if (account != null && _account != null)
+            throw new InvalidOperationException("The post is already associated with another account.");
+
+        // Disassociate from the current account, if any
+        _account?.RemovePost(this);
+
+        // Set the new account
         _account = account;
+
+        // Associate the post with the new account
+        account?.AddPost(this);
     }
 
     // Internal method: Remove the Account reference
@@ -112,5 +147,22 @@ public class Post
     {
         _account = null;
     }
-}
 
+    // Public method: Update the post's attributes
+    public void UpdatePost(string newCaption, DateTime newCreatedAt)
+    {
+        // Validate the new caption
+        if (string.IsNullOrWhiteSpace(newCaption))
+            throw new ArgumentException("Caption cannot be empty or whitespace.");
+
+        // Validate the new creation date
+        if (newCreatedAt > DateTime.Now)
+            throw new ArgumentException("Creation date cannot be in the future.");
+
+        // Update attributes
+        Caption = newCaption;
+        CreatedAt = newCreatedAt;
+    }
+    
+    
+}

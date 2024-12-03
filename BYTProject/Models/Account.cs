@@ -189,24 +189,33 @@ public class Account
         if (post == null)
             throw new ArgumentNullException(nameof(post), "Post cannot be null.");
 
-        if (_posts.Contains(post))
+        // Check if a post with the same PostId already exists
+        if (_posts.Any(p => p.PostId == post.PostId))
             throw new InvalidOperationException("The post is already associated with this account.");
 
+        // Ensure the post is disassociated from any previous account
+        post.SetAccount(this);
+
+        // Add the post to this account's list
         _posts.Add(post);
-        post.SetAccount(this); // Set the reverse connection
     }
 
+
+
+    
     // Method: Remove a Post from the Account
     public void RemovePost(Post post)
     {
         if (post == null)
             throw new ArgumentNullException(nameof(post), "Post cannot be null.");
 
+        // Remove the post and handle reverse reference removal
         if (_posts.Remove(post))
         {
-            post.RemoveAccount(); // Remove the reverse connection
+            post.RemoveAccount(); // Ensure the reverse connection is removed
         }
     }
+
 
     // Method: Update an existing Post
     public void UpdatePost(Post oldPost, Post newPost)
@@ -216,5 +225,14 @@ public class Account
 
         RemovePost(oldPost);
         AddPost(newPost);
+    }
+    
+    public void RemoveAccountAndDisassociatePosts()
+    {
+        foreach (var post in _posts.ToList())
+        {
+            post.RemoveAccount(); // Removes the reverse reference
+        }
+        _posts.Clear(); // Clears all posts from the account
     }
 }
