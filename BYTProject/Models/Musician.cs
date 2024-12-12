@@ -39,7 +39,7 @@ public class Musician
             _accountId = value;
         }
     }
-
+    
     // Private static extent collection to store all Musician objects
     private static List<Musician> _musiciansExtent = new List<Musician>();
 
@@ -87,4 +87,37 @@ public class Musician
     {
         _musiciansExtent.Clear();
     }
+    
+    
+    // Association: One Musician -> Many MusicAlbums
+    private readonly List<MusicAlbum> _musicAlbums = new List<MusicAlbum>();
+
+    // Getter for music albums (read-only view)
+    public IReadOnlyList<MusicAlbum> GetMusicAlbums() => _musicAlbums.AsReadOnly();
+
+    // Add a MusicAlbum to the Musician
+    public void AddMusicAlbum(MusicAlbum album)
+    {
+        if (album == null) throw new ArgumentNullException(nameof(album));
+        if (_musicAlbums.Contains(album)) throw new InvalidOperationException("This album is already associated with the musician.");
+            
+        _musicAlbums.Add(album);
+        album.SetMusician(this); // Set reverse reference
+    }
+
+    // Remove a MusicAlbum from the Musician
+    public void RemoveMusicAlbum(MusicAlbum album)
+    {
+        if (album == null) throw new ArgumentNullException(nameof(album));
+        if (!_musicAlbums.Contains(album)) throw new InvalidOperationException("This album is not associated with the musician.");
+
+        _musicAlbums.Remove(album);
+
+        // Ensure reverse reference is cleared only if it still points to this musician
+        if (album.GetMusician() == this)
+        {
+            album.RemoveMusician();
+        }
+    }
+
 }
