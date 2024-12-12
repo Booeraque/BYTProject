@@ -99,4 +99,44 @@ public class Music
     {
         _musicExtent.Clear();
     }
+    
+    //relation to musician
+    // Method to set the musician with bidirectional association
+    public void SetMusician(Musician musician)
+    {
+        if (_musician == musician) return; // Avoid redundant operations
+
+        if (_musician != null)
+        {
+            // Remove this music from the old musician
+            var oldMusician = _musician;
+            _musician = null; // Temporarily break the association
+            oldMusician.RemoveMusic(this);
+        }
+
+        _musician = musician;
+
+        if (_musician != null && !_musician.GetMusicList().Contains(this))
+        {
+            // Add this music to the new musician if not already added
+            _musician.AddMusic(this);
+        }
+    }
+
+    // Method to remove the association with the musician
+    public void RemoveMusician()
+    {
+        if (_musician == null) return; // No association to remove
+
+        var oldMusician = _musician;
+        _musician = null; // Clear the musician reference
+
+        if (oldMusician.GetMusicList().Contains(this))
+        {
+            oldMusician.RemoveMusic(this); // Remove reverse association
+        }
+    }
 }
+    
+    
+    

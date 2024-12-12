@@ -119,5 +119,41 @@ public class Musician
             album.RemoveMusician();
         }
     }
+    
+    
+    //music
+    
+    // Association: One Musician -> Many Music Tracks
+    private readonly List<Music> _musicList = new List<Music>();
+
+    // Getter for the music list (read-only view)
+    public IReadOnlyList<Music> GetMusicList() => _musicList.AsReadOnly();
+
+    // Method to add a Music track
+    public void AddMusic(Music music)
+    {
+        if (music == null) throw new ArgumentNullException(nameof(music));
+        if (_musicList.Contains(music)) throw new InvalidOperationException("This music track is already associated with this musician.");
+    
+        if (music.Musician != null && music.Musician != this)
+        {
+            // Remove the music from the previous musician
+            music.Musician.RemoveMusic(music);
+        }
+    
+        _musicList.Add(music);
+        music.SetMusician(this); // Set the reverse reference
+    }
+
+
+    // Method to remove a Music track
+    public void RemoveMusic(Music music)
+    {
+        if (music == null) throw new ArgumentNullException(nameof(music));
+        if (!_musicList.Remove(music)) 
+            throw new InvalidOperationException("This music track is not associated with the musician.");
+
+        music.RemoveMusician(); // Clear the reverse reference
+    }
 
 }

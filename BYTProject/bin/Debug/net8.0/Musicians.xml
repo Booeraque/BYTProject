@@ -10,9 +10,4 @@
     <MusicianBio>Bio21</MusicianBio>
     <AccountId>101</AccountId>
   </Musician>
-  <Musician>
-    <MusicianId>1</MusicianId>
-    <MusicianBio>Bio</MusicianBio>
-    <AccountId>1</AccountId>
-  </Musician>
 </ArrayOfMusician>

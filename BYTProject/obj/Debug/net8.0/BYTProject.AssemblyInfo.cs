@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BYTProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+511979a8649f5213133e6bbd253ea64ffbc504a6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f67e40789973a5f55e15e9c02f83e63cc077879f")]
 [assembly: System.Reflection.AssemblyProductAttribute("BYTProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BYTProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

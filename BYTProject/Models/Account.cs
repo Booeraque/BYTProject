@@ -153,7 +153,6 @@ public class Account
         }
 
         Console.WriteLine($"Attempting to load accounts from {filename}...");
-        Console.WriteLine($"Attempting to load accounts from {filename}...");
 
         try
         {
