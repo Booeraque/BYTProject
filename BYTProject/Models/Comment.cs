@@ -4,6 +4,8 @@ namespace BYTProject.Models;
 
 public class Comment
 {
+    private Account _account;
+    private Post _post;
     // Mandatory attribute: CommentID
     private int _commentId;
     public int CommentId
@@ -96,5 +98,61 @@ public class Comment
     public static void ClearComments()
     {
         _commentsExtent.Clear();
+    }
+    
+    // Getter: Get the associated Account
+    public Account Account => _account;
+
+    // Internal method: Set the Account for this Comment
+    internal void SetAccount(Account account)
+    {
+        if (_account == account)
+            return;
+
+        if (account != null && _account != null)
+            throw new InvalidOperationException("The comment is already associated with another account.");
+
+        // Disassociate from the current account, if any
+        _account?.RemoveComment(this);
+
+        // Set the new account
+        _account = account;
+
+        // Associate the comment with the new account
+        account?.AddComment(this);
+    }
+
+    // Internal method: Remove the Account reference
+    internal void RemoveAccount()
+    {
+        _account = null;
+    }
+
+    // Getter: Get the associated Post
+    public Post Post => _post;
+
+    // Internal method: Set the Post for this Comment
+    internal void SetPost(Post post)
+    {
+        if (_post == post)
+            return;
+
+        if (post != null && _post != null)
+            throw new InvalidOperationException("The comment is already associated with another post.");
+
+        // Disassociate from the current post, if any
+        _post?.RemoveComment(this);
+
+        // Set the new post
+        _post = post;
+
+        // Associate the comment with the new post
+        post?.AddComment(this);
+    }
+
+    // Internal method: Remove the Post reference
+    internal void RemovePost()
+    {
+        _post = null;
     }
 }

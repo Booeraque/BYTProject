@@ -4,6 +4,8 @@ namespace BYTProject.Models;
 
 public class Like
 {
+    private Account _account;
+    private Post _post;
     // Mandatory attribute: LikeID
     private int _likeId;
     public int LikeId
@@ -73,5 +75,61 @@ public class Like
     public static void ClearLikes()
     {
         _likesExtent.Clear();
+    }
+    
+    // Getter: Get the associated Account
+    public Account Account => _account;
+
+    // Internal method: Set the Account for this Like
+    internal void SetAccount(Account account)
+    {
+        if (_account == account)
+            return;
+
+        if (account != null && _account != null)
+            throw new InvalidOperationException("The like is already associated with another account.");
+
+        // Disassociate from the current account, if any
+        _account?.RemoveLike(this);
+
+        // Set the new account
+        _account = account;
+
+        // Associate the like with the new account
+        account?.AddLike(this);
+    }
+
+    // Internal method: Remove the Account reference
+    internal void RemoveAccount()
+    {
+        _account = null;
+    }
+
+    // Getter: Get the associated Post
+    public Post Post => _post;
+
+    // Internal method: Set the Post for this Like
+    internal void SetPost(Post post)
+    {
+        if (_post == post)
+            return;
+
+        if (post != null && _post != null)
+            throw new InvalidOperationException("The like is already associated with another post.");
+
+        // Disassociate from the current post, if any
+        _post?.RemoveLike(this);
+
+        // Set the new post
+        _post = post;
+
+        // Associate the like with the new post
+        post?.AddLike(this);
+    }
+
+    // Internal method: Remove the Post reference
+    internal void RemovePost()
+    {
+        _post = null;
     }
 }

@@ -165,5 +165,75 @@ public class Post
         CreatedAt = newCreatedAt;
     }
     
-    
+    // Association: One Post -> Many Comments
+    private readonly List<Comment> _comments = new List<Comment>();
+
+    // Getter: Return a copy of the comments
+    public IReadOnlyList<Comment> Comments => _comments.AsReadOnly();
+
+    // Method: Add a Comment to the Post
+    public void AddComment(Comment comment)
+    {
+        if (comment == null)
+            throw new ArgumentNullException(nameof(comment), "Comment cannot be null.");
+
+        // Check if a comment with the same CommentId already exists
+        if (_comments.Any(c => c.CommentId == comment.CommentId))
+            throw new InvalidOperationException("The comment is already associated with this post.");
+
+        // Ensure the comment is disassociated from any previous post
+        comment.SetPost(this);
+
+        // Add the comment to this post's list
+        _comments.Add(comment);
+    }
+
+    // Method: Remove a Comment from the Post
+    public void RemoveComment(Comment comment)
+    {
+        if (comment == null)
+            throw new ArgumentNullException(nameof(comment), "Comment cannot be null.");
+
+        // Remove the comment and handle reverse reference removal
+        if (_comments.Remove(comment))
+        {
+            comment.RemovePost(); // Ensure the reverse connection is removed
+        }
+    }
+
+    // Association: One Post -> Many Likes
+    private readonly List<Like> _likes = new List<Like>();
+
+    // Getter: Return a copy of the likes
+    public IReadOnlyList<Like> Likes => _likes.AsReadOnly();
+
+    // Method: Add a Like to the Post
+    public void AddLike(Like like)
+    {
+        if (like == null)
+            throw new ArgumentNullException(nameof(like), "Like cannot be null.");
+
+        // Check if a like with the same LikeId already exists
+        if (_likes.Any(l => l.LikeId == like.LikeId))
+            throw new InvalidOperationException("The like is already associated with this post.");
+
+        // Ensure the like is disassociated from any previous post
+        like.SetPost(this);
+
+        // Add the like to this post's list
+        _likes.Add(like);
+    }
+
+    // Method: Remove a Like from the Post
+    public void RemoveLike(Like like)
+    {
+        if (like == null)
+            throw new ArgumentNullException(nameof(like), "Like cannot be null.");
+
+        // Remove the like and handle reverse reference removal
+        if (_likes.Remove(like))
+        {
+            like.RemovePost(); // Ensure the reverse connection is removed
+        }
+    }
 }

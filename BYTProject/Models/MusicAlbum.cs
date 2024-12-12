@@ -81,7 +81,10 @@ public class MusicAlbum
         AddMusicAlbum(this);
     }
 
-    public MusicAlbum(){}
+    public MusicAlbum()
+    {
+        
+    }
 
     // Method to save all music albums to XML (for persistence)
     public static void SaveMusicAlbums()

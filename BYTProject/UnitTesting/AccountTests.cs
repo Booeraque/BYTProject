@@ -11,6 +11,8 @@ namespace BYTProject.UnitTesting
         {
             // Clear accounts before each test
             Account.ClearAccounts();
+            Comment.ClearComments();
+            Like.ClearLikes();
         }
         
         [Fact]
@@ -202,6 +204,24 @@ namespace BYTProject.UnitTesting
             Assert.Equal("User2", accounts[1].Username);
 
             File.Delete("Accounts.xml");
+        }
+        
+        
+        [Fact]
+        public void RemoveAccount_ShouldRemoveAssociatedCommentsAndLikes()
+        {
+            var account = new Account(1, "User1", "user1@example.com", DateTime.Now.AddYears(-20), "Address 1", "Password1");
+            var comment = new Comment(1, "Content 1", DateTime.Now);
+            var like = new Like(1, DateTime.Now);
+
+            account.AddComment(comment);
+            account.AddLike(like);
+
+            account.RemoveComment(comment);
+            account.RemoveLike(like);
+
+            Assert.DoesNotContain(comment, account.Comments);
+            Assert.DoesNotContain(like, account.Likes);
         }
     }
 }

@@ -83,6 +83,22 @@ namespace BYTProject.UnitTesting
             var comments = Comment.GetComments();
             Assert.Contains(comment, comments);
         }
+        
+
+        [Fact]
+        public void EditComment_ShouldUpdateContentCorrectly()
+        {
+            var comment = new Comment(1, "Original Content", DateTime.Now);
+            comment.Content = "Updated Content";
+            Assert.Equal("Updated Content", comment.Content);
+        }
+
+        [Fact]
+        public void EditComment_ShouldThrowException_WhenNewContentIsEmpty()
+        {
+            var comment = new Comment(1, "Original Content", DateTime.Now);
+            Assert.Throws<ArgumentException>(() => comment.Content = "");
+        }
 
         [Fact]
         public void SaveAndLoadComments_ShouldPersistDataCorrectly()

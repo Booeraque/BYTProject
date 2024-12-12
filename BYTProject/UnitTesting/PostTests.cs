@@ -10,6 +10,8 @@ namespace BYTProject.UnitTesting
         {
             // Clear posts before each test
             Post.ClearPosts();
+            Comment.ClearComments();
+            Like.ClearLikes();
         }
 
         [Fact]
@@ -82,20 +84,18 @@ namespace BYTProject.UnitTesting
             // Clear posts before the test to avoid the extent being pre-filled
             Post.ClearPosts();
 
-            // Create an account
-            var account = new Account(1, "testUser", "test@example.com", DateTime.Now.AddYears(-25), "123 Main St", "password");
-
-            // Create and add the first post
             var post1 = new Post(1, "Caption 1", DateTime.Now);
-            account.AddPost(post1);  // Add post to the account
+    
+            // Add the first post to the extent
+            Post.AddPost(post1);
 
             // Now try to add a duplicate post (with the same PostId)
             var post2 = new Post(1, "Caption 2", DateTime.Now); // Same PostId as post1
 
-            // Try adding the duplicate post and expect an exception
-            var exception = Assert.Throws<InvalidOperationException>(() => account.AddPost(post2));
+            // Try adding the duplicate post
+            var exception = Assert.Throws<InvalidOperationException>(() => Post.AddPost(post2));
 
-            // Assert that the exception message matches the expected one
+            // Assert that the exception message matches
             Assert.Equal("The post is already associated with this account.", exception.Message);
         }
 
@@ -165,6 +165,54 @@ namespace BYTProject.UnitTesting
             Assert.Throws<ArgumentException>(() => Post.RemovePost(null));
         }
 
+        [Fact]
+        public void RemovePost_ShouldRemovePostCorrectly()
+        {
+            // Create and add a post
+            var post = new Post(1, "Caption 1", DateTime.Now);
+            Post.AddPost(post);
+
+            // Verify the post is added first
+            Assert.Contains(post, Post.GetPosts());
+
+            // Now, remove the post
+            Post.RemovePost(post);
+
+            // Verify that the post has been removed
+            Assert.DoesNotContain(post, Post.GetPosts());
+        }
         
+        [Fact]
+        public void RemovePost_ShouldRemoveAssociatedCommentsAndLikes()
+        {
+            var post = new Post(1, "Caption 1", DateTime.Now);
+            var comment = new Comment(1, "Content 1", DateTime.Now);
+            var like = new Like(1, DateTime.Now);
+
+            post.AddComment(comment);
+            post.AddLike(like);
+
+            post.RemoveComment(comment);
+            post.RemoveLike(like);
+
+            Assert.DoesNotContain(comment, post.Comments);
+            Assert.DoesNotContain(like, post.Likes);
+        }
+
+        [Fact]
+        public void RemovePost_ShouldDisassociateCommentsAndLikes()
+        {
+            var post = new Post(1, "Caption 1", DateTime.Now);
+            var comment = new Comment(1, "Content 1", DateTime.Now);
+            var like = new Like(1, DateTime.Now);
+
+            post.AddComment(comment);
+            post.AddLike(like);
+
+            Post.RemovePost(post);
+
+            Assert.DoesNotContain(comment, Comment.GetComments());
+            Assert.DoesNotContain(like, Like.GetLikes());
+        }
     }
 }
