@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Studies\\RiderProjects\\BYT\\BYTProject\\BYTProject\\BYTProject.csproj": {}
+    "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\BYTProject.csproj": {}
   },
   "projects": {
-    "C:\\Studies\\RiderProjects\\BYT\\BYTProject\\BYTProject\\BYTProject.csproj": {
+    "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\BYTProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Studies\\RiderProjects\\BYT\\BYTProject\\BYTProject\\BYTProject.csproj",
+        "projectUniqueName": "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\BYTProject.csproj",
         "projectName": "BYTProject",
-        "projectPath": "C:\\Studies\\RiderProjects\\BYT\\BYTProject\\BYTProject\\BYTProject.csproj",
-        "packagesPath": "C:\\Users\\egogo\\.nuget\\packages\\",
-        "outputPath": "C:\\Studies\\RiderProjects\\BYT\\BYTProject\\BYTProject\\obj\\",
+        "projectPath": "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\BYTProject.csproj",
+        "packagesPath": "C:\\Users\\prana\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\prana\\RiderProjects\\BYTProject\\BYTProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\egogo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\prana\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -69,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\prana\\.dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
