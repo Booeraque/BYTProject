@@ -9,8 +9,9 @@ namespace BYTProject.UnitTesting
     {
         public MusicAlbumTests()
         {
-            // Clear albums before each test
+            // Clear albums and musicians before each test
             MusicAlbum.ClearMusicAlbums();
+            Musician.ClearMusicians();
         }
         [Fact]
         public void AlbumId_ShouldThrowException_WhenValueIsNonPositive()
@@ -99,6 +100,83 @@ namespace BYTProject.UnitTesting
             Assert.Equal(2, albums.Count);
             Assert.Contains(albums, a => a.AlbumId == 1 && a.Description == "Album 1");
             Assert.Contains(albums, a => a.AlbumId == 2 && a.Description == "Album 2");
+        }
+        [Fact]
+        public void SetMusician_ShouldSetMusicianCorrectly()
+        {
+            var musician = new Musician(1, "Test Bio", 1);
+            var album = new MusicAlbum(1, "Single", "Test Description");
+
+            album.SetMusician(musician);
+
+            Assert.Equal(musician, album.GetMusician());
+            Assert.Contains(album, musician.GetMusicAlbums());
+        }
+
+        [Fact]
+        public void SetMusician_ShouldReassignMusicianCorrectly()
+        {
+            var musician1 = new Musician(1, "Bio 1", 1);
+            var musician2 = new Musician(2, "Bio 2", 2);
+            var album = new MusicAlbum(1, "Single", "Test Description");
+
+            album.SetMusician(musician1);
+            album.SetMusician(musician2);
+
+            Assert.Equal(musician2, album.GetMusician());
+            Assert.DoesNotContain(album, musician1.GetMusicAlbums());
+            Assert.Contains(album, musician2.GetMusicAlbums());
+        }
+
+        [Fact]
+        public void SetMusician_ShouldDoNothing_WhenSameMusicianIsSet()
+        {
+            var musician = new Musician(1, "Test Bio", 1);
+            var album = new MusicAlbum(1, "Single", "Test Description");
+
+            album.SetMusician(musician);
+            album.SetMusician(musician); // Set the same musician again
+
+            Assert.Equal(musician, album.GetMusician());
+            Assert.Single(musician.GetMusicAlbums()); // Ensure no duplicates are added
+        }
+
+        [Fact]
+        public void RemoveMusician_ShouldRemoveAssociation()
+        {
+            var musician = new Musician(1, "Test Bio", 1);
+            var album = new MusicAlbum(1, "Single", "Test Description");
+
+            album.SetMusician(musician);
+            album.RemoveMusician();
+
+            Assert.Null(album.GetMusician());
+            Assert.DoesNotContain(album, musician.GetMusicAlbums());
+        }
+
+        [Fact]
+        public void RemoveMusician_ShouldDoNothing_WhenNoMusicianIsSet()
+        {
+            var album = new MusicAlbum(1, "Single", "Test Description");
+
+            album.RemoveMusician(); // Attempt to remove when no musician is associated
+
+            Assert.Null(album.GetMusician()); // Ensure no errors occur
+        }
+
+        [Fact]
+        public void BidirectionalAssociation_ShouldBeConsistent()
+        {
+            var musician = new Musician(1, "Test Bio", 1);
+            var album = new MusicAlbum(1, "Single", "Test Description");
+
+            album.SetMusician(musician);
+            Assert.Equal(musician, album.GetMusician());
+            Assert.Contains(album, musician.GetMusicAlbums());
+
+            album.RemoveMusician();
+            Assert.Null(album.GetMusician());
+            Assert.DoesNotContain(album, musician.GetMusicAlbums());
         }
     }
 }

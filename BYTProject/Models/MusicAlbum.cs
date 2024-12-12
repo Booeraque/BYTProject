@@ -98,4 +98,47 @@ public class MusicAlbum
     {
         _musicAlbumsExtent.Clear();
     }
+    
+    // Association: Many MusicAlbums -> One Musician
+    private Musician _musician;
+
+    // Getter for the associated musician
+    public Musician GetMusician() => _musician;
+
+    // Set the musician (reverse connection)
+    public void SetMusician(Musician musician)
+    {
+        if (_musician == musician) return; // Avoid redundant operations
+
+        if (_musician != null)
+        {
+            // Temporarily skip reverse updates to avoid recursion
+            var previousMusician = _musician;
+            _musician = null; // Break the current reference
+            previousMusician.RemoveMusicAlbum(this); // Remove this album from the old musician
+        }
+
+        _musician = musician;
+
+        if (_musician != null && !_musician.GetMusicAlbums().Contains(this))
+        {
+            // Add this album to the new musician only if it doesn't already exist
+            _musician.AddMusicAlbum(this);
+        }
+    }
+
+    // Remove the association with the musician
+    public void RemoveMusician()
+    {
+        if (_musician == null) return; // Nothing to remove
+
+        var oldMusician = _musician;
+        _musician = null; // Break the association
+
+        // Ensure reverse reference removal only if the musician still has this album
+        if (oldMusician.GetMusicAlbums().Contains(this))
+        {
+            oldMusician.RemoveMusicAlbum(this);
+        }
+    }
 }
