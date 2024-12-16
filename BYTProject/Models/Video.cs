@@ -93,4 +93,41 @@ public class Video
     {
         _videoExtent.Clear();
     }
+    
+    // Sets the VideoEditor while maintaining the reverse relationship
+    public void SetVideoEditor(VideoEditor videoEditor)
+    {
+        if (videoEditor == null) throw new ArgumentNullException(nameof(videoEditor));
+        if (_videoEditor == videoEditor) return; // Avoid redundant operations
+
+        // Remove this video from the previous VideoEditor
+        if (_videoEditor != null)
+        {
+            var oldEditor = _videoEditor;
+            _videoEditor = null; // Temporarily break the association
+            oldEditor.RemoveVideo(this);
+        }
+
+        // Assign the new VideoEditor and update the reverse reference
+        _videoEditor = videoEditor;
+        if (!_videoEditor.UploadedVideos.Contains(this))
+        {
+            _videoEditor.AddVideo(this);
+        }
+    }
+
+    // Removes the VideoEditor and clears the reverse reference
+    public void RemoveVideoEditor()
+    {
+        if (_videoEditor == null) return; // Nothing to remove
+
+        var oldEditor = _videoEditor;
+        _videoEditor = null;
+
+        if (oldEditor.UploadedVideos.Contains(this)) // Ensure the association exists
+        {
+            oldEditor.RemoveVideo(this); // Remove the video from the editor's list
+        }
+    }
+
 }
