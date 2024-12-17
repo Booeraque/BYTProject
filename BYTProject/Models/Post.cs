@@ -46,12 +46,15 @@ public class Post
     // Static extent collection to store all Post objects
     private static readonly List<Post> _postsExtent = new List<Post>();
 
-    // Static method to add a Post to the extent, with validation
     public static void AddPost(Post post)
     {
         if (post == null)
             throw new ArgumentException("Post cannot be null.");
-        
+
+        // Check for duplicate PostId
+        if (_postsExtent.Any(p => p.PostId == post.PostId))
+            throw new InvalidOperationException("A post with the same PostId already exists.");
+
         _postsExtent.Add(post);
     }
 
@@ -76,9 +79,6 @@ public class Post
         PostId = postID;
         Caption = caption;
         CreatedAt = createdAt;
-
-        // Automatically add to extent
-        AddPost(this);
     }
 
     public Post()
@@ -197,6 +197,7 @@ public class Post
         // Remove the comment and handle reverse reference removal
         if (_comments.Remove(comment))
         {
+            _comments.Remove(comment);
             comment.RemovePost(); // Ensure the reverse connection is removed
         }
     }
@@ -233,6 +234,7 @@ public class Post
         // Remove the like and handle reverse reference removal
         if (_likes.Remove(like))
         {
+            _likes.Remove(like);
             like.RemovePost(); // Ensure the reverse connection is removed
         }
     }

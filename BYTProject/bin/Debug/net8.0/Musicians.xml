@@ -2,17 +2,7 @@
 <ArrayOfMusician xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Musician>
     <MusicianId>1</MusicianId>
-    <MusicianBio>Bio11</MusicianBio>
-    <AccountId>100</AccountId>
-  </Musician>
-  <Musician>
-    <MusicianId>2</MusicianId>
-    <MusicianBio>Bio21</MusicianBio>
-    <AccountId>101</AccountId>
-  </Musician>
-  <Musician>
-    <MusicianId>1</MusicianId>
-    <MusicianBio>Bio</MusicianBio>
+    <MusicianBio>Test Bio</MusicianBio>
     <AccountId>1</AccountId>
   </Musician>
 </ArrayOfMusician>
