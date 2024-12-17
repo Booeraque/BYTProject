@@ -9,9 +9,11 @@ namespace BYTProject.UnitTesting
     {
         public PostTagTests()
         {
-            // Clear post tags before each test
+            // Clear post tags and tags before each test
             PostTag.ClearPostTags();
+            Tag.ClearTags();
         }
+
         [Fact]
         public void AddedAt_ShouldThrowException_WhenValueIsInFuture()
         {
@@ -27,9 +29,52 @@ namespace BYTProject.UnitTesting
         }
 
         [Fact]
-        public void AddTag_ShouldThrowException_WhenPostTagIsNull()
+        public void AddTag_ShouldAssociateTagCorrectly()
         {
-            Assert.Throws<ArgumentException>(() => PostTag.AddTag(null));
+            var postTag = new PostTag(DateTime.Now);
+            var tag = new Tag(1);
+
+            postTag.AddTag(tag);
+
+            Assert.Contains(tag, postTag.Tags); // Forward association
+            Assert.Contains(postTag, tag.PostTags); // Reverse association
+        }
+
+        [Fact]
+        public void AddTag_ShouldThrowException_WhenTagIsNull()
+        {
+            var postTag = new PostTag(DateTime.Now);
+            Assert.Throws<ArgumentNullException>(() => postTag.AddTag(null));
+        }
+
+        [Fact]
+        public void AddTag_ShouldThrowException_WhenTagAlreadyAdded()
+        {
+            var postTag = new PostTag(DateTime.Now);
+            var tag = new Tag(1);
+
+            postTag.AddTag(tag);
+            Assert.Throws<InvalidOperationException>(() => postTag.AddTag(tag));
+        }
+
+        [Fact]
+        public void RemoveTag_ShouldDisassociateTagCorrectly()
+        {
+            var postTag = new PostTag(DateTime.Now);
+            var tag = new Tag(1);
+
+            postTag.AddTag(tag);
+            postTag.RemoveTag(tag);
+
+            Assert.DoesNotContain(tag, postTag.Tags); // Forward association cleared
+            Assert.DoesNotContain(postTag, tag.PostTags); // Reverse association cleared
+        }
+
+        [Fact]
+        public void RemoveTag_ShouldThrowException_WhenTagIsNull()
+        {
+            var postTag = new PostTag(DateTime.Now);
+            Assert.Throws<ArgumentNullException>(() => postTag.RemoveTag(null));
         }
 
         [Fact]

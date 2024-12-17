@@ -9,6 +9,7 @@ public class MediaTests
     public MediaTests()
     {
         Media.ClearMedia();
+        Group.ClearGroups();
     }
     
     [Fact]
@@ -57,8 +58,49 @@ public class MediaTests
     public void GetMediaList_ShouldReturnCorrectList()
     {
         var media = new Media(1, "Video");
+        Media.AddMedia(media);
         var mediaList = Media.GetMediaList();
         Assert.Contains(media, mediaList);
+    }
+
+    [Fact]
+    public void SetGroup_ShouldAssignGroupCorrectly()
+    {
+        var group = new Group(1, "Test Group", "Test Description");
+        var media = new Media(1, "Video");
+
+        media.SetGroup(group);
+
+        Assert.Equal(group, media.Group); // Forward association
+        Assert.Contains(media, group.MediaList); // Reverse association
+    }
+
+    [Fact]
+    public void SetGroup_ShouldReplaceExistingGroup()
+    {
+        var group1 = new Group(1, "Group 1", "Description 1");
+        var group2 = new Group(2, "Group 2", "Description 2");
+        var media = new Media(1, "Video");
+
+        media.SetGroup(group1);
+        media.SetGroup(group2);
+
+        Assert.Equal(group2, media.Group);
+        Assert.DoesNotContain(media, group1.MediaList); // Removed from previous group
+        Assert.Contains(media, group2.MediaList); // Added to new group
+    }
+
+    [Fact]
+    public void RemoveGroup_ShouldDisassociateGroupCorrectly()
+    {
+        var group = new Group(1, "Test Group", "Test Description");
+        var media = new Media(1, "Video");
+
+        media.SetGroup(group);
+        media.RemoveGroup();
+
+        Assert.Null(media.Group); // Forward association cleared
+        Assert.DoesNotContain(media, group.MediaList); // Reverse association cleared
     }
 
     [Fact]

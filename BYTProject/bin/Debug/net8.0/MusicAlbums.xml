@@ -10,34 +10,4 @@
     <Type>Mix</Type>
     <Description>Album 2</Description>
   </MusicAlbum>
-  <MusicAlbum>
-    <AlbumId>1</AlbumId>
-    <Type>Single</Type>
-    <Description>Mock Album Description</Description>
-  </MusicAlbum>
-  <MusicAlbum>
-    <AlbumId>1</AlbumId>
-    <Type>Single</Type>
-    <Description>Mock Album Description</Description>
-  </MusicAlbum>
-  <MusicAlbum>
-    <AlbumId>1</AlbumId>
-    <Type>Single</Type>
-    <Description>Mock Album Description</Description>
-  </MusicAlbum>
-  <MusicAlbum>
-    <AlbumId>1</AlbumId>
-    <Type>Single</Type>
-    <Description>Mock Album Description</Description>
-  </MusicAlbum>
-  <MusicAlbum>
-    <AlbumId>1</AlbumId>
-    <Type>Single</Type>
-    <Description>Mock Album Description</Description>
-  </MusicAlbum>
-  <MusicAlbum>
-    <AlbumId>1</AlbumId>
-    <Type>Single</Type>
-    <Description>Mock Album Description</Description>
-  </MusicAlbum>
 </ArrayOfMusicAlbum>

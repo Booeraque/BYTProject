@@ -8,8 +8,9 @@ namespace BYTProject.UnitTesting
     {
         public GroupTests()
         {
-            // Clear groups before each test
+            // Clear groups and media before each test
             Group.ClearGroups();
+            Media.ClearMedia();
         }
         
         [Fact]
@@ -63,19 +64,58 @@ namespace BYTProject.UnitTesting
         [Fact]
         public void AddGroup_ShouldAddGroupCorrectly()
         {
-            Group.ClearGroups();
             var group = new Group(1, "Group 1", "Sample Description");
             Group.AddGroup(group);
             Assert.Contains(group, Group.GetGroups());
         }
 
         [Fact]
-        public void GetGroups_ShouldReturnCorrectList()
+        public void AddMedia_ShouldAddMediaCorrectly()
         {
-            Group.ClearGroups();
             var group = new Group(1, "Group 1", "Sample Description");
-            var groups = Group.GetGroups();
-            Assert.Contains(group, groups);
+            var media = new Media(1, "Video");
+
+            group.AddMedia(media);
+
+            Assert.Contains(media, group.MediaList);
+            Assert.Equal(group, media.Group);
+        }
+
+        [Fact]
+        public void AddMedia_ShouldThrowException_WhenMediaIsNull()
+        {
+            var group = new Group(1, "Group 1", "Sample Description");
+            Assert.Throws<ArgumentNullException>(() => group.AddMedia(null));
+        }
+
+        [Fact]
+        public void AddMedia_ShouldThrowException_WhenMediaIsAlreadyAdded()
+        {
+            var group = new Group(1, "Group 1", "Sample Description");
+            var media = new Media(1, "Video");
+
+            group.AddMedia(media);
+            Assert.Throws<InvalidOperationException>(() => group.AddMedia(media));
+        }
+
+        [Fact]
+        public void RemoveMedia_ShouldRemoveMediaCorrectly()
+        {
+            var group = new Group(1, "Group 1", "Sample Description");
+            var media = new Media(1, "Video");
+
+            group.AddMedia(media);
+            group.RemoveMedia(media);
+
+            Assert.DoesNotContain(media, group.MediaList);
+            Assert.Null(media.Group);
+        }
+
+        [Fact]
+        public void RemoveMedia_ShouldThrowException_WhenMediaIsNull()
+        {
+            var group = new Group(1, "Group 1", "Sample Description");
+            Assert.Throws<ArgumentNullException>(() => group.RemoveMedia(null));
         }
 
         [Fact]

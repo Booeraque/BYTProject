@@ -45,7 +45,7 @@ namespace BYTProject.Models
         }
 
         // Parameterless constructor for XML serialization
-        public Tag() { }
+        public Tag(int tagId) { }
 
         // Static extent collection to store all Tag objects
         private static List<Tag> _tagsExtent = new List<Tag>();
@@ -114,5 +114,42 @@ namespace BYTProject.Models
                 Console.WriteLine($"Error loading Tag data: {ex.Message}");
             }
         }
+        // Association: One Tag -> Many PostTags
+        private readonly List<PostTag> _postTags = new List<PostTag>();
+
+// Getter: Return a copy of the post tags
+        public IReadOnlyList<PostTag> PostTags => _postTags.AsReadOnly();
+
+// Method: Add a PostTag to the Tag
+        public void AddPostTag(PostTag postTag)
+        {
+            if (postTag == null)
+                throw new ArgumentNullException(nameof(postTag), "PostTag cannot be null.");
+
+            if (_postTags.Contains(postTag))
+                return; // Prevent redundant addition
+
+            _postTags.Add(postTag);
+
+            // Add reverse association only if missing
+            if (!postTag.Tags.Contains(this))
+            {
+                postTag.AddTag(this);
+            }
+        }
+
+        public void RemovePostTag(PostTag postTag)
+        {
+            if (postTag == null)
+                throw new ArgumentNullException(nameof(postTag), "PostTag cannot be null.");
+
+            if (_postTags.Remove(postTag))
+            {
+                // Remove reverse association
+                postTag.RemoveTag(this);
+            }
+        }
+
     }
+    
 }

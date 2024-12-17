@@ -10,7 +10,7 @@ public class UserTests
         // Clear users before each test
         User.ClearUsers();
     }
-    
+
     [Fact]
     public void AccountID_ShouldThrowException_WhenValueIsNonPositive()
     {
@@ -55,6 +55,54 @@ public class UserTests
         var user = new User(1, true);
         var users = User.GetUsers();
         Assert.Contains(user, users);
+    }
+
+    [Fact]
+    public void AddAdminRight_ShouldAddRightCorrectly()
+    {
+        var user = new User(1, true);
+        user.AddAdminRight("ManagePosts");
+        Assert.Contains("ManagePosts", user.AdminRights);
+    }
+
+    [Fact]
+    public void AddAdminRight_ShouldThrowException_WhenRightIsNullOrEmpty()
+    {
+        var user = new User(1, true);
+        Assert.Throws<ArgumentNullException>(() => user.AddAdminRight(null));
+        Assert.Throws<ArgumentNullException>(() => user.AddAdminRight(""));
+    }
+
+    [Fact]
+    public void AddAdminRight_ShouldThrowException_WhenUserIsNotAdmin()
+    {
+        var user = new User(1, false);
+        Assert.Throws<InvalidOperationException>(() => user.AddAdminRight("ManagePosts"));
+    }
+
+    [Fact]
+    public void AddAdminRight_ShouldThrowException_WhenRightIsDuplicate()
+    {
+        var user = new User(1, true);
+        user.AddAdminRight("ManagePosts");
+        Assert.Throws<InvalidOperationException>(() => user.AddAdminRight("ManagePosts"));
+    }
+
+    [Fact]
+    public void RemoveAdminRight_ShouldRemoveRightCorrectly()
+    {
+        var user = new User(1, true);
+        user.AddAdminRight("ManagePosts");
+        user.RemoveAdminRight("ManagePosts");
+
+        Assert.DoesNotContain("ManagePosts", user.AdminRights);
+    }
+
+    [Fact]
+    public void RemoveAdminRight_ShouldThrowException_WhenRightDoesNotExist()
+    {
+        var user = new User(1, true);
+        Assert.Throws<InvalidOperationException>(() => user.RemoveAdminRight("NonExistentRight"));
     }
 
     [Fact]

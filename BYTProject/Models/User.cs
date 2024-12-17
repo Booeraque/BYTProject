@@ -77,4 +77,35 @@ public class User
     {
         _usersExtent.Clear();
     }
+    // Association: One User -> Many Rights (as Admin)
+    private readonly List<string> _adminRights = new List<string>();
+
+// Getter: Return a copy of the admin rights
+    public IReadOnlyList<string> AdminRights => _adminRights.AsReadOnly();
+
+// Method: Add an Admin Right to the User
+    public void AddAdminRight(string right)
+    {
+        if (string.IsNullOrEmpty(right))
+            throw new ArgumentNullException(nameof(right), "Right cannot be null or empty.");
+
+        if (!_isAdmin)
+            throw new InvalidOperationException("Only admin users can have rights.");
+
+        if (_adminRights.Contains(right))
+            throw new InvalidOperationException("The right is already assigned to this admin user.");
+
+        _adminRights.Add(right);
+    }
+
+// Method: Remove an Admin Right from the User
+    public void RemoveAdminRight(string right)
+    {
+        if (string.IsNullOrEmpty(right))
+            throw new ArgumentNullException(nameof(right), "Right cannot be null or empty.");
+
+        if (!_adminRights.Remove(right))
+            throw new InvalidOperationException("The right does not exist in this admin user's rights.");
+    }
+
 }

@@ -90,6 +90,41 @@ public class Group
     {
         _groupsExtent = PersistenceManager.LoadExtent<Group>("Groups.xml");
     }
-    
+    // Association: One Group -> Many Media
+    private readonly List<Media> _mediaList = new List<Media>();
+
+// Getter: Return a copy of the media list
+    public IReadOnlyList<Media> MediaList => _mediaList.AsReadOnly();
+
+// Method: Add a Media to the Group
+    public void AddMedia(Media media)
+    {
+        if (media == null)
+            throw new ArgumentNullException(nameof(media), "Media cannot be null.");
+
+        // Check if the media is already associated with this group
+        if (_mediaList.Any(m => m.MediaId == media.MediaId))
+            throw new InvalidOperationException("The media is already associated with this group.");
+
+        // Ensure the media is disassociated from any previous group
+        media.SetGroup(this);
+
+        // Add the media to this group's list
+        _mediaList.Add(media);
+    }
+
+// Method: Remove a Media from the Group
+    public void RemoveMedia(Media media)
+    {
+        if (media == null)
+            throw new ArgumentNullException(nameof(media), "Media cannot be null.");
+
+        // Remove the media and handle reverse reference removal
+        if (_mediaList.Remove(media))
+        {
+            media.RemoveGroup(); // Ensure the reverse connection is removed
+        }
+    }
+
     
 }
