@@ -100,6 +100,7 @@ namespace BYTProject.UnitTesting
         public void GetPosts_ShouldReturnCorrectList()
         {
             var post = new Post(1, "Caption 1", DateTime.Now);
+            Post.AddPost(post);
             var posts = Post.GetPosts();
             Assert.Contains(post, posts);
         }

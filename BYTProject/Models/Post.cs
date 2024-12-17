@@ -58,11 +58,21 @@ public class Post
         _postsExtent.Add(post);
     }
 
-    // Static method to remove a Post from the extent
     public static void RemovePost(Post post)
     {
         if (post == null)
             throw new ArgumentException("Post cannot be null.");
+
+        // Remove associated comments and likes
+        foreach (var comment in post.Comments.ToList())
+        {
+            post.RemoveComment(comment);
+        }
+
+        foreach (var like in post.Likes.ToList())
+        {
+            post.RemoveLike(like);
+        }
 
         _postsExtent.Remove(post);
     }
