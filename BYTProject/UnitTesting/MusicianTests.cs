@@ -8,8 +8,9 @@ namespace BYTProject.UnitTesting
     {
         public MusicianTests()
         {
-            // Clear musicians before each test
+            // Clear musicians and music before each test
             Musician.ClearMusicians();
+            Music.ClearMusic();
         }
         
         [Fact]
@@ -207,6 +208,138 @@ namespace BYTProject.UnitTesting
             Assert.Contains(album, musician2.GetMusicAlbums());
             Assert.Equal(musician2, album.GetMusician());
         }
+        
+        //test for music
+        
+        [Fact]
+        public void AddMusic_ShouldAddMusicToMusician()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var music = new Music(1, "Test Music", musician, new MusicAlbum(1, "Single", "Test Album"));
 
+            musician.AddMusic(music);
+
+            Assert.Contains(music, musician.GetMusicList());
+        }
+
+        
+        [Fact]
+        public void AddMusic_ShouldSetMusicianOnMusic()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var music = new Music(1, "Test Music", musician, new MusicAlbum(1, "Single", "Test Album"));
+
+            musician.AddMusic(music);
+
+            Assert.Equal(musician, music.Musician);
+        }
+
+        [Fact]
+        public void AddMusic_ShouldThrowException_WhenMusicIsNull()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+
+            Assert.Throws<ArgumentNullException>(() => musician.AddMusic(null));
+        }
+
+        [Fact]
+        public void AddMusic_ShouldThrowException_WhenMusicAlreadyExists()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var music = new Music(1, "Test Music", musician, new MusicAlbum(1, "Single", "Test Album"));
+
+            musician.AddMusic(music);
+
+            Assert.Throws<InvalidOperationException>(() => musician.AddMusic(music));
+        }
+
+        [Fact]
+        public void RemoveMusic_ShouldRemoveMusicFromMusician()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var music = new Music(1, "Test Music", musician, new MusicAlbum(1, "Single", "Test Album"));
+
+            musician.AddMusic(music);
+            musician.RemoveMusic(music);
+
+            Assert.DoesNotContain(music, musician.GetMusicList());
+        }
+
+        [Fact]
+        public void RemoveMusic_ShouldRemoveMusicianFromMusic()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var music = new Music(1, "Test Music", musician, new MusicAlbum(1, "Single", "Test Album"));
+
+            musician.AddMusic(music);
+            musician.RemoveMusic(music);
+
+            Assert.Null(music.Musician);
+        }
+
+        [Fact]
+        public void RemoveMusic_ShouldThrowException_WhenMusicIsNull()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+
+            Assert.Throws<ArgumentNullException>(() => musician.RemoveMusic(null));
+        }
+
+        [Fact]
+        public void RemoveMusic_ShouldThrowException_WhenMusicDoesNotExist()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var album = new MusicAlbum(1, "Single", "Test Album");
+            var music = new Music(1, "Test Music", musician, album); // Valid Musician provided
+
+            // Do not add the music to the musician
+            Assert.Throws<InvalidOperationException>(() => musician.RemoveMusic(music));
+        }
+
+
+        [Fact]
+        public void Musician_ShouldNotHaveDuplicateMusic()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var music1 = new Music(1, "Music 1", musician, new MusicAlbum(1, "Single", "Album 1"));
+            var music2 = new Music(2, "Music 2", musician, new MusicAlbum(2, "Single", "Album 2"));
+
+            musician.AddMusic(music1);
+            musician.AddMusic(music2);
+
+            Assert.Equal(2, musician.GetMusicList().Count);
+        }
+
+        [Fact]
+        public void Music_ShouldChangeMusician_WhenReassigned()
+        {
+            var musician1 = new Musician(1, "Bio 1", 100);
+            var musician2 = new Musician(2, "Bio 2", 101);
+            var music = new Music(1, "Test Music", musician1, new MusicAlbum(1, "Single", "Test Album"));
+
+            musician1.AddMusic(music);
+            musician2.AddMusic(music);
+
+            Assert.DoesNotContain(music, musician1.GetMusicList());
+            Assert.Contains(music, musician2.GetMusicList());
+            Assert.Equal(musician2, music.Musician);
+        }
+
+        [Fact]
+        public void Music_ShouldRemoveOldMusician_WhenReassigned()
+        {
+            var musician1 = new Musician(1, "Bio 1", 100);
+            var musician2 = new Musician(2, "Bio 2", 101);
+            var album = new MusicAlbum(1, "Single", "Test Album");
+            var music = new Music(1, "Test Music", musician1, album);
+
+            musician1.AddMusic(music);
+            musician2.AddMusic(music); // This reassignment will now work as musician1 is valid.
+
+            Assert.DoesNotContain(music, musician1.GetMusicList());
+            Assert.Contains(music, musician2.GetMusicList());
+            Assert.Equal(musician2, music.Musician);
+        }
     }
+
 }

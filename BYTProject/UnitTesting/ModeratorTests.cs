@@ -70,7 +70,40 @@ namespace BYTProject.UnitTesting
             var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
             Assert.Contains(moderator, Moderator.GetModerators());
         }
-        
+
+        [Fact]
+        public void AddManagedRight_ShouldAddRightSuccessfully()
+        {
+            var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
+            moderator.AddManagedRight("ManagePosts");
+            Assert.Contains("ManagePosts", moderator.ManagedRights);
+        }
+
+        [Fact]
+        public void AddManagedRight_ShouldThrowException_WhenAddingDuplicateRight()
+        {
+            var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
+            moderator.AddManagedRight("ManagePosts");
+            Assert.Throws<InvalidOperationException>(() => moderator.AddManagedRight("ManagePosts"));
+        }
+
+        [Fact]
+        public void RemoveManagedRight_ShouldRemoveRightSuccessfully()
+        {
+            var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
+            moderator.AddManagedRight("ManagePosts");
+            moderator.RemoveManagedRight("ManagePosts");
+            Assert.DoesNotContain("ManagePosts", moderator.ManagedRights);
+        }
+
+        [Fact]
+        public void RemoveManagedRight_ShouldThrowException_WhenRightDoesNotExist()
+        {
+            var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
+            Assert.Throws<InvalidOperationException>(() => moderator.RemoveManagedRight("NonExistentRight"));
+        }
+
+
         [Fact]
         public void SaveAndLoadModerators_ShouldPersistDataCorrectly()
         {

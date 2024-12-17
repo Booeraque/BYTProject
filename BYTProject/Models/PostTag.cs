@@ -61,4 +61,41 @@ public class PostTag
     {
         _postTagsExtent.Clear();
     }
+    // Association: One PostTag -> Many Tags
+    private readonly List<Tag> _tags = new List<Tag>();
+
+// Getter: Return a copy of the tags
+    public IReadOnlyList<Tag> Tags => _tags.AsReadOnly();
+
+// Method: Add a Tag to the PostTag
+    public void AddTag(Tag tag)
+    {
+        if (tag == null)
+            throw new ArgumentNullException(nameof(tag), "Tag cannot be null.");
+
+        if (_tags.Contains(tag))
+            return; // Prevent redundant addition
+
+        _tags.Add(tag);
+
+        // Add reverse association only if missing
+        if (!tag.PostTags.Contains(this))
+        {
+            tag.AddPostTag(this);
+        }
+    }
+
+    public void RemoveTag(Tag tag)
+    {
+        if (tag == null)
+            throw new ArgumentNullException(nameof(tag), "Tag cannot be null.");
+
+        if (_tags.Remove(tag))
+        {
+            // Remove reverse association
+            tag.RemovePostTag(this);
+        }
+    }
+
+
 }

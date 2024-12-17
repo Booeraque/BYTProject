@@ -92,4 +92,38 @@ public class VideoEditor
     {
         _videoEditorsExtent.Clear();
     }
+    
+    
+    // Association: One VideoEditor -> Many Videos
+    private readonly List<Video> _uploadedVideos = new List<Video>();
+    public IReadOnlyList<Video> UploadedVideos => _uploadedVideos.AsReadOnly();
+
+    // Method to add a Video to the VideoEditor
+    public void AddVideo(Video video)
+    {
+        if (video == null) throw new ArgumentNullException(nameof(video));
+        if (_uploadedVideos.Contains(video)) throw new InvalidOperationException("This video is already uploaded by this editor.");
+
+        _uploadedVideos.Add(video);
+        video.SetVideoEditor(this); // Maintain bidirectional association
+    }
+
+    // Method to remove a Video from the VideoEditor
+    public void RemoveVideo(Video video)
+    {
+        if (video == null) throw new ArgumentNullException(nameof(video));
+        if (!_uploadedVideos.Remove(video)) // Check if video exists in the list
+            throw new InvalidOperationException("This video is not uploaded by this editor.");
+
+        video.RemoveVideoEditor(); // Clear reverse reference
+    }
+    
+
+    
+    public IReadOnlyList<Video> GetVideos()
+    {
+        return UploadedVideos;
+    }
+
+    
 }

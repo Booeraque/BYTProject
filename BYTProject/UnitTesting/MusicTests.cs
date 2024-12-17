@@ -114,5 +114,60 @@ namespace BYTProject.UnitTesting
             Assert.Equal(2, musicList[1].MusicId);
             Assert.Equal("Description 2", musicList[1].Description);
         }
+        
+        [Fact]
+        public void Music_ShouldNotAllowDuplicateAssociationWithMusician()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var musicAlbum = new MusicAlbum(1, "Single", "Test Album");
+            var music = new Music(1, "Test Music", musician, musicAlbum);
+
+            // Add the music to the musician
+            musician.AddMusic(music);
+
+            // Try adding the same music again
+            Assert.Throws<InvalidOperationException>(() => musician.AddMusic(music));
+        }
+
+        
+
+        [Fact]
+        public void RemoveMusician_ShouldClearMusicianFromMusic()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var musicAlbum = new MusicAlbum(1, "Single", "Test Album");
+            var music = new Music(1, "Test Music", musician, musicAlbum);
+
+            // Explicitly add the music to the musician
+            musician.AddMusic(music);
+
+            // Assert that the music is associated with the musician
+            Assert.Contains(music, musician.GetMusicList());
+
+            // Remove the music from the musician
+            musician.RemoveMusic(music);
+
+            // Assert that the music is no longer associated
+            Assert.DoesNotContain(music, musician.GetMusicList());
+
+            // Assert that the musician reference is cleared in the music
+            Assert.Null(music.Musician);
+        }
+
+        
+        [Fact]
+        public void RemoveMusic_ShouldRemoveMusicFromMusician()
+        {
+            var musician = new Musician(1, "Test Bio", 100);
+            var musicAlbum = new MusicAlbum(1, "Single", "Test Album");
+            var music = new Music(1, "Test Music", musician, musicAlbum);
+
+            musician.AddMusic(music);
+            musician.RemoveMusic(music);
+
+            Assert.DoesNotContain(music, musician.GetMusicList());
+            Assert.Null(music.Musician); // Ensure reverse reference is cleared
+        }
+
     }
 }

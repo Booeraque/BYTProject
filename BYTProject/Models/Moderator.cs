@@ -67,7 +67,6 @@ namespace BYTProject.Models
             _rights = rights;
         }
 
-
         public static void SaveModerators()
         {
             try
@@ -107,6 +106,37 @@ namespace BYTProject.Models
         public static void ClearModerators()
         {
             _moderatorsExtent.Clear();
+        }
+
+        // Association handling methods added here
+        private readonly List<string> _managedRights = new List<string>();
+
+        // Getter: Return a copy of the managed rights
+        public IReadOnlyList<string> ManagedRights => _managedRights.AsReadOnly();
+
+        // Method: Add a Right to the Moderator
+        public void AddManagedRight(string right)
+        {
+            if (string.IsNullOrEmpty(right))
+                throw new ArgumentNullException(nameof(right), "Right cannot be null or empty.");
+
+            if (_managedRights.Count >= 5)
+                throw new InvalidOperationException("A moderator cannot have more than 5 rights.");
+
+            if (_managedRights.Contains(right))
+                throw new InvalidOperationException("The right is already assigned to this moderator.");
+
+            _managedRights.Add(right);
+        }
+
+        // Method: Remove a Right from the Moderator
+        public void RemoveManagedRight(string right)
+        {
+            if (string.IsNullOrEmpty(right))
+                throw new ArgumentNullException(nameof(right), "Right cannot be null or empty.");
+
+            if (!_managedRights.Remove(right))
+                throw new InvalidOperationException("The right does not exist in this moderator's managed rights.");
         }
     }
 }

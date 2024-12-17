@@ -75,4 +75,36 @@ public class Media
     {
         _mediaExtent.Clear();
     }
+    // Association: One Media -> One Group
+    private Group _group;
+
+// Getter: Get the associated group
+    public Group Group => _group;
+
+// Method: Set the Group for the Media
+    public void SetGroup(Group group)
+    {
+        if (_group == group) return;
+
+        // Disassociate from the current group, if any
+        _group?.RemoveMedia(this);
+
+        // Set the new group
+        _group = group;
+
+        // Add this media to the new group
+        group?.AddMedia(this);
+    }
+
+// Method: Remove the Group reference
+    public void RemoveGroup()
+    {
+        if (_group != null)
+        {
+            var previousGroup = _group;
+            _group = null; // Clear forward reference
+            previousGroup.RemoveMedia(this); // Remove from the group's media list
+        }
+    }
+
 }
