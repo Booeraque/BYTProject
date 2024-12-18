@@ -75,36 +75,33 @@ public class Media
     {
         _mediaExtent.Clear();
     }
-    // Association: One Media -> One Group
-    private Group _group;
+    private Post _post;
 
-// Getter: Get the associated group
-    public Group Group => _group;
+    public Post Post => _post;
 
-// Method: Set the Group for the Media
-    public void SetGroup(Group group)
+    public void SetPost(Post post)
     {
-        if (_group == group) return;
+        if (_post == post) return;
 
-        // Disassociate from the current group, if any
-        _group?.RemoveMedia(this);
+        // Remove reverse connection from the old post, if any
+        if (_post != null)
+        {
+            _post.RemoveMedia(this);
+        }
 
-        // Set the new group
-        _group = group;
-
-        // Add this media to the new group
-        group?.AddMedia(this);
+        // Update the internal reference to the new post
+        _post = post;
     }
 
-// Method: Remove the Group reference
-    public void RemoveGroup()
+
+    public void RemovePost()
     {
-        if (_group != null)
+        if (_post != null)
         {
-            var previousGroup = _group;
-            _group = null; // Clear forward reference
-            previousGroup.RemoveMedia(this); // Remove from the group's media list
+            _post.RemoveMedia(this); // Remove this Media from Post's MediaList
+            _post = null;            // Remove the reference in Media
         }
     }
+
 
 }

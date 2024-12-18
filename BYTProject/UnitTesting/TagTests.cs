@@ -54,58 +54,7 @@ public class TagTests
         var tag = new Tag(1, categories);
         Assert.Equal(categories, tag.Categories);
     }
-
-    [Fact]
-    public void AddPostTag_ShouldAssociatePostTagCorrectly()
-    {
-        var tag = new Tag(1, new List<string> { "Category 1" });
-        var postTag = new PostTag(DateTime.Now);
-
-        tag.AddPostTag(postTag);
-
-        // Forward and reverse associations
-        Assert.Contains(postTag, tag.PostTags);
-        Assert.Contains(tag, postTag.Tags);
-    }
-
-
-    [Fact]
-    public void AddPostTag_ShouldThrowException_WhenPostTagIsNull()
-    {
-        var tag = new Tag(1, new List<string> { "Category 1" });
-        Assert.Throws<ArgumentNullException>(() => tag.AddPostTag(null));
-    }
-
-    [Fact]
-    public void AddPostTag_ShouldThrowException_WhenPostTagAlreadyAdded()
-    {
-        var tag = new Tag(1, new List<string> { "Category 1" });
-        var postTag = new PostTag(System.DateTime.Now);
-
-        tag.AddPostTag(postTag);
-        Assert.Throws<InvalidOperationException>(() => tag.AddPostTag(postTag));
-    }
-
-    [Fact]
-    public void RemovePostTag_ShouldDisassociatePostTagCorrectly()
-    {
-        var tag = new Tag(1, new List<string> { "Category 1" });
-        var postTag = new PostTag(System.DateTime.Now);
-
-        tag.AddPostTag(postTag);
-        tag.RemovePostTag(postTag);
-
-        Assert.DoesNotContain(postTag, tag.PostTags); // Forward association cleared
-        Assert.DoesNotContain(tag, postTag.Tags);     // Reverse association cleared
-    }
-
-    [Fact]
-    public void RemovePostTag_ShouldThrowException_WhenPostTagIsNull()
-    {
-        var tag = new Tag(1, new List<string> { "Category 1" });
-        Assert.Throws<ArgumentNullException>(() => tag.RemovePostTag(null));
-    }
-
+    
     [Fact]
     public void AddTag_ShouldThrowException_WhenTagIsNull()
     {
@@ -146,4 +95,93 @@ public class TagTests
         Assert.Equal(2, tags[1].TagId);
         Assert.Equal(new List<string> { "Category 20" }, tags[1].Categories);
     }
+    [Fact]
+    public void AddPost_ShouldAssociatePostWithTag()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        var post = new Post(1, "Post Caption", DateTime.Now);
+
+        tag.AddPost(post);
+
+        Assert.Contains(post, tag.Posts);
+    }
+
+    [Fact]
+    public void AddPost_ShouldThrowException_WhenPostAlreadyAssociated()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        var post = new Post(1, "Post Caption", DateTime.Now);
+
+        tag.AddPost(post);
+        var exception = Assert.Throws<InvalidOperationException>(() => tag.AddPost(post));
+
+        Assert.Equal("Post is already associated with this tag.", exception.Message);
+    }
+
+    [Fact]
+    public void RemovePost_ShouldDisassociatePostFromTag()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        var post = new Post(1, "Post Caption", DateTime.Now);
+
+        tag.AddPost(post);
+        tag.RemovePost(post);
+
+        Assert.DoesNotContain(post, tag.Posts);
+    }
+
+    [Fact]
+    public void RemovePost_ShouldDoNothing_WhenPostNotAssociated()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        var post = new Post(1, "Post Caption", DateTime.Now);
+
+        tag.RemovePost(post); // Should not throw
+        Assert.Empty(tag.Posts);
+    }
+    [Fact]
+    public void AddPostTag_ShouldAssociatePostTagWithTag()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        var postTag = new PostTag(DateTime.Now);
+
+        tag.AddPostTag(postTag);
+
+        Assert.Contains(postTag, tag.PostTags);
+    }
+
+    [Fact]
+    public void AddPostTag_ShouldThrowException_WhenPostTagAlreadyAssociated()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        var postTag = new PostTag(DateTime.Now);
+
+        tag.AddPostTag(postTag);
+        var exception = Assert.Throws<InvalidOperationException>(() => tag.AddPostTag(postTag));
+
+        Assert.Equal("PostTag is already associated with this tag.", exception.Message);
+    }
+
+    [Fact]
+    public void RemovePostTag_ShouldDisassociatePostTagFromTag()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        var postTag = new PostTag(DateTime.Now);
+
+        tag.AddPostTag(postTag);
+        tag.RemovePostTag(postTag);
+
+        Assert.DoesNotContain(postTag, tag.PostTags);
+    }
+
+    [Fact]
+    public void RemovePostTag_ShouldDoNothing_WhenPostTagNotAssociated()
+    {
+        var tag = new Tag(1, new List<string> { "Category 1" });
+        var postTag = new PostTag(DateTime.Now);
+
+        tag.RemovePostTag(postTag); // Should not throw
+        Assert.Empty(tag.PostTags);
+    }
+
 }

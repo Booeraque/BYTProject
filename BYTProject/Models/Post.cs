@@ -102,16 +102,18 @@ public class Post
     // Method to load all posts from XML (for persistence)
     public static void LoadPosts()
     {
-        try
+        var posts = PersistenceManager.LoadExtent<Post>("Posts.xml");
+        _postsExtent.Clear();
+        _postsExtent.AddRange(posts);
+
+        // Reconnect posts to their groups
+        foreach (var post in posts)
         {
-            _postsExtent.Clear();
-            _postsExtent.AddRange(PersistenceManager.LoadExtent<Post>("Posts.xml"));
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to load posts.", ex);
+            post.Group?.AddPost(post);
         }
     }
+
+
 
     public static void ClearPosts()
     {
@@ -236,4 +238,107 @@ public class Post
             like.RemovePost(); // Ensure the reverse connection is removed
         }
     }
+    // Association: One Post -> 1..10 Media
+    private readonly List<Media> _mediaList = new List<Media>();
+
+    public IReadOnlyList<Media> MediaList => _mediaList.AsReadOnly();
+
+    public void AddMedia(Media media)
+    {
+        if (media == null)
+            throw new ArgumentNullException(nameof(media), "Media cannot be null.");
+
+        if (_mediaList.Contains(media))
+            throw new InvalidOperationException("Media is already associated with this post.");
+
+        if (_mediaList.Count >= 10)
+            throw new InvalidOperationException("A post can have a maximum of 10 media items.");
+
+        // Add media to the collection
+        _mediaList.Add(media);
+
+        // Update reverse connection only if necessary
+        if (media.Post != this)
+        {
+            media.SetPost(this);
+        }
+    }
+
+    public void RemoveMedia(Media media)
+    {
+        if (media == null)
+            throw new ArgumentNullException(nameof(media), "Media cannot be null.");
+
+        if (_mediaList.Remove(media))
+        {
+            // Remove reverse connection
+            media.SetPost(null);
+        }
+    }
+
+
+    // Association: Post -> Group
+    private Group _group;
+
+    public Group Group => _group;
+
+    public void SetGroup(Group group)
+    {
+        if (_group == group) return; // Prevent redundant calls
+
+        _group?.RemovePost(this); // Remove from the current group, if any
+        _group = group;
+
+        if (group != null && !group.Posts.Contains(this)) // Avoid re-adding
+        {
+            group.AddPost(this);
+        }
+    }
+
+
+    public void RemoveGroup()
+    {
+        if (_group != null)
+        {
+            _group.RemovePost(this); // Remove this post from the group's Posts collection
+            _group = null;           // Nullify the group reference in the post
+        }
+    }
+
+
+// Association: Post -> Tags
+    private readonly List<Tag> _tags = new List<Tag>();
+
+    public IReadOnlyList<Tag> Tags => _tags.AsReadOnly();
+
+    public void AddTag(Tag tag)
+    {
+        if (tag == null)
+            throw new ArgumentNullException(nameof(tag), "Tag cannot be null.");
+
+        if (_tags.Contains(tag))
+            throw new InvalidOperationException("Tag is already associated with this post.");
+
+        _tags.Add(tag);
+
+        // Update reverse connection only if necessary
+        if (!tag.Posts.Contains(this))
+        {
+            tag.AddPost(this);
+        }
+    }
+
+    public void RemoveTag(Tag tag)
+    {
+        if (tag == null)
+            throw new ArgumentNullException(nameof(tag), "Tag cannot be null.");
+
+        if (_tags.Remove(tag))
+        {
+            tag.RemovePost(this);
+        }
+    }
+
+
+
 }

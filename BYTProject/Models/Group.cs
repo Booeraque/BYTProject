@@ -90,40 +90,29 @@ public class Group
     {
         _groupsExtent = PersistenceManager.LoadExtent<Group>("Groups.xml");
     }
-    // Association: One Group -> Many Media
-    private readonly List<Media> _mediaList = new List<Media>();
 
-// Getter: Return a copy of the media list
-    public IReadOnlyList<Media> MediaList => _mediaList.AsReadOnly();
 
-// Method: Add a Media to the Group
-    public void AddMedia(Media media)
+
+    // Association: One Group -> Many Posts
+    private readonly List<Post> _posts = new List<Post>();
+
+    public IReadOnlyList<Post> Posts => _posts.AsReadOnly();
+
+    public void AddPost(Post post)
     {
-        if (media == null)
-            throw new ArgumentNullException(nameof(media), "Media cannot be null.");
+        if (post == null) throw new ArgumentNullException(nameof(post), "Post cannot be null.");
+        if (_posts.Contains(post)) throw new InvalidOperationException("Post is already in this group.");
 
-        // Check if the media is already associated with this group
-        if (_mediaList.Any(m => m.MediaId == media.MediaId))
-            throw new InvalidOperationException("The media is already associated with this group.");
-
-        // Ensure the media is disassociated from any previous group
-        media.SetGroup(this);
-
-        // Add the media to this group's list
-        _mediaList.Add(media);
+        _posts.Add(post);
+        post.SetGroup(this);
     }
 
-// Method: Remove a Media from the Group
-    public void RemoveMedia(Media media)
+    public void RemovePost(Post post)
     {
-        if (media == null)
-            throw new ArgumentNullException(nameof(media), "Media cannot be null.");
+        if (post == null)
+            throw new ArgumentNullException(nameof(post), "Post cannot be null.");
 
-        // Remove the media and handle reverse reference removal
-        if (_mediaList.Remove(media))
-        {
-            media.RemoveGroup(); // Ensure the reverse connection is removed
-        }
+        _posts.Remove(post);
     }
 
     

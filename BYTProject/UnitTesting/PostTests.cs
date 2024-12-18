@@ -214,5 +214,119 @@ namespace BYTProject.UnitTesting
             Assert.DoesNotContain(comment, Comment.GetComments());
             Assert.DoesNotContain(like, Like.GetLikes());
         }
+        [Fact]
+        public void AddMedia_ShouldAddMediaToPost()
+        {
+            var post = new Post(1, "Caption", DateTime.Now);
+            var media = new Media(1, "Image");
+
+            post.AddMedia(media);
+
+            Assert.Contains(media, post.MediaList);
+            Assert.Equal(post, media.Post); // Verify reverse connection
+        }
+
+        [Fact]
+        public void AddMedia_ShouldThrowException_WhenMediaAlreadyExists()
+        {
+            var post = new Post(1, "Caption", DateTime.Now);
+            var media = new Media(1, "Image");
+
+            post.AddMedia(media);
+
+            var exception = Assert.Throws<InvalidOperationException>(() => post.AddMedia(media));
+            Assert.Equal("Media is already associated with this post.", exception.Message);
+        }
+
+        [Fact]
+        public void AddMedia_ShouldThrowException_WhenExceedingMediaLimit()
+        {
+            var post = new Post(1, "Caption", DateTime.Now);
+
+            for (int i = 1; i <= 10; i++)
+            {
+                post.AddMedia(new Media(i, $"Image{i}"));
+            }
+
+            var extraMedia = new Media(11, "ExtraImage");
+
+            var exception = Assert.Throws<InvalidOperationException>(() => post.AddMedia(extraMedia));
+            Assert.Equal("A post can have a maximum of 10 media items.", exception.Message);
+        }
+
+        [Fact]
+        public void RemoveMedia_ShouldDisassociateMediaFromPost()
+        {
+            var post = new Post(1, "Caption", DateTime.Now);
+            var media = new Media(1, "Image");
+
+            post.AddMedia(media);
+            post.RemoveMedia(media);
+
+            Assert.DoesNotContain(media, post.MediaList);
+            Assert.Null(media.Post); // Verify reverse connection is removed
+        }
+        [Fact]
+        public void SetGroup_ShouldAssignGroupToPost()
+        {
+            var group = new Group(1, "Group 1", "Description");
+            var post = new Post(1, "Caption", DateTime.Now);
+
+            post.SetGroup(group);
+
+            Assert.Equal(group, post.Group);
+            Assert.Contains(post, group.Posts); // Verify reverse connection
+        }
+
+        [Fact]
+        public void RemoveGroup_ShouldDisassociateGroupFromPost()
+        {
+            var group = new Group(1, "Group 1", "Description");
+            var post = new Post(1, "Caption", DateTime.Now);
+
+            post.SetGroup(group);
+            post.RemoveGroup();
+
+            Assert.Null(post.Group); // Verify post no longer references the group
+            Assert.DoesNotContain(post, group.Posts); // Verify group no longer contains the post
+        }
+
+        [Fact]
+        public void AddTag_ShouldAssociateTagWithPost()
+        {
+            var post = new Post(1, "Caption", DateTime.Now);
+            var tag = new Tag(1, new System.Collections.Generic.List<string> { "Tag1" });
+
+            post.AddTag(tag);
+
+            Assert.Contains(tag, post.Tags);
+            Assert.Contains(post, tag.Posts); // Verify reverse connection
+        }
+
+        [Fact]
+        public void AddTag_ShouldThrowException_WhenTagAlreadyAssociated()
+        {
+            var post = new Post(1, "Caption", DateTime.Now);
+            var tag = new Tag(1, new System.Collections.Generic.List<string> { "Tag1" });
+
+            post.AddTag(tag);
+
+            var exception = Assert.Throws<InvalidOperationException>(() => post.AddTag(tag));
+            Assert.Equal("Tag is already associated with this post.", exception.Message);
+        }
+
+        [Fact]
+        public void RemoveTag_ShouldDisassociateTagFromPost()
+        {
+            var post = new Post(1, "Caption", DateTime.Now);
+            var tag = new Tag(1, new System.Collections.Generic.List<string> { "Tag1" });
+
+            post.AddTag(tag);
+            post.RemoveTag(tag);
+
+            Assert.DoesNotContain(tag, post.Tags);
+            Assert.DoesNotContain(post, tag.Posts); // Verify reverse connection
+        }
+
     }
 }

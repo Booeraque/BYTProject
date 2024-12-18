@@ -3,11 +3,26 @@
   <Post>
     <PostId>1</PostId>
     <Caption>Caption 1</Caption>
-    <CreatedAt>2024-12-17T18:58:23.0967167+01:00</CreatedAt>
+    <CreatedAt>2024-12-18T00:12:34.3911753+01:00</CreatedAt>
   </Post>
   <Post>
     <PostId>2</PostId>
     <Caption>Caption 2</Caption>
-    <CreatedAt>2024-12-17T18:58:23.0967198+01:00</CreatedAt>
+    <CreatedAt>2024-12-18T00:12:34.3911804+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>101</PostId>
+    <Caption>My first post!</Caption>
+    <CreatedAt>2024-12-18T00:19:11.6703083+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>102</PostId>
+    <Caption>Another update.</Caption>
+    <CreatedAt>2024-12-18T00:19:11.6706718+01:00</CreatedAt>
+  </Post>
+  <Post>
+    <PostId>103</PostId>
+    <Caption>A quick thought.</Caption>
+    <CreatedAt>2024-12-18T00:19:11.6706739+01:00</CreatedAt>
   </Post>
 </ArrayOfPost>

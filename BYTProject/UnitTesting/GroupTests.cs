@@ -8,11 +8,11 @@ namespace BYTProject.UnitTesting
     {
         public GroupTests()
         {
-            // Clear groups and media before each test
+            // Clear groups and posts before each test
             Group.ClearGroups();
-            Media.ClearMedia();
+            Post.ClearPosts();
         }
-        
+
         [Fact]
         public void GroupID_ShouldThrowException_WhenValueIsNonPositive()
         {
@@ -70,52 +70,75 @@ namespace BYTProject.UnitTesting
         }
 
         [Fact]
-        public void AddMedia_ShouldAddMediaCorrectly()
+        public void AddPost_ShouldCreateReverseConnection()
         {
             var group = new Group(1, "Group 1", "Sample Description");
-            var media = new Media(1, "Video");
+            var post = new Post(1, "Post Caption", DateTime.Now);
 
-            group.AddMedia(media);
+            group.AddPost(post);
 
-            Assert.Contains(media, group.MediaList);
-            Assert.Equal(group, media.Group);
+            Assert.Contains(post, group.Posts);
+            Assert.Equal(group, post.Group); // Verify reverse connection
         }
 
         [Fact]
-        public void AddMedia_ShouldThrowException_WhenMediaIsNull()
+        public void RemovePost_ShouldRemoveReverseConnection()
         {
             var group = new Group(1, "Group 1", "Sample Description");
-            Assert.Throws<ArgumentNullException>(() => group.AddMedia(null));
+            var post = new Post(1, "Post Caption", DateTime.Now);
+
+            group.AddPost(post);
+            group.RemovePost(post);
+
+            Assert.DoesNotContain(post, group.Posts);
+            Assert.Null(post.Group); // Verify reverse connection is removed
         }
 
         [Fact]
-        public void AddMedia_ShouldThrowException_WhenMediaIsAlreadyAdded()
+        public void AddPost_ShouldThrowException_WhenPostAlreadyInGroup()
         {
             var group = new Group(1, "Group 1", "Sample Description");
-            var media = new Media(1, "Video");
+            var post = new Post(1, "Post Caption", DateTime.Now);
 
-            group.AddMedia(media);
-            Assert.Throws<InvalidOperationException>(() => group.AddMedia(media));
+            group.AddPost(post);
+
+            var exception = Assert.Throws<InvalidOperationException>(() => group.AddPost(post));
+            Assert.Equal("Post is already in this group.", exception.Message);
         }
 
         [Fact]
-        public void RemoveMedia_ShouldRemoveMediaCorrectly()
+        public void ModifyPostConnection_ShouldUpdateGroup()
         {
-            var group = new Group(1, "Group 1", "Sample Description");
-            var media = new Media(1, "Video");
+            var group1 = new Group(1, "Group 1", "Description 1");
+            var group2 = new Group(2, "Group 2", "Description 2");
+            var post = new Post(1, "Post Caption", DateTime.Now);
 
-            group.AddMedia(media);
-            group.RemoveMedia(media);
+            group1.AddPost(post);
+            Assert.Equal(group1, post.Group);
 
-            Assert.DoesNotContain(media, group.MediaList);
-            Assert.Null(media.Group);
+            // Move post to a different group
+            group2.AddPost(post);
+
+            Assert.DoesNotContain(post, group1.Posts);
+            Assert.Contains(post, group2.Posts);
+            Assert.Equal(group2, post.Group); // Verify updated reverse connection
         }
 
         [Fact]
-        public void RemoveMedia_ShouldThrowException_WhenMediaIsNull()
+        public void AddPost_ShouldThrowException_WhenPostIsNull()
         {
             var group = new Group(1, "Group 1", "Sample Description");
-            Assert.Throws<ArgumentNullException>(() => group.RemoveMedia(null));
+            Assert.Throws<ArgumentNullException>(() => group.AddPost(null));
+        }
+
+        [Fact]
+        public void RemovePost_ShouldDoNothing_WhenPostNotInGroup()
+        {
+            var group = new Group(1, "Group 1", "Sample Description");
+            var post = new Post(1, "Post Caption", DateTime.Now);
+
+            group.RemovePost(post); // Should not throw or fail
+            Assert.Empty(group.Posts);
         }
 
         [Fact]

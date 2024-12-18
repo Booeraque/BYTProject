@@ -9,8 +9,9 @@ namespace BYTProject.UnitTesting
     {
         public ModeratorTests()
         {
-            // Clear moderators before each test
+            // Clear all extents before each test
             Moderator.ClearModerators();
+            Group.ClearGroups();
         }
 
         [Fact]
@@ -47,7 +48,7 @@ namespace BYTProject.UnitTesting
             var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
             Assert.Throws<ArgumentException>(() => moderator.Rights = null);
             Assert.Throws<ArgumentException>(() => moderator.Rights = new List<string>());
-            Assert.Throws<ArgumentException>(() => moderator.Rights = new List<string> { "Right1", "Right2", "Right3", "Right4", "Right5", "Right6" });
+            Assert.Throws<ArgumentException>(() => moderator.Rights = new List<string> { "R1", "R2", "R3", "R4", "R5", "R6" });
         }
 
         [Fact]
@@ -59,51 +60,58 @@ namespace BYTProject.UnitTesting
         }
 
         [Fact]
-        public void AddModerator_ShouldThrowException_WhenModeratorIsNull()
+        public void AddGroup_ShouldAddGroupToModerator()
         {
-            Assert.Throws<ArgumentException>(() => Moderator.AddModerator(null));
+            var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
+            var group = new Group(1, "Group 1", "Description 1");
+
+            moderator.AddGroup(group);
+
+            Assert.Contains(group, moderator.Groups);
         }
 
         [Fact]
-        public void AddModerator_ShouldAddModeratorCorrectly()
+        public void AddGroup_ShouldThrowException_WhenGroupIsNull()
         {
             var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
-            Assert.Contains(moderator, Moderator.GetModerators());
+            Assert.Throws<ArgumentNullException>(() => moderator.AddGroup(null));
         }
 
         [Fact]
-        public void AddManagedRight_ShouldAddRightSuccessfully()
+        public void AddGroup_ShouldThrowException_WhenGroupAlreadyExists()
         {
             var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
-            moderator.AddManagedRight("ManagePosts");
-            Assert.Contains("ManagePosts", moderator.ManagedRights);
+            var group = new Group(1, "Group 1", "Description 1");
+
+            moderator.AddGroup(group);
+            var exception = Assert.Throws<InvalidOperationException>(() => moderator.AddGroup(group));
+
+            Assert.Equal("Group is already managed by this moderator.", exception.Message);
         }
 
         [Fact]
-        public void AddManagedRight_ShouldThrowException_WhenAddingDuplicateRight()
+        public void RemoveGroup_ShouldRemoveGroupFromModerator()
         {
             var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
-            moderator.AddManagedRight("ManagePosts");
-            Assert.Throws<InvalidOperationException>(() => moderator.AddManagedRight("ManagePosts"));
+            var group = new Group(1, "Group 1", "Description 1");
+
+            moderator.AddGroup(group);
+            moderator.RemoveGroup(group);
+
+            Assert.DoesNotContain(group, moderator.Groups);
         }
 
         [Fact]
-        public void RemoveManagedRight_ShouldRemoveRightSuccessfully()
+        public void RemoveGroup_ShouldDoNothing_WhenGroupNotManaged()
         {
             var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
-            moderator.AddManagedRight("ManagePosts");
-            moderator.RemoveManagedRight("ManagePosts");
-            Assert.DoesNotContain("ManagePosts", moderator.ManagedRights);
+            var group = new Group(1, "Group 1", "Description 1");
+
+            moderator.RemoveGroup(group); // Should not throw or fail
+            Assert.Empty(moderator.Groups);
         }
 
-        [Fact]
-        public void RemoveManagedRight_ShouldThrowException_WhenRightDoesNotExist()
-        {
-            var moderator = new Moderator(1, DateTime.Now, new List<string> { "Right1" });
-            Assert.Throws<InvalidOperationException>(() => moderator.RemoveManagedRight("NonExistentRight"));
-        }
-
-
+       
         [Fact]
         public void SaveAndLoadModerators_ShouldPersistDataCorrectly()
         {

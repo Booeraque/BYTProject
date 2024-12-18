@@ -61,41 +61,45 @@ public class PostTag
     {
         _postTagsExtent.Clear();
     }
-    // Association: One PostTag -> Many Tags
-    private readonly List<Tag> _tags = new List<Tag>();
+    private Tag _tag;
 
-// Getter: Return a copy of the tags
-    public IReadOnlyList<Tag> Tags => _tags.AsReadOnly();
+    public Tag Tag => _tag;
 
-// Method: Add a Tag to the PostTag
-    public void AddTag(Tag tag)
+    public void SetTag(Tag tag)
     {
-        if (tag == null)
-            throw new ArgumentNullException(nameof(tag), "Tag cannot be null.");
+        if (_tag == tag) return;
 
-        if (_tags.Contains(tag))
-            return; // Prevent redundant addition
+        _tag?.RemovePostTag(this);
+        _tag = tag;
+        tag?.AddPostTag(this);
+    }
 
-        _tags.Add(tag);
-
-        // Add reverse association only if missing
-        if (!tag.PostTags.Contains(this))
+    public void RemoveTag()
+    {
+        if (_tag != null)
         {
-            tag.AddPostTag(this);
+            _tag.RemovePostTag(this); // Remove this PostTag from the Tag's PostTags collection
+            _tag = null;              // Nullify the reference in PostTag
         }
     }
 
-    public void RemoveTag(Tag tag)
-    {
-        if (tag == null)
-            throw new ArgumentNullException(nameof(tag), "Tag cannot be null.");
+// Association: Tag -> Post
+private readonly List<Post> _posts = new List<Post>();
 
-        if (_tags.Remove(tag))
-        {
-            // Remove reverse association
-            tag.RemovePostTag(this);
-        }
-    }
+public IReadOnlyList<Post> Posts => _posts.AsReadOnly();
 
+public void AddPost(Post post)
+{
+    if (post == null) throw new ArgumentNullException(nameof(post));
+    if (_posts.Contains(post)) throw new InvalidOperationException("Post is already associated with this tag.");
+
+    _posts.Add(post);
+}
+
+public void RemovePost(Post post)
+{
+    if (post == null) throw new ArgumentNullException(nameof(post));
+    _posts.Remove(post);
+}
 
 }

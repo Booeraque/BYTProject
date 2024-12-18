@@ -56,55 +56,7 @@ public class UserTests
         var users = User.GetUsers();
         Assert.Contains(user, users);
     }
-
-    [Fact]
-    public void AddAdminRight_ShouldAddRightCorrectly()
-    {
-        var user = new User(1, true);
-        user.AddAdminRight("ManagePosts");
-        Assert.Contains("ManagePosts", user.AdminRights);
-    }
-
-    [Fact]
-    public void AddAdminRight_ShouldThrowException_WhenRightIsNullOrEmpty()
-    {
-        var user = new User(1, true);
-        Assert.Throws<ArgumentNullException>(() => user.AddAdminRight(null));
-        Assert.Throws<ArgumentNullException>(() => user.AddAdminRight(""));
-    }
-
-    [Fact]
-    public void AddAdminRight_ShouldThrowException_WhenUserIsNotAdmin()
-    {
-        var user = new User(1, false);
-        Assert.Throws<InvalidOperationException>(() => user.AddAdminRight("ManagePosts"));
-    }
-
-    [Fact]
-    public void AddAdminRight_ShouldThrowException_WhenRightIsDuplicate()
-    {
-        var user = new User(1, true);
-        user.AddAdminRight("ManagePosts");
-        Assert.Throws<InvalidOperationException>(() => user.AddAdminRight("ManagePosts"));
-    }
-
-    [Fact]
-    public void RemoveAdminRight_ShouldRemoveRightCorrectly()
-    {
-        var user = new User(1, true);
-        user.AddAdminRight("ManagePosts");
-        user.RemoveAdminRight("ManagePosts");
-
-        Assert.DoesNotContain("ManagePosts", user.AdminRights);
-    }
-
-    [Fact]
-    public void RemoveAdminRight_ShouldThrowException_WhenRightDoesNotExist()
-    {
-        var user = new User(1, true);
-        Assert.Throws<InvalidOperationException>(() => user.RemoveAdminRight("NonExistentRight"));
-    }
-
+    
     [Fact]
     public void SaveAndLoadUsers_ShouldPersistDataCorrectly()
     {
@@ -122,4 +74,35 @@ public class UserTests
         Assert.Equal(2, users[1].AccountId);
         Assert.False(users[1].IsAdmin);
     }
+    [Fact]
+    public void SetGroup_ShouldAssignGroupToUser()
+    {
+        var user = new User(1, true);
+        var group = new Group(1, "Group 1", "Sample Description");
+
+        user.SetGroup(group);
+
+        Assert.Equal(group, user.Group);
+    }
+
+    [Fact]
+    public void SetGroup_ShouldThrowException_WhenGroupIsNull()
+    {
+        var user = new User(1, true);
+
+        Assert.Throws<ArgumentNullException>(() => user.SetGroup(null));
+    }
+
+    [Fact]
+    public void RemoveGroup_ShouldDisassociateGroupFromUser()
+    {
+        var user = new User(1, true);
+        var group = new Group(1, "Group 1", "Sample Description");
+
+        user.SetGroup(group);
+        user.RemoveGroup();
+
+        Assert.Null(user.Group);
+    }
+
 }

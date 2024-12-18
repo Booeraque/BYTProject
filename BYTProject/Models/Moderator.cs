@@ -107,36 +107,25 @@ namespace BYTProject.Models
         {
             _moderatorsExtent.Clear();
         }
+        // Association: One Moderator -> Many Groups
+        private readonly List<Group> _groups = new List<Group>();
 
-        // Association handling methods added here
-        private readonly List<string> _managedRights = new List<string>();
+        public IReadOnlyList<Group> Groups => _groups.AsReadOnly();
 
-        // Getter: Return a copy of the managed rights
-        public IReadOnlyList<string> ManagedRights => _managedRights.AsReadOnly();
-
-        // Method: Add a Right to the Moderator
-        public void AddManagedRight(string right)
+        public void AddGroup(Group group)
         {
-            if (string.IsNullOrEmpty(right))
-                throw new ArgumentNullException(nameof(right), "Right cannot be null or empty.");
+            if (group == null) throw new ArgumentNullException(nameof(group), "Group cannot be null.");
+            if (_groups.Contains(group)) throw new InvalidOperationException("Group is already managed by this moderator.");
 
-            if (_managedRights.Count >= 5)
-                throw new InvalidOperationException("A moderator cannot have more than 5 rights.");
-
-            if (_managedRights.Contains(right))
-                throw new InvalidOperationException("The right is already assigned to this moderator.");
-
-            _managedRights.Add(right);
+            _groups.Add(group);
         }
 
-        // Method: Remove a Right from the Moderator
-        public void RemoveManagedRight(string right)
+        public void RemoveGroup(Group group)
         {
-            if (string.IsNullOrEmpty(right))
-                throw new ArgumentNullException(nameof(right), "Right cannot be null or empty.");
+            if (group == null) throw new ArgumentNullException(nameof(group), "Group cannot be null.");
 
-            if (!_managedRights.Remove(right))
-                throw new InvalidOperationException("The right does not exist in this moderator's managed rights.");
+            _groups.Remove(group);
         }
+
     }
 }

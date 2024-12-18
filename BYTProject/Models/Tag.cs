@@ -9,6 +9,7 @@ namespace BYTProject.Models
     {
         // Mandatory attribute: TagID
         private int _tagId;
+
         public int TagId
         {
             get => _tagId;
@@ -21,7 +22,7 @@ namespace BYTProject.Models
 
         // Mandatory attribute: Categories
         private List<string> _categories;
-        
+
         [XmlArray("Categories")]
         [XmlArrayItem("Category")]
         public List<string> Categories
@@ -30,7 +31,8 @@ namespace BYTProject.Models
             set
             {
                 if (value == null) throw new ArgumentException("Categories cannot be null.");
-                if (value.Count == 0 || value.Contains(string.Empty)) throw new ArgumentException("Categories cannot be empty.");
+                if (value.Count == 0 || value.Contains(string.Empty))
+                    throw new ArgumentException("Categories cannot be empty.");
                 if (value.Count > 10) throw new ArgumentException("Categories cannot contain more than 10 items.");
                 _categories = value;
             }
@@ -45,12 +47,11 @@ namespace BYTProject.Models
         }
 
         // Parameterless constructor for XML serialization
-        public Tag(int tagId) { }
+        public Tag() { }
 
         // Static extent collection to store all Tag objects
         private static List<Tag> _tagsExtent = new List<Tag>();
 
-        // Method to clear all tags (for testing purposes)
         public static void ClearTags()
         {
             _tagsExtent.Clear();
@@ -114,42 +115,50 @@ namespace BYTProject.Models
                 Console.WriteLine($"Error loading Tag data: {ex.Message}");
             }
         }
-        // Association: One Tag -> Many PostTags
+        
+        // Association: Many Tags -> Many Posts
+        private readonly List<Post> _posts = new List<Post>();
+
+        public IReadOnlyList<Post> Posts => _posts.AsReadOnly();
+
+        public void AddPost(Post post)
+        {
+            if (post == null)
+                throw new ArgumentNullException(nameof(post), "Post cannot be null.");
+
+            if (_posts.Contains(post))
+                throw new InvalidOperationException("Post is already associated with this tag.");
+
+            _posts.Add(post);
+
+        }
+
+        public void RemovePost(Post post)
+        {
+            if (post == null)
+                throw new ArgumentNullException(nameof(post), "Post cannot be null.");
+
+            _posts.Remove(post);
+        }
+
         private readonly List<PostTag> _postTags = new List<PostTag>();
 
-// Getter: Return a copy of the post tags
         public IReadOnlyList<PostTag> PostTags => _postTags.AsReadOnly();
 
-// Method: Add a PostTag to the Tag
         public void AddPostTag(PostTag postTag)
         {
-            if (postTag == null)
-                throw new ArgumentNullException(nameof(postTag), "PostTag cannot be null.");
-
-            if (_postTags.Contains(postTag))
-                return; // Prevent redundant addition
+            if (postTag == null) throw new ArgumentNullException(nameof(postTag), "PostTag cannot be null.");
+            if (_postTags.Contains(postTag)) throw new InvalidOperationException("PostTag is already associated with this tag.");
 
             _postTags.Add(postTag);
-
-            // Add reverse association only if missing
-            if (!postTag.Tags.Contains(this))
-            {
-                postTag.AddTag(this);
-            }
         }
 
         public void RemovePostTag(PostTag postTag)
         {
-            if (postTag == null)
-                throw new ArgumentNullException(nameof(postTag), "PostTag cannot be null.");
+            if (postTag == null) throw new ArgumentNullException(nameof(postTag), "PostTag cannot be null.");
 
-            if (_postTags.Remove(postTag))
-            {
-                // Remove reverse association
-                postTag.RemoveTag(this);
-            }
+            _postTags.Remove(postTag);
         }
 
     }
-    
 }

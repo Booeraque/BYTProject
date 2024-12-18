@@ -1,7 +1,6 @@
 ﻿using BYTProject.Models;
 using Xunit;
 using System;
-using System.Collections.Generic;
 
 namespace BYTProject.UnitTesting
 {
@@ -12,6 +11,7 @@ namespace BYTProject.UnitTesting
             // Clear post tags and tags before each test
             PostTag.ClearPostTags();
             Tag.ClearTags();
+            Post.ClearPosts();
         }
 
         [Fact]
@@ -29,52 +29,81 @@ namespace BYTProject.UnitTesting
         }
 
         [Fact]
-        public void AddTag_ShouldAssociateTagCorrectly()
+        public void SetTag_ShouldAssignTagToPostTag()
         {
+            var tag = new Tag(1, new List<string> { "Category1" });
             var postTag = new PostTag(DateTime.Now);
-            var tag = new Tag(1);
 
-            postTag.AddTag(tag);
+            postTag.SetTag(tag);
 
-            Assert.Contains(tag, postTag.Tags); // Forward association
-            Assert.Contains(postTag, tag.PostTags); // Reverse association
+            Assert.Equal(tag, postTag.Tag);
+            Assert.Contains(postTag, tag.PostTags); // Reverse connection
         }
 
         [Fact]
-        public void AddTag_ShouldThrowException_WhenTagIsNull()
+        public void RemoveTag_ShouldDisassociateTagFromPostTag()
+        {
+            var tag = new Tag(1, new List<string> { "Category1" });
+            var postTag = new PostTag(DateTime.Now);
+
+            postTag.SetTag(tag);
+            postTag.RemoveTag();
+
+            Assert.Null(postTag.Tag); // Verify PostTag no longer references Tag
+            Assert.DoesNotContain(postTag, tag.PostTags); // Verify Tag no longer contains PostTag
+        }
+
+
+        [Fact]
+        public void AddPost_ShouldAssociatePostWithPostTag()
         {
             var postTag = new PostTag(DateTime.Now);
-            Assert.Throws<ArgumentNullException>(() => postTag.AddTag(null));
+            var post = new Post(1, "Post Caption", DateTime.Now);
+
+            postTag.AddPost(post);
+
+            Assert.Contains(post, postTag.Posts);
         }
 
         [Fact]
-        public void AddTag_ShouldThrowException_WhenTagAlreadyAdded()
+        public void AddPost_ShouldThrowException_WhenPostIsNull()
         {
             var postTag = new PostTag(DateTime.Now);
-            var tag = new Tag(1);
-
-            postTag.AddTag(tag);
-            Assert.Throws<InvalidOperationException>(() => postTag.AddTag(tag));
+            Assert.Throws<ArgumentNullException>(() => postTag.AddPost(null));
         }
 
         [Fact]
-        public void RemoveTag_ShouldDisassociateTagCorrectly()
+        public void AddPost_ShouldThrowException_WhenPostAlreadyAssociated()
         {
             var postTag = new PostTag(DateTime.Now);
-            var tag = new Tag(1);
+            var post = new Post(1, "Post Caption", DateTime.Now);
 
-            postTag.AddTag(tag);
-            postTag.RemoveTag(tag);
+            postTag.AddPost(post);
+            var exception = Assert.Throws<InvalidOperationException>(() => postTag.AddPost(post));
 
-            Assert.DoesNotContain(tag, postTag.Tags); // Forward association cleared
-            Assert.DoesNotContain(postTag, tag.PostTags); // Reverse association cleared
+            Assert.Equal("Post is already associated with this tag.", exception.Message);
         }
 
         [Fact]
-        public void RemoveTag_ShouldThrowException_WhenTagIsNull()
+        public void RemovePost_ShouldDisassociatePostFromPostTag()
         {
             var postTag = new PostTag(DateTime.Now);
-            Assert.Throws<ArgumentNullException>(() => postTag.RemoveTag(null));
+            var post = new Post(1, "Post Caption", DateTime.Now);
+
+            postTag.AddPost(post);
+            postTag.RemovePost(post);
+
+            Assert.DoesNotContain(post, postTag.Posts);
+        }
+
+        [Fact]
+        public void RemovePost_ShouldDoNothing_WhenPostNotAssociated()
+        {
+            var postTag = new PostTag(DateTime.Now);
+            var post = new Post(1, "Post Caption", DateTime.Now);
+
+            postTag.RemovePost(post); // Should not throw an error
+            Assert.Empty(postTag.Posts);
         }
 
         [Fact]
@@ -95,6 +124,7 @@ namespace BYTProject.UnitTesting
             var postTag2 = new PostTag(DateTime.Now.AddMinutes(-10));
 
             PostTag.SavePostTags();
+            PostTag.ClearPostTags();
             PostTag.LoadPostTags();
 
             var postTags = PostTag.GetPostTags();
