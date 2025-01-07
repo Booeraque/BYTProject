@@ -212,6 +212,7 @@ public class Account
         // Remove the post and handle reverse reference removal
         if (_posts.Remove(post))
         {
+            _posts.Remove(post);
             post.RemoveAccount(); // Ensure the reverse connection is removed
         }
     }
@@ -297,5 +298,20 @@ public class Account
         {
             like.RemoveAccount(); // Ensure the reverse connection is removed
         }
+    }
+    
+    public void RemoveAccount()
+    {
+        foreach (var comment in _comments.ToList())
+        {
+            RemoveComment(comment);
+        }
+
+        foreach (var like in _likes.ToList())
+        {
+            RemoveLike(like);
+        }
+
+        // Additional logic to remove the account from the global list, if applicable
     }
 }

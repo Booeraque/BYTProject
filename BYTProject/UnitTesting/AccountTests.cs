@@ -217,8 +217,7 @@ namespace BYTProject.UnitTesting
             account.AddComment(comment);
             account.AddLike(like);
 
-            account.RemoveComment(comment);
-            account.RemoveLike(like);
+            account.RemoveAccount();
 
             Assert.DoesNotContain(comment, account.Comments);
             Assert.DoesNotContain(like, account.Likes);

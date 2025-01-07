@@ -127,9 +127,15 @@ public class Like
         post?.AddLike(this);
     }
 
-    // Internal method: Remove the Post reference
+    // Internal method: Remove the Post reference and remove the Like extent
     internal void RemovePost()
     {
-        _post = null;
+        if (_post != null)
+        {
+            var post = _post;
+            _post = null;
+            post.RemoveLike(this);
+            _likesExtent.Remove(this);
+        }
     }
 }

@@ -153,6 +153,12 @@ public class Comment
     // Internal method: Remove the Post reference
     internal void RemovePost()
     {
-        _post = null;
+        if (_post != null)
+        {
+            var post = _post;
+            _post = null;
+            post.RemoveComment(this);
+            _commentsExtent.Remove(this);
+        }
     }
 }

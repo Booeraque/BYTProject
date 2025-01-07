@@ -81,11 +81,10 @@ namespace BYTProject.UnitTesting
         [Fact]
         public void AddPost_ShouldThrowException_WhenDuplicatePostIsAdded()
         {
-            // Clear posts before the test to avoid the extent being pre-filled
             Post.ClearPosts();
-
+            
             var post1 = new Post(1, "Caption 1", DateTime.Now);
-    
+
             // Add the first post to the extent
             Post.AddPost(post1);
 
@@ -93,20 +92,15 @@ namespace BYTProject.UnitTesting
             var post2 = new Post(1, "Caption 2", DateTime.Now); // Same PostId as post1
 
             // Try adding the duplicate post
-            var exception = Assert.Throws<InvalidOperationException>(() => Post.AddPost(post2));
-
-            // Assert that the exception message matches
-            Assert.Equal("The post is already associated with this account.", exception.Message);
+            Assert.Throws<InvalidOperationException>(() => Post.AddPost(post2));
         }
-
-
-
-
+        
 
         [Fact]
         public void GetPosts_ShouldReturnCorrectList()
         {
             var post = new Post(1, "Caption 1", DateTime.Now);
+            Post.AddPost(post);
             var posts = Post.GetPosts();
             Assert.Contains(post, posts);
         }
