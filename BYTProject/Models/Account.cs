@@ -4,6 +4,90 @@ namespace BYTProject.Models;
 
 public class Account
 {
+    // Overlapping and Dynamic Inheritance
+    public bool IsUser { get; private set; }
+    public bool IsModerator { get; private set; }
+
+    private IRole _currentRole;
+
+    public IRole CurrentRole
+    {
+        get => _currentRole;
+        set
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value), "Role cannot be null.");
+            _currentRole = value;
+        }
+    }
+
+    public Account(int accountID, string username, string email, DateTime birthDate, string address, string password, bool isUser, bool isModerator)
+    {
+        AccountId = accountID;
+        Username = username;
+        Email = email;
+        BirthDate = birthDate;
+        Address = address;
+        Password = password;
+        IsUser = isUser;
+        IsModerator = isModerator;
+
+        ValidateRoles();
+    }
+
+    public void SwitchRole(IRole newRole)
+    {
+        CurrentRole?.OnRoleExit();
+        CurrentRole = newRole;
+        CurrentRole.OnRoleEnter(this);
+    }
+
+    private void ValidateRoles()
+    {
+        if (IsUser) CurrentRole = new UserRole();
+        if (IsModerator) CurrentRole = new ModeratorRole();
+
+        if (!IsUser && !IsModerator)
+        {
+            throw new InvalidOperationException("An account must have at least one role.");
+        }
+    }
+
+// Interface for roles
+    public interface IRole
+    {
+        void OnRoleEnter(Account account);
+        void OnRoleExit();
+    }
+
+// User Role
+    public class UserRole : IRole
+    {
+        public void OnRoleEnter(Account account)
+        {
+            Console.WriteLine($"Account {account.AccountId} is now a User.");
+        }
+
+        public void OnRoleExit()
+        {
+            Console.WriteLine("Exiting User role.");
+        }
+    }
+
+// Moderator Role
+    public class ModeratorRole : IRole
+    {
+        public void OnRoleEnter(Account account)
+        {
+            Console.WriteLine($"Account {account.AccountId} is now a Moderator.");
+        }
+
+        public void OnRoleExit()
+        {
+            Console.WriteLine("Exiting Moderator role.");
+        }
+    }
+
+    
     // Mandatory attribute: AccountID
     private int _accountId;
     public int AccountId
@@ -127,6 +211,8 @@ public class Account
         AddAccount(this);
     }
 
+    
+    
     // Parameterless constructor needed for XML serialization
     public Account() {}
 

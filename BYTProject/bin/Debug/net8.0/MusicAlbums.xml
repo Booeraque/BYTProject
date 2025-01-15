@@ -10,4 +10,44 @@
     <Type>Mix</Type>
     <Description>Album 2</Description>
   </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>First Album</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>First Album</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>First Album</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>First Album</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>First Album</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>First Album</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>2</AlbumId>
+    <Type>Live</Type>
+    <Description>Second Album</Description>
+  </MusicAlbum>
+  <MusicAlbum>
+    <AlbumId>1</AlbumId>
+    <Type>Single</Type>
+    <Description>First Album</Description>
+  </MusicAlbum>
 </ArrayOfMusicAlbum>

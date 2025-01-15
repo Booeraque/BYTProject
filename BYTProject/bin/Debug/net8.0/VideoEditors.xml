@@ -10,4 +10,34 @@
     <VideoEdBio>Bio2</VideoEdBio>
     <AccountId>101</AccountId>
   </VideoEditor>
+  <VideoEditor>
+    <VideoEdId>1</VideoEdId>
+    <VideoEdBio>Editor Bio</VideoEdBio>
+    <AccountId>1</AccountId>
+  </VideoEditor>
+  <VideoEditor>
+    <VideoEdId>1</VideoEdId>
+    <VideoEdBio>Editor Bio</VideoEdBio>
+    <AccountId>1</AccountId>
+  </VideoEditor>
+  <VideoEditor>
+    <VideoEdId>1</VideoEdId>
+    <VideoEdBio>Editor Bio</VideoEdBio>
+    <AccountId>1</AccountId>
+  </VideoEditor>
+  <VideoEditor>
+    <VideoEdId>1</VideoEdId>
+    <VideoEdBio>Editor Bio</VideoEdBio>
+    <AccountId>1</AccountId>
+  </VideoEditor>
+  <VideoEditor>
+    <VideoEdId>1</VideoEdId>
+    <VideoEdBio>Editor Bio</VideoEdBio>
+    <AccountId>1</AccountId>
+  </VideoEditor>
+  <VideoEditor>
+    <VideoEdId>1</VideoEdId>
+    <VideoEdBio>Editor Bio</VideoEdBio>
+    <AccountId>1</AccountId>
+  </VideoEditor>
 </ArrayOfVideoEditor>
