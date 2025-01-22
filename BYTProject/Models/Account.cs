@@ -4,88 +4,116 @@ namespace BYTProject.Models;
 
 public class Account
 {
-    // Overlapping and Dynamic Inheritance
-    public bool IsUser { get; private set; }
-    public bool IsModerator { get; private set; }
-
-    private IRole _currentRole;
-
-    public IRole CurrentRole
+    // Role Enum for User and Moderator
+    [Flags]
+    public enum RoleType
     {
-        get => _currentRole;
-        set
+        User = 1,        // Default role
+        Moderator = 2,   // Moderator role
+        Both = User | Moderator
+    }
+
+    private RoleType _roles = RoleType.User; // Default is User
+    public RoleType Roles
+    {
+        get => _roles;
+        private set => _roles = value;
+    }
+
+    // Role Enum for Musician and VideoEditor (Independent Roles)
+    public enum AdditionalRoleType
+    {
+        None = 0,
+        Musician = 1,
+        VideoEditor = 2
+    }
+
+    private AdditionalRoleType _additionalRole = AdditionalRoleType.None;
+    public AdditionalRoleType AdditionalRole
+    {
+        get => _additionalRole;
+        private set => _additionalRole = value;
+    }
+
+    // Role assignment tracking
+    private readonly Dictionary<AdditionalRoleType, DateTime> _additionalRoleAssignments = new();
+
+    // Dynamic Role Management for User/Moderator
+    public void AddRole(RoleType role)
+    {
+        if (Roles.HasFlag(role))
+            throw new InvalidOperationException($"Account already has the role: {role}");
+
+        Roles |= role;
+        Console.WriteLine($"Added role: {role} to Account {AccountId}");
+    }
+
+    public void RemoveRole(RoleType role)
+    {
+        if (role == RoleType.User && !Roles.HasFlag(RoleType.Moderator))
+            throw new InvalidOperationException("An account must have at least one role. Cannot remove the User role.");
+
+        Roles &= ~role;
+        Console.WriteLine($"Removed role: {role} from Account {AccountId}");
+    }
+
+    // Dynamic Role Management for Musician/VideoEditor
+    public void SetAdditionalRole(AdditionalRoleType role)
+    {
+        if (AdditionalRole != AdditionalRoleType.None)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value), "Role cannot be null.");
-            _currentRole = value;
+            throw new InvalidOperationException($"Account already has an additional role: {AdditionalRole}");
+        }
+
+        if (role == AdditionalRoleType.None)
+        {
+            throw new InvalidOperationException("Cannot explicitly set role to None.");
+        }
+
+        _additionalRole = role;
+        _additionalRoleAssignments[role] = DateTime.Now;
+
+        Console.WriteLine($"Assigned {role} role to Account {AccountId} at {_additionalRoleAssignments[role]}");
+    }
+
+    public void RemoveAdditionalRole()
+    {
+        if (AdditionalRole == AdditionalRoleType.None)
+        {
+            throw new InvalidOperationException("Account does not have an additional role to remove.");
+        }
+
+        Console.WriteLine($"Removed {AdditionalRole} role from Account {AccountId}");
+        _additionalRole = AdditionalRoleType.None;
+    }
+
+    public DateTime? GetAdditionalRoleAssignmentDate(AdditionalRoleType role)
+    {
+        return _additionalRoleAssignments.ContainsKey(role) ? _additionalRoleAssignments[role] : null;
+    }
+
+    // Role-based behavior simulation
+    public void PerformRoleBasedAction()
+    {
+        if (Roles.HasFlag(RoleType.User))
+        {
+            Console.WriteLine($"Account {AccountId} is performing User actions.");
+        }
+        if (Roles.HasFlag(RoleType.Moderator))
+        {
+            Console.WriteLine($"Account {AccountId} is performing Moderator actions.");
+        }
+
+        if (AdditionalRole == AdditionalRoleType.Musician)
+        {
+            Console.WriteLine($"Account {AccountId} is performing Musician actions.");
+        }
+        else if (AdditionalRole == AdditionalRoleType.VideoEditor)
+        {
+            Console.WriteLine($"Account {AccountId} is performing VideoEditor actions.");
         }
     }
 
-    public Account(int accountID, string username, string email, DateTime birthDate, string address, string password, bool isUser, bool isModerator)
-    {
-        AccountId = accountID;
-        Username = username;
-        Email = email;
-        BirthDate = birthDate;
-        Address = address;
-        Password = password;
-        IsUser = isUser;
-        IsModerator = isModerator;
-
-        ValidateRoles();
-    }
-
-    public void SwitchRole(IRole newRole)
-    {
-        CurrentRole?.OnRoleExit();
-        CurrentRole = newRole;
-        CurrentRole.OnRoleEnter(this);
-    }
-
-    private void ValidateRoles()
-    {
-        if (IsUser) CurrentRole = new UserRole();
-        if (IsModerator) CurrentRole = new ModeratorRole();
-
-        if (!IsUser && !IsModerator)
-        {
-            throw new InvalidOperationException("An account must have at least one role.");
-        }
-    }
-
-// Interface for roles
-    public interface IRole
-    {
-        void OnRoleEnter(Account account);
-        void OnRoleExit();
-    }
-
-// User Role
-    public class UserRole : IRole
-    {
-        public void OnRoleEnter(Account account)
-        {
-            Console.WriteLine($"Account {account.AccountId} is now a User.");
-        }
-
-        public void OnRoleExit()
-        {
-            Console.WriteLine("Exiting User role.");
-        }
-    }
-
-// Moderator Role
-    public class ModeratorRole : IRole
-    {
-        public void OnRoleEnter(Account account)
-        {
-            Console.WriteLine($"Account {account.AccountId} is now a Moderator.");
-        }
-
-        public void OnRoleExit()
-        {
-            Console.WriteLine("Exiting Moderator role.");
-        }
-    }
 
     
     // Mandatory attribute: AccountID
@@ -206,6 +234,8 @@ public class Account
         BirthDate = birthDate;
         Address = address;
         Password = password;
+        
+        Roles = RoleType.User;
 
         // Automatically add to extent
         AddAccount(this);
